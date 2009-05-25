@@ -1,12 +1,4 @@
-class CompileCPPProject:
-	def __init__(self, rootPath = None):
-		self.setRoot(rootPath)
-		
-	def setRoot(self, rootPath):
-		self.rootPath = rootPath
+from wudoo.compile.Project import Project
 
-	def getRoot(self):
-		return self.rootPath
-
-	def addSrcFolders(self, srcFolders):
-		pass
+class CompileCPPProject(Project):
+	pass
