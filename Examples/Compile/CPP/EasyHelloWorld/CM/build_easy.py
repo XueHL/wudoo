@@ -18,9 +18,9 @@ def getProject():
 	project = pickle.loads(storrage)
 	return project
 
+
+### ### ### ### ### ### ### ### ### ### 
 if (__name__ == "__main__"):
-	settings = DefaultBuildSettings()
+	import os
 	project = getProject()
-	settings.outputDir = project.getRoot() + "/" + "Out"
-	settings.outputBinName = "HelloWorld.exe"
-	WDefaultBuild(project, settings)
+	wdefaultBuild(project)

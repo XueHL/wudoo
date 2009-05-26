@@ -4,5 +4,14 @@ from wudoo.compile.cpp.DefaultCPPBuildSettings import DefaultCPPBuildSettings
 Project = CompileCPPProject
 DefaultBuildSettings = DefaultCPPBuildSettings
 
-def WDefaultBuild(project, settings):
-	pass
+def wdefaultBuild(project):
+	compilation = DefaultCPPCompilation(project)
+	compilation.compile()
+	writeCompilation(compilation)
+#	compilation.setGoal(settings.getGoal())
+#	compilation.setOutputDir(settings.getOutputDir())
+#	compilation.setObjDir(settings.getObjDir())
+#	compilation.setBinDir(settings.getBinDir())
+	
+def writeCompilation(compilation):
+	pass	

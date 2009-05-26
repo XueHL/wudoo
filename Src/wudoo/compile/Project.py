@@ -3,6 +3,9 @@ from wudoo.compile import SourceFilterColl
 from wudoo.FSItem import FSItem
 
 class Project:
+	"""\
+Structure.\
+"""
 	def __init__(self, rootPath = ""):
 		self.setRoot(rootPath)
 		self.__sourceFolders = []
