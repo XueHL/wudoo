@@ -3,7 +3,7 @@ from wudoo.compile.cpp.Front import *
 
 project = Project()
 
-project.setRoot("..")
+project.setRoot("..", moduleFile2basePath(__file__))
 project.addSrcFolders(
 """
 Src

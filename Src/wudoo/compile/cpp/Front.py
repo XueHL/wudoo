@@ -1,3 +1,4 @@
+import os
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.DefaultCPPBuildSettings import DefaultCPPBuildSettings
 
@@ -14,4 +15,7 @@ def wdefaultBuild(project):
 #	compilation.setBinDir(settings.getBinDir())
 	
 def writeCompilation(compilation):
-	pass	
+	pass
+
+def moduleFile2basePath(modFile):
+	return os.path.normpath(os.path.join(modFile, ".."))	

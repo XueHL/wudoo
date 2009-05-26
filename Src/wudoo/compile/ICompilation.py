@@ -4,4 +4,10 @@ class ICompilation:
 
     def getProject(self):
         raise NotImplementedError()
+
+    def setAllocateObjStrategy(self, strat):
+        raise NotImplementedError()
+
+    def getSrc2ObjMap(self):
+        raise NotImplementedError()
     

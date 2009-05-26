@@ -10,6 +10,9 @@ class FSItem:
     def getPath(self, start = 0):
         return os.path.join(*self.__pathSteps[start:-1])
     
+    def getPathArr(self, start = 0):
+        return self.__pathSteps[start:-1]
+    
     def getBegOfPath(self, count = -1):
         if count == -1: count = len(self.__pathSteps) - 1
         return os.path.join(*self.__pathSteps[:count])

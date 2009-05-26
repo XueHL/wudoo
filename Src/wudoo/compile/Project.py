@@ -12,8 +12,10 @@ Structure.\
 		self.__filter = SourceFilterColl.ACCEPT_ALL_FILTER
 		self.__sourceItems = []
 		
-	def setRoot(self, rootPath):
-		self.__rootPath = os.path.normpath(os.path.join(sys.path[0], rootPath))
+	def setRoot(self, rootPath, basePath = None):
+		if basePath is None:
+			basePath = sys.path[0]
+		self.__rootPath = os.path.normpath(os.path.join(basePath, rootPath))
 
 	def getRoot(self):
 		return self.__rootPath
