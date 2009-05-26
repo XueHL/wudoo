@@ -19,7 +19,15 @@ class Project:
 		self.__filter = sourceFilter
 
 	def addSrcFolders(self, srcFolder):
-		self.__sourceFolders.append(srcFolder)
+		srcFolder = srcFolder.split("\n")
+		while len(srcFolder) > 0 and len(srcFolder[0]) == 0:
+			srcFolder= srcFolder[1:]
+		while len(srcFolder) > 0 and len(srcFolder[len(srcFolder) - 1]) == 0:
+			srcFolder= srcFolder[:-1]
+		self.__sourceFolders.extend(srcFolder)
+	
+	def getSrcFolders(self):
+		return self.__sourceFolders
 	
 	def findSources(self):
 		self.__sourceItems = []

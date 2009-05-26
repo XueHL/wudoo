@@ -19,4 +19,12 @@ class TestProject(unittest.TestCase):
 		project.findSources()
 		self.assertTrue(len(project.getSourceItems()) > 3)
 		
-		 
+	def testAddSourceFolder2Project(self):
+		project = Project()
+		project.addSrcFolders(
+"""
+Src
+Hdr
+"""
+            )
+		self.assertEquals(["Src", "Hdr"], project.getSrcFolders())
