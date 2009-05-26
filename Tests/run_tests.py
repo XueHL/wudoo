@@ -8,8 +8,10 @@ sys.path.append(srcRoot)
 sys.path.append(os.path.join(trunkPath, "Tests"))
 
 import tests.TestProject
+import tests.TestItemsWork
 
 testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.TestProject),\
-        ])
+	unittest.TestLoader().loadTestsFromModule(tests.TestItemsWork),\
+	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)
