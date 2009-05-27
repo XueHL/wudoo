@@ -3,6 +3,9 @@ import unittest, os, sys, tempfile
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.BaseCompilation import BaseCompilation
 from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
+from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
+
+from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
 class TestCompilation(unittest.TestCase):
     additp = sys.path[0]
@@ -26,7 +29,7 @@ class TestCompilation(unittest.TestCase):
         compilation.setAllocateObjStrategy(strat)
         ex = None
         try:
-            compilation.compile()
+            compilation.compile(StoreCallsWillExecutor())
         except Exception, e:
             ex = e
         self.assertTrue(ex is not None)
@@ -40,12 +43,20 @@ class TestCompilation(unittest.TestCase):
         self.assertEquals(os.path.join("Src", "Main.o"), obj.getPathNameExt(1))
         
     def testCompile(self):
-        return
         project = TestCompilation.build_easy_prj.getProject()
         compilation = BaseCompilation(project)
         tmpDir = tempfile.mkdtemp()
         strat = AllocInSpecifDirStrategy(tmpDir, ".o")
         compilation.setAllocateObjStrategy(strat)
-        compilation.setCompiler()
-        compilation.compile()
+        compilation.setCompiler(GPPCompiler())
+        we = StoreCallsWillExecutor()
+        compilation.compile(we)
+        we.history.sort()
+        cmd = we.history[1]
+        self.assertTrue(cmd.find("g++") > -1)
+        self.assertTrue(cmd.find("-c") > -1)
+        self.assertTrue(cmd.find("Main.cpp") > -1)
+        self.assertTrue(cmd.find("-o") > -1)
+        self.assertTrue(cmd.find("Main.o") > -1)
+        
         

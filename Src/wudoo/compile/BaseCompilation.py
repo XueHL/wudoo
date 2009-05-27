@@ -5,6 +5,7 @@ class BaseCompilation(ICompilation):
         self.__project = project
         self.__allocObjStrategy = None
         self.__src2objMap = {}
+        self.__compiler = None
         
     def getProject(self):
         return self.__project
@@ -15,10 +16,14 @@ class BaseCompilation(ICompilation):
     def getSrc2ObjMap(self):
         return self.__src2objMap
         
-    def compile(self):
+    def compile(self, willExecutor):
         self.__project.findSources()
         for src in self.__project.getSourceItems():
             obj = self.__allocObjStrategy.allocate(src)
             self.__src2objMap[src] = obj
-        compiler.compile()
+        for src in self.__project.getSourceItems():
+            self.__compiler.compile(src, self, willExecutor)
+
+    def setCompiler(self, compiler):
+        self.__compiler = compiler
         
