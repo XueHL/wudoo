@@ -8,6 +8,7 @@ from wudoo.compile.cpp.Front import DefaultCPPCompilation
 from wudoo.compile.Project import Project
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 from wudoo.SystemWillExecutor import SystemWillExecutor
+from wudoo.FSItem import FSItem
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
@@ -49,6 +50,7 @@ class TestCompilation(unittest.TestCase):
     def testCompile(self):
         project = TestCompilation.build_easy_prj.getProject()
         compilation = BaseCompilation(project)
+        compilation.setGoalFSItem(FSItem("C:\Work", "hello.exe"))
         tmpDir = tempfile.mkdtemp()
         strat = AllocInSpecifDirStrategy(tmpDir, ".o")
         compilation.setAllocateObjStrategy(strat)
@@ -62,22 +64,29 @@ class TestCompilation(unittest.TestCase):
         self.assertTrue(cmd.find("Main.cpp") > -1)
         self.assertTrue(cmd.find("-o") > -1)
         self.assertTrue(cmd.find("Main.o") > -1)
+        cmd = we.history[2]
+        self.assertTrue(cmd.find("g++") > -1)
+        self.assertTrue(cmd.find("Hello.o") > -1)
+        self.assertTrue(cmd.find("Main.o") > -1)
+        self.assertTrue(cmd.find("-o C:\Work\hello.exe") > -1)
         
     def testEasyBuildReal(self):
         project = TestCompilation.build_easy_prj.getProject()
         compilation = DefaultCPPCompilation(project)
         tmpDir = tempfile.mkdtemp()
+        compilation.setGoalFSItem(FSItem(tmpDir, "Bin", project.getName() + ".exe"));
         strat = AllocInSpecifDirStrategy(tmpDir, ".o")
         compilation.setAllocateObjStrategy(strat)
         compilation.compile(SystemWillExecutor())
         project = Project(tmpDir)
         srcFolder = TestCompilation.build_easy_prj.getProject().getSrcFolders()[0] 
         project.addSrcFolders(srcFolder)
-        project.setSourceFilter(ExtensionBasedFilter({"o": "o"}));
+        project.addSrcFolders("Bin")
+        project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
         project.findSources()
         objItems = project.getSourceItems()
         objPaths = [io.getPathNameExt(1) for io in objItems]
         objPaths.sort()
-        self.assertEquals(["Src\\Hello.o", "Src\\Main.o"], objPaths)
+        self.assertEquals(["Bin\\BuildEasy.exe", "Src\\Hello.o", "Src\\Main.o"], objPaths)
         
         

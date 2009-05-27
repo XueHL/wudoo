@@ -6,11 +6,17 @@ class Project:
 	"""\
 Structure.\
 """
-	def __init__(self, rootPath = ""):
+	def __init__(self, rootPath = "", name = None):
 		self.setRoot(rootPath)
 		self.__sourceFolders = []
 		self.__filter = SourceFilterColl.ACCEPT_ALL_FILTER
 		self.__sourceItems = []
+		if name is None:
+			name = self.getRoot().replace("/", "_").replace("\\", "_").replace(":", "_") + ".exe"
+		self.__name = name
+		
+	def getName(self):
+		return self.__name
 		
 	def setRoot(self, rootPath, basePath = None):
 		if basePath is None:

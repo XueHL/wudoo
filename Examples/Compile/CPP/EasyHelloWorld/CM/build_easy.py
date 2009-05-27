@@ -1,7 +1,7 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project()
+project = Project(name = "BuildEasy")
 
 project.setRoot("..", moduleFile2basePath(__file__))
 project.addSrcFolders(
