@@ -8,6 +8,8 @@ class FSItem:
         return os.path.join(*self.__pathSteps[start:])
     
     def getPath(self, start = 0):
+        if len(self.__pathSteps) <= 1:
+            return ""
         return os.path.join(*self.__pathSteps[start:-1])
     
     def getPathArr(self, start = 0):

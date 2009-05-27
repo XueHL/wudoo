@@ -4,6 +4,10 @@ from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.BaseCompilation import BaseCompilation
 from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
+from wudoo.compile.cpp.Front import DefaultCPPCompilation
+from wudoo.compile.Project import Project
+from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
+from wudoo.SystemWillExecutor import SystemWillExecutor
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
@@ -58,5 +62,22 @@ class TestCompilation(unittest.TestCase):
         self.assertTrue(cmd.find("Main.cpp") > -1)
         self.assertTrue(cmd.find("-o") > -1)
         self.assertTrue(cmd.find("Main.o") > -1)
+        
+    def testEasyBuildReal(self):
+        project = TestCompilation.build_easy_prj.getProject()
+        compilation = DefaultCPPCompilation(project)
+        tmpDir = tempfile.mkdtemp()
+        strat = AllocInSpecifDirStrategy(tmpDir, ".o")
+        compilation.setAllocateObjStrategy(strat)
+        compilation.compile(SystemWillExecutor())
+        project = Project(tmpDir)
+        srcFolder = TestCompilation.build_easy_prj.getProject().getSrcFolders()[0] 
+        project.addSrcFolders(srcFolder)
+        project.setSourceFilter(ExtensionBasedFilter({"o": "o"}));
+        project.findSources()
+        objItems = project.getSourceItems()
+        objPaths = [io.getPathNameExt(1) for io in objItems]
+        objPaths.sort()
+        self.assertEquals(["Src\\Hello.o", "Src\\Main.o"], objPaths)
         
         
