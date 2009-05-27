@@ -3,7 +3,7 @@ from wudoo.compile.cpp.Front import *
 
 project = Project()
 
-project.setRoot("..")
+project.setRoot("..", moduleFile2basePath(__file__))
 project.addSrcFolders(
 """
 Src
@@ -18,9 +18,9 @@ def getProject():
 	project = pickle.loads(storrage)
 	return project
 
+
+### ### ### ### ### ### ### ### ### ### 
 if (__name__ == "__main__"):
-	settings = DefaultBuildSettings()
+	import os
 	project = getProject()
-	settings.outputDir = project.getRoot() + "/" + "Out"
-	settings.outputBinName = "HelloWorld.exe"
-	WDefaultBuild(project, settings)
+	wdefaultBuild(project)
