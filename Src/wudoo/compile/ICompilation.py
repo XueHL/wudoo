@@ -1,5 +1,5 @@
 class ICompilation:
-    def compile(self):
+    def compile(self, willExecutor):
         raise NotImplementedError()
 
     def getProject(self):
@@ -9,5 +9,8 @@ class ICompilation:
         raise NotImplementedError()
 
     def getSrc2ObjMap(self):
+        raise NotImplementedError()
+
+    def setCompiler(self, compiler):
         raise NotImplementedError()
     

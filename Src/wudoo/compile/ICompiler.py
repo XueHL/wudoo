@@ -1,3 +1,3 @@
 class ICompiler:
-	def compile(self, src, obj):
+	def compile(self, src, compilation, willExecutor):
 		raise NotImplementedError()
