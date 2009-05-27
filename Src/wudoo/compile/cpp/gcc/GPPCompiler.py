@@ -19,3 +19,17 @@ class GPPCompiler(BaseCompiler):
 			""
 		self.__preCompileStrategy.onPreCompile(obj)
 		willExecutor.execute(command)
+	
+	def link(self, project, compilation, willExecutor, goalFSItem):
+		objStr = ""
+		for src in project.getSourceItems():
+			obj = compilation.getSrc2ObjMap()[src]
+			objStr += " " + obj.getPathNameExt()
+		command = self.__gppCmd + \
+			objStr + \
+			" -o " + \
+			goalFSItem.getPathNameExt() + \
+			""
+		self.__preCompileStrategy.onPreLink(goalFSItem)
+		willExecutor.execute(command)
+			
