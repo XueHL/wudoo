@@ -1,6 +1,6 @@
-from wudoo.compile.ICompilator import ICompilator
+from wudoo.compile.ICompiler import ICompiler
 
-class BaseCompilator(ICompilator):
+class BaseCompiler(ICompiler):
 	def __init__(self, willExecutor):
 		self.__willExecutor = willExecutor
 
