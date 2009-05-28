@@ -26,4 +26,4 @@ def writeCompilation(compilation):
 	pass
 
 def moduleFile2basePath(modFile):
-	return os.path.normpath(os.path.join(modFile, ".."))	
+	return os.path.abspath(os.path.normpath(os.path.join(modFile, "..")))
