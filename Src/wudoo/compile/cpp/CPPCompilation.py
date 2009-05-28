@@ -12,7 +12,7 @@ class CPPCompilation(BaseCompilation):
 	def setObjRoot(self, objRoot):
 		if objRoot is None:
 			objRoot = os.path.join(self.getProject().getRoot(), "Out", "Obj")
-		self.setAllocateObjStrategy(AllocInSpecifDirStrategy(objRoot, "o"))
+		self.setAllocateObjStrategy(AllocInSpecifDirStrategy(objRoot, ".o"))
 
 	def setBinDestFSItem(self, binDestFSItem):
 		if binDestFSItem is None:

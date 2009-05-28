@@ -1,1 +1,2 @@
 regexp:.*\.pyc
+regexp:Examples/Compile/CPP/EasyHelloWorld/Out.*

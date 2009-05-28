@@ -1,3 +1,4 @@
+import os
 from wudoo.compile.BaseCompiler import BaseCompiler
 from wudoo.compile.CreateDestOnPreCompile import CreateDestOnPreCompile
 
@@ -11,11 +12,13 @@ class GPPCompiler(BaseCompiler):
 
 	def compile(self, src, compilation, willExecutor):
 		obj = compilation.getSrc2ObjMap()[src]
+		project = compilation.getProject()
 		command = self.__gppCmd + \
 			" -c " + \
-			src.getPathNameExt() + \
+			'"' + src.getPathNameExt() + '"' + \
 			" -o " + \
-			obj.getPathNameExt() + \
+			'"' + obj.getPathNameExt() + '"' + \
+			self.__buildHdrString(project) + \
 			""
 		self.__preCompileStrategy.onPreCompile(obj)
 		willExecutor.execute(command)
@@ -24,12 +27,18 @@ class GPPCompiler(BaseCompiler):
 		objStr = ""
 		for src in project.getSourceItems():
 			obj = compilation.getSrc2ObjMap()[src]
-			objStr += " " + obj.getPathNameExt()
+			objStr += " \"" + obj.getPathNameExt() + '"'
 		command = self.__gppCmd + \
 			objStr + \
 			" -o " + \
-			goalFSItem.getPathNameExt() + \
+			'"' + goalFSItem.getPathNameExt() + '"' + \
 			""
 		self.__preCompileStrategy.onPreLink(goalFSItem)
 		willExecutor.execute(command)
-			
+
+	def __buildHdrString(self, project):
+		allhdrs = project.getHdrFolders() + project.getExportHdrFolders()
+		result = " "
+		for hdr in allhdrs:
+			result += ' -I"' + os.path.join(project.getRoot(), hdr) + '"'
+		return result

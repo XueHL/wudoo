@@ -30,11 +30,7 @@ Structure.\
 		self.__filter = sourceFilter
 
 	def addSrcFolders(self, srcFolder):
-		srcFolder = srcFolder.split("\n")
-		while len(srcFolder) > 0 and len(srcFolder[0]) == 0:
-			srcFolder= srcFolder[1:]
-		while len(srcFolder) > 0 and len(srcFolder[len(srcFolder) - 1]) == 0:
-			srcFolder= srcFolder[:-1]
+		srcFolder = Project.splitSrcDescr(srcFolder)
 		self.__sourceFolders.extend(srcFolder)
 	
 	def getSrcFolders(self):
@@ -58,4 +54,11 @@ Structure.\
 				curPr = os.path.join(cur, sub)
 				self.__recFS(srcFold, curPr);
 				
-				
+	def __splitSrcDescr(descr):
+		descr = descr.split("\n")
+		while len(descr) > 0 and len(descr[0]) == 0:
+			descr= descr[1:]
+		while len(descr) > 0 and len(descr[len(descr) - 1]) == 0:
+			descr= descr[:-1]
+		return descr
+	splitSrcDescr = staticmethod(__splitSrcDescr)
