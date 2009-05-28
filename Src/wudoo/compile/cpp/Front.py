@@ -8,8 +8,8 @@ from wudoo.SystemWillExecutor import SystemWillExecutor
 Project = CompileCPPProject
 DefaultBuildSettings = DefaultCPPBuildSettings
 
-def DefaultCPPCompilation(project):
-	compilation = CPPCompilation(project) 
+def DefaultCPPCompilation(project, objRoot = None, binDestFSItem = None):
+	compilation = CPPCompilation(project, objRoot = objRoot, binDestFSItem = binDestFSItem) 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
