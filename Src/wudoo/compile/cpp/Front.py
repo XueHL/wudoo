@@ -13,8 +13,9 @@ def DefaultCPPCompilation(project, objRoot = None, binDestFSItem = None):
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
-def wdefaultBuild(project):
+def wdefaultBuild(project, settings = DefaultCPPBuildSettings()):
 	compilation = DefaultCPPCompilation(project)
+	settings.fillCompilation(compilation)
 	compilation.compile(SystemWillExecutor())
 	writeCompilation(compilation)
 #	compilation.setGoal(settings.getGoal())
