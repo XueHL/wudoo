@@ -1,10 +1,11 @@
 import pickle
 from wudoo.compile.cpp.Front import *
-from wudoo.FSItem import FSItem
+
+MDL_FILE = moduleFile2basePath(__file__)
 
 project = Project(name = "BuildEasy")
 
-project.setRoot(os.path.join("..", ".."), moduleFile2basePath(__file__))
+project.setRoot(os.path.join("..", ".."), MDL_FILE)
 project.addSrcFolders(
 """
 Src
@@ -24,8 +25,7 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	objRoot = os.path.normpath(os.path.join(__file__, "..", "Ched-Out"))
-	binDestFSItem = FSItem(os.path.join(__file__, "..", "Ched-Out"), "ched-bin.exe")
-	compilation = DefaultCPPCompilation(project, objRoot = objRoot, binDestFSItem = binDestFSItem)
-	compilation.compile(SystemWillExecutor())
-
+	settings = DefaultBuildSettings()
+	settings.setObjRoot(os.path.join("Ched-Out", "Obj"))
+	settings.setExeFile(os.path.join("Ched-Out", "Bin", "ched-bin.exe"))
+	wdefaultBuild(project, settings)
