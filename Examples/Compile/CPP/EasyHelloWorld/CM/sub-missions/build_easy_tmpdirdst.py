@@ -23,9 +23,12 @@ def getProject():
 
 ### ### ### ### ### ### ### ### ### ### 
 if (__name__ == "__main__"):
+	import tempfile
+	tmpDir = tempfile.mkdtemp()
+	print tmpDir
 	import os
 	project = getProject()
 	settings = DefaultBuildSettings()
-	settings.setObjRoot(os.path.join(MDL_FILE, "Ched-Out", "Obj"))
-	settings.setExeFile(os.path.join(MDL_FILE, "Ched-Out", "Bin", "ched-bin.exe"))
+	settings.setObjRoot(os.path.join(tmpDir, "Ched-Out", "Obj"))
+	settings.setExeFile(os.path.join(tmpDir, "Ched-Out", "Bin", "ched-bin.exe"))
 	wdefaultBuild(project, settings)
