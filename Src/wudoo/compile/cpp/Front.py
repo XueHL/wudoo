@@ -1,9 +1,11 @@
-import os
+import os, sys
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.DefaultCPPBuildSettings import DefaultCPPBuildSettings
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.SystemWillExecutor import SystemWillExecutor
+
+DEPENT_MODULE_PATH_STORRAGE = {}
 
 Project = CompileCPPProject
 DefaultBuildSettings = DefaultCPPBuildSettings
@@ -28,3 +30,10 @@ def writeCompilation(compilation):
 
 def moduleFile2basePath(modFile):
 	return os.path.abspath(os.path.normpath(os.path.join(modFile, "..")))
+
+def addDependProjDir(dppdPath):
+	dppdPath = os.path.normpath(dppdPath)
+	print dppdPath
+	if not DEPENT_MODULE_PATH_STORRAGE.has_key(dppdPath):
+		DEPENT_MODULE_PATH_STORRAGE[dppdPath] = dppdPath
+		sys.path.append(dppdPath)

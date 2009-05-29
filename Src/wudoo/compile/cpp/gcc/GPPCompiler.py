@@ -37,8 +37,19 @@ class GPPCompiler(BaseCompiler):
 		willExecutor.execute(command)
 
 	def __buildHdrString(self, project):
-		allhdrs = project.getHdrFolders() + project.getExportHdrFolders()
+		allhdrs = []
+		self.__addHdrFolders(project.getHdrFolders(), project, allhdrs)
+		self.__dfsAddExportHderFromDependences(project, allhdrs)
 		result = " "
 		for hdr in allhdrs:
-			result += ' -I"' + os.path.join(project.getRoot(), hdr) + '"'
+			result += ' -I"' + hdr + '"'
 		return result
+
+	def __dfsAddExportHderFromDependences(self, project, allhdrs):
+		self.__addHdrFolders(project.getExportHdrFolders(), project, allhdrs)
+		for depprj in project.getDependenceProjects():
+			self.__dfsAddExportHderFromDependences(depprj, allhdrs)
+
+	def __addHdrFolders(self, folderList, project, dest):
+		for hdr in folderList:
+			dest.append(os.path.join(project.getRoot(), hdr))
