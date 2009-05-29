@@ -24,7 +24,7 @@ class BaseCompilation(ICompilation):
         self.__project.findSources()
         self.__buildObjMap()
         self.__compileObjs(willExecutor)
-        self.__compileBinary(willExecutor)
+        #self.__compileBinary(willExecutor)
         
     def __buildObjMap(self):
         for src in self.__project.getSourceItems():
@@ -35,9 +35,11 @@ class BaseCompilation(ICompilation):
         for src in self.__project.getSourceItems():
             self.__compiler.compile(src, self, willExecutor)
             
-    def __compileBinary(self, willExecutor):
-        self.__compiler.link(self.__project, self, willExecutor, self.__goalFSItem)
+    def buildBinary(self, willExecutor):
+        self.__compiler.buildBinary(self, willExecutor, self.__goalFSItem)
 
     def setCompiler(self, compiler):
         self.__compiler = compiler
         
+    def getCompiler(self):
+        return self.__compiler

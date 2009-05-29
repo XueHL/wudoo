@@ -8,6 +8,7 @@ class CPPCompilation(BaseCompilation):
 		BaseCompilation.__init__(self, project)
 		self.setObjRoot(objRoot)
 		self.setBinDestFSItem(binDestFSItem)
+		self.__dependenceObjects = []
 
 	def setObjRoot(self, objRoot):
 		if objRoot is None:
@@ -19,3 +20,24 @@ class CPPCompilation(BaseCompilation):
 			binDestFSItem = FSItem(self.getProject().getRoot(), os.path.join("Out", "Bin"), self.getProject().getName())
 		self.setGoalFSItem(binDestFSItem)
 
+	def resolveDependings(self, willExecutor):
+		for p in self.getProject().getDependenceProjects():
+			compilation = CPPCompilation(p)
+			compilation.setCompiler(self.getCompiler())
+			compilation.compile(willExecutor)
+			compilation.resolveDependings(willExecutor)
+			self.__dependenceObjects.extend(compilation.getAllObjectItems(addEntryPoints = False))
+
+	def getAllObjectItems(self, addEntryPoints = True):
+		result = []
+		src2ObjMap = self.getSrc2ObjMap()
+		for src in self.getProject().getSourceItems():
+			if not addEntryPoints and self.isEntryPoint(src):
+				continue
+			obj = src2ObjMap[src]
+			result.append(obj)
+		result.extend(self.__dependenceObjects)
+		return result
+
+	def isEntryPoint(self, fsItem):
+		return fsItem.getName().find("main") > -1

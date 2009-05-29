@@ -18,7 +18,10 @@ def DefaultCPPCompilation(project, objRoot = None, binDestFSItem = None):
 def wdefaultBuild(project, settings = DefaultCPPBuildSettings()):
 	compilation = DefaultCPPCompilation(project)
 	settings.fillCompilation(compilation)
-	compilation.compile(SystemWillExecutor())
+	we = SystemWillExecutor()
+	compilation.compile(we)
+	compilation.resolveDependings(we)
+	compilation.buildBinary(we)
 	writeCompilation(compilation)
 #	compilation.setGoal(settings.getGoal())
 #	compilation.setOutputDir(settings.getOutputDir())
@@ -33,7 +36,6 @@ def moduleFile2basePath(modFile):
 
 def addDependProjDir(dppdPath):
 	dppdPath = os.path.normpath(dppdPath)
-	print dppdPath
 	if not DEPENT_MODULE_PATH_STORRAGE.has_key(dppdPath):
 		DEPENT_MODULE_PATH_STORRAGE[dppdPath] = dppdPath
 		sys.path.append(dppdPath)
