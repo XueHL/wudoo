@@ -58,17 +58,18 @@ class TestCompilation(unittest.TestCase):
         we = StoreCallsWillExecutor()
         compilation.compile(we)
         we.history.sort()
-        cmd = we.history[1]
+        cmd = we.history[2]
         self.assertTrue(cmd.find("g++") > -1)
         self.assertTrue(cmd.find("-c") > -1)
         self.assertTrue(cmd.find("Main.cpp") > -1)
         self.assertTrue(cmd.find("-o") > -1)
         self.assertTrue(cmd.find("Main.o") > -1)
-        cmd = we.history[2]
+        cmd = we.history[0]
         self.assertTrue(cmd.find("g++") > -1)
         self.assertTrue(cmd.find("Hello.o") > -1)
         self.assertTrue(cmd.find("Main.o") > -1)
-        self.assertTrue(cmd.find("-o C:\Work\hello.exe") > -1)
+        #print "\n\n\t\t", cmd, "\n\n"
+        self.assertTrue(cmd.find("-o \"C:\Work\hello.exe\"") > -1)
         
     def testEasyBuildReal(self):
         project = TestCompilation.build_easy_prj.getProject()
