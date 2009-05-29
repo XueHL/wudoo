@@ -14,6 +14,7 @@ Structure.\
 		if name is None:
 			name = self.getRoot().replace("/", "_").replace("\\", "_").replace(":", "_") + ".exe"
 		self.__name = name
+		self.__dependencePrjs = []
 		
 	def getName(self):
 		return self.__name
@@ -53,6 +54,12 @@ Structure.\
 			for sub in os.listdir(curGl):
 				curPr = os.path.join(cur, sub)
 				self.__recFS(srcFold, curPr);
+
+	def addDependenceProject(self, depPrj):
+		self.__dependencePrjs.append(depPrj)
+
+	def getDependenceProjects(self):
+		return self.__dependencePrjs
 				
 	def __splitSrcDescr(descr):
 		descr = descr.split("\n")
