@@ -14,12 +14,6 @@ class BaseCompilation(ICompilation):
     def getProject(self):
         return self.__project
 
-    def setAllocateObjStrategy(self, strat):
-        self.__allocObjStrategy = strat
-
-    def setGoalFSItem(self, goalFSItem):
-        self.__goalFSItem = goalFSItem
-
     def getSrc2ObjMap(self):
         return self.__src2objMap
         
@@ -31,7 +25,7 @@ class BaseCompilation(ICompilation):
     def resolveDependings(self, willExecutor):
         for p in self.getProject().getDependenceProjects():
             compilation = self._newCompilation(p)
-            compilation.setCompiler(self.getCompiler())
+            compilation.setCompiler(self.__compiler)
             if self.__dependenceBuildRoot is not None:
                 compilation.setObjRoot(os.path.join(self.__dependenceBuildRoot, p.getName()))
             compilation.compile(willExecutor)
@@ -40,20 +34,6 @@ class BaseCompilation(ICompilation):
             
     def buildBinary(self, willExecutor):
         self.__compiler.buildBinary(self, willExecutor, self.__goalFSItem)
-
-    def setCompiler(self, compiler):
-        self.__compiler = compiler
-        
-    def getCompiler(self):
-        return self.__compiler
-
-    def setBinDestFSItem(self, binDestFSItem):
-        if binDestFSItem is None:
-            binDestFSItem = FSItem(self.getProject().getRoot(), os.path.join("Out", "Bin"), self.getProject().getName())
-        self.setGoalFSItem(binDestFSItem)
-
-    def setDependenceBuildRoot(self, dependenceBuildRoot):
-        self.__dependenceBuildRoot = dependenceBuildRoot
 
     def getAllObjectItems(self, **params):
         result = []
@@ -64,6 +44,23 @@ class BaseCompilation(ICompilation):
                 result.append(obj)
         result.extend(self.__dependenceObjects)
         return result
+
+    def setAllocateObjStrategy(self, strat):
+        self.__allocObjStrategy = strat
+
+    def setGoalFSItem(self, goalFSItem):
+        self.__goalFSItem = goalFSItem
+
+    def setCompiler(self, compiler):
+        self.__compiler = compiler
+        
+    def setBinDestFSItem(self, binDestFSItem):
+        if binDestFSItem is None:
+            binDestFSItem = FSItem(self.getProject().getRoot(), os.path.join("Out", "Bin"), self.getProject().getName())
+        self.setGoalFSItem(binDestFSItem)
+
+    def setDependenceBuildRoot(self, dependenceBuildRoot):
+        self.__dependenceBuildRoot = dependenceBuildRoot
     
     def _skipObjectItem(self, src, **params):
         return False
