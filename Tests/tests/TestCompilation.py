@@ -13,12 +13,17 @@ from wudoo.FSItem import FSItem
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
 class TestCompilation(unittest.TestCase):
-    additp = sys.path[0]
-    additp = os.path.join(additp, "..", "Examples", "Compile", "CPP", "EasyHelloWorld", "CM")
-    additp = os.path.normpath(additp)
-    sys.path.append(additp)
+    sys.path.append(
+        os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "EasyHelloWorld", "CM"))                    
+        )
     import build_easy
     build_easy_prj = build_easy
+    
+    sys.path.append(
+        os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "UseExportHeaders", "CM"))                    
+        )
+    import build_useexphdr
+    build_useexphdr_prj = build_useexphdr
     
     def testTrivialCompilation(self):
         project = TestCompilation.build_easy_prj.getProject()
@@ -80,18 +85,31 @@ class TestCompilation(unittest.TestCase):
         compilation.setGoalFSItem(FSItem(tmpDir, "Bin", project.getName() + ".exe"));
         strat = AllocInSpecifDirStrategy(tmpDir, ".o")
         compilation.setAllocateObjStrategy(strat)
-        compilation.compile(SystemWillExecutor())
-        compilation.resolveDependings(SystemWillExecutor())
-        compilation.buildBinary(SystemWillExecutor())
+        compilation.buildWorkFlow(SystemWillExecutor())
         project = Project(tmpDir)
-        srcFolder = TestCompilation.build_easy_prj.getProject().getSrcFolders()[0] 
-        project.addSrcFolders(srcFolder)
-        project.addSrcFolders("Bin")
+        project.addSrcFolders("\n".join(os.listdir(tmpDir)))
         project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
         project.findSources()
         objItems = project.getSourceItems()
         objPaths = [io.getPathNameExt(1) for io in objItems]
         objPaths.sort()
         self.assertEquals(["Bin\\BuildEasy.exe", "Src\\Hello.o", "Src\\Main.o"], objPaths)
+        
+    def testBuildDepend(self):
+        project = TestCompilation.build_useexphdr_prj.getProject()
+        compilation = DefaultCPPCompilation(project)
+        tmpDir = tempfile.mkdtemp()
+        compilation.setGoalFSItem(FSItem(tmpDir, "Bin", project.getName() + ".exe"));
+        compilation.setObjRoot(os.path.join(tmpDir, "Obj"))
+        compilation.setDependenceBuildRoot(os.path.join(tmpDir, "Outer", "Obj"))
+        compilation.buildWorkFlow(SystemWillExecutor())
+        project = Project(tmpDir)
+        project.addSrcFolders("\n".join(os.listdir(tmpDir)))
+        project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
+        project.findSources()
+        objItems = project.getSourceItems()
+        objPaths = [io.getPathNameExt(1) for io in objItems]
+        objPaths.sort()
+        self.assertEquals(["Bin\\UseExportHdr.exe", "Obj\\Src\\main.o", "Outer\\Obj\\ExportHdr\\SrcMain\\main.o", "Outer\\Obj\\ExportHdr\\Src\\ExportHello.o"], objPaths)
         
         

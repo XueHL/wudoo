@@ -35,6 +35,11 @@ class BaseCompilation(ICompilation):
     def buildBinary(self, willExecutor):
         self.__compiler.buildBinary(self, willExecutor, self.__goalFSItem)
 
+    def buildWorkFlow(self, willExecutor):
+        self.compile(willExecutor)
+        self.resolveDependings(willExecutor)
+        self.buildBinary(willExecutor)
+        
     def getAllObjectItems(self, **params):
         result = []
         src2ObjMap = self.getSrc2ObjMap()
