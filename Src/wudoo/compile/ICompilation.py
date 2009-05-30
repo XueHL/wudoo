@@ -1,4 +1,7 @@
 class ICompilation:
+    def buildWorkFlow(self, willExecutor):
+        raise NotImplementedError()
+    
     def compile(self, willExecutor):
         raise NotImplementedError()
     
