@@ -14,3 +14,6 @@ class ICompilation:
     def setCompiler(self, compiler):
         raise NotImplementedError()
     
+    def setObjRoot(self, objRoot):
+        raise NotImplementedError()
+    
