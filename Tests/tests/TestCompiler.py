@@ -15,6 +15,8 @@ class TestCompiler(unittest.TestCase):
 		return []
 	def getExportHdrFolders(self):
 		return []
+	def getDependenceProjects(self):
+		return []
 
 	def testProjectRootPathSet(self):
 		we = StoreCallsWillExecutor()

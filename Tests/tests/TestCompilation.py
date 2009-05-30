@@ -57,6 +57,8 @@ class TestCompilation(unittest.TestCase):
         compilation.setCompiler(GPPCompiler())
         we = StoreCallsWillExecutor()
         compilation.compile(we)
+        compilation.resolveDependings(we)
+        compilation.buildBinary(we)
         we.history.sort()
         cmd = we.history[2]
         self.assertTrue(cmd.find("g++") > -1)
@@ -79,6 +81,8 @@ class TestCompilation(unittest.TestCase):
         strat = AllocInSpecifDirStrategy(tmpDir, ".o")
         compilation.setAllocateObjStrategy(strat)
         compilation.compile(SystemWillExecutor())
+        compilation.resolveDependings(SystemWillExecutor())
+        compilation.buildBinary(SystemWillExecutor())
         project = Project(tmpDir)
         srcFolder = TestCompilation.build_easy_prj.getProject().getSrcFolders()[0] 
         project.addSrcFolders(srcFolder)
