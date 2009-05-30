@@ -4,10 +4,11 @@ from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
 from wudoo.FSItem import FSItem
 
 class CPPCompilation(BaseCompilation):
-	def __init__(self, project, objRoot = None, binDestFSItem = None):
+	def __init__(self, project, objRoot = None, binDestFSItem = None, dependenceBuildRoot = None):
 		BaseCompilation.__init__(self, project)
 		self.setObjRoot(objRoot)
 		self.setBinDestFSItem(binDestFSItem)
+		self.setDependenceBuildRoot(dependenceBuildRoot)
 		self.__dependenceObjects = []
 
 	def setObjRoot(self, objRoot):
@@ -20,10 +21,15 @@ class CPPCompilation(BaseCompilation):
 			binDestFSItem = FSItem(self.getProject().getRoot(), os.path.join("Out", "Bin"), self.getProject().getName())
 		self.setGoalFSItem(binDestFSItem)
 
+	def setDependenceBuildRoot(self, dependenceBuildRoot):
+		self.__dependenceBuildRoot = dependenceBuildRoot
+
 	def resolveDependings(self, willExecutor):
 		for p in self.getProject().getDependenceProjects():
 			compilation = CPPCompilation(p)
 			compilation.setCompiler(self.getCompiler())
+			if self.__dependenceBuildRoot is not None:
+				compilation.setObjRoot(os.path.join(self.__dependenceBuildRoot, p.getName()))
 			compilation.compile(willExecutor)
 			compilation.resolveDependings(willExecutor)
 			self.__dependenceObjects.extend(compilation.getAllObjectItems(addEntryPoints = False))

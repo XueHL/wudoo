@@ -30,4 +30,6 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	wdefaultBuild(project)
+	settings = DefaultBuildSettings()
+	settings.setDependenceBuildRoot(os.path.join(MDL_FILE, "..", "Outer", "Obj"))
+	wdefaultBuild(project, settings)
