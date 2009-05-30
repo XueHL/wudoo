@@ -1,11 +1,17 @@
 class ICompilation:
     def compile(self, willExecutor):
         raise NotImplementedError()
-
-    def getProject(self):
+    
+    def resolveDependings(self, willExecutor):
         raise NotImplementedError()
 
-    def setAllocateObjStrategy(self, strat):
+    def buildBinary(self, willExecutor):
+        raise NotImplementedError()
+
+    def getAllObjectItems(self, **params):
+        raise NotImplementedError()
+
+    def getProject(self):
         raise NotImplementedError()
 
     def getSrc2ObjMap(self):
@@ -15,5 +21,8 @@ class ICompilation:
         raise NotImplementedError()
     
     def setObjRoot(self, objRoot):
+        raise NotImplementedError()
+
+    def setAllocateObjStrategy(self, strat):
         raise NotImplementedError()
     
