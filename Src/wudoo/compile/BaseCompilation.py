@@ -9,7 +9,7 @@ class BaseCompilation(ICompilation):
         self.__allocObjStrategy = None
         self.__src2objMap = {}
         self.__compiler = None
-        self.__dependenceObjects = []
+        #self.__dependenceObjects = []
         
     def getProject(self):
         return self.__project
@@ -24,14 +24,7 @@ class BaseCompilation(ICompilation):
 
     def resolveDependings(self, willExecutor):
         for dep in self.getProject().getDependences():
-            p = dep.getProject()        
-            compilation = self._newCompilation(p)
-            compilation.setCompiler(self.__compiler)
-            if self.__dependenceBuildRoot is not None:
-                compilation.setObjRoot(os.path.join(self.__dependenceBuildRoot, p.getName()))
-            compilation.compile(willExecutor)
-            compilation.resolveDependings(willExecutor)
-            self.__dependenceObjects.extend(compilation.getAllObjectItems(addEntryPoints = False))
+            dep.resolve(self, willExecutor)
             
     def buildBinary(self, willExecutor):
         self.__compiler.buildBinary(self, willExecutor, self.__goalFSItem)
@@ -48,8 +41,12 @@ class BaseCompilation(ICompilation):
             if not self._skipObjectItem(src, **params):
                 obj = src2ObjMap[src]
                 result.append(obj)
-        result.extend(self.__dependenceObjects)
+	for dep in self.getProject().getDependences():
+		result.extend(dep.getObjectItems())
         return result
+
+    def getCompiler(self):
+    	return self.__compiler
 
     def setAllocateObjStrategy(self, strat):
         self.__allocObjStrategy = strat
@@ -67,7 +64,10 @@ class BaseCompilation(ICompilation):
 
     def setDependenceBuildRoot(self, dependenceBuildRoot):
         self.__dependenceBuildRoot = dependenceBuildRoot
-    
+
+    def getDependenceBuildRoot(self):
+        return self.__dependenceBuildRoot
+
     def _skipObjectItem(self, src, **params):
         return False
         

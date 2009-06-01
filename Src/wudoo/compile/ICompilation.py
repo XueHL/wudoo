@@ -29,3 +29,5 @@ class ICompilation:
     def setAllocateObjStrategy(self, strat):
         raise NotImplementedError()
     
+    def getCompiler(self):
+        raise NotImplementedError()
