@@ -5,6 +5,7 @@ from wudoo.compile.cpp.DefaultCPPBuildSettings import DefaultCPPBuildSettings
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.dependency.StaticLibDependency import StaticLibDependency
+from wudoo.compile.cpp.dependency.CompiledObjsDependency import CompiledObjsDependency
 
 from wudoo.SystemWillExecutor import SystemWillExecutor
 
@@ -42,6 +43,3 @@ def addDependProjDir(dppdPath):
 	if not DEPENT_MODULE_PATH_STORRAGE.has_key(dppdPath):
 		DEPENT_MODULE_PATH_STORRAGE[dppdPath] = dppdPath
 		sys.path.append(dppdPath)
-
-class LinkTypes:
-	STATIC_LIB = StaticLibDependency()

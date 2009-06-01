@@ -15,7 +15,7 @@ Src
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(exportHdrPrj, linkType = LinkTypes.STATIC_LIB)
+project.addDependenceProject(StaticLibDependency(exportHdrPrj))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
