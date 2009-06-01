@@ -16,7 +16,7 @@ class CPPCompilation(BaseCompilation):
 		if objRoot is None:
 			objRoot = os.path.join(self.getProject().getRoot(), "Out", "Obj")
 		self.setAllocateObjStrategy(AllocInSpecifDirStrategy(objRoot, ".o"))
-    
+	
 	def _skipObjectItem(self, src, **params):
 		addEntryPoints = "addEntryPoints"
 		if not params.has_key(addEntryPoints):

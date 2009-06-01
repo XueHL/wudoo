@@ -1,3 +1,3 @@
 class IFilter:
-    def accepts(self, filePath):
-        raise NotImplementedError()
+	def accepts(self, filePath):
+		raise NotImplementedError()
