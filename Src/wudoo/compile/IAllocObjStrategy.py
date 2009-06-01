@@ -1,4 +1,4 @@
 class IAllocObjStrategy:
-    def allocate(self, fsItem):
-        raise NotImplementedError()
-    
+	def allocate(self, fsItem):
+		raise NotImplementedError()
+	

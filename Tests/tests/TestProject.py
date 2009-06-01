@@ -13,7 +13,7 @@ class TestProject(unittest.TestCase):
 		srcItems = [fsi.getPathNameExt(1) for fsi in srcItems]
 		srcItems.sort()
 		self.assertEquals(["Src\\Hello.cpp", "Src\\Main.cpp"], srcItems)
-    	
+		
 	def testProjectRootPathSet(self):
 		project = Project()
 		project.setRoot("tests/pam/param/..")
@@ -37,7 +37,7 @@ class TestProject(unittest.TestCase):
 Src
 Hdr
 """
-            )
+			)
 		self.assertEquals(["Src", "Hdr"], project.getSrcFolders())
 
-    	
+		
