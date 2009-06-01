@@ -1,2 +1,3 @@
 class IDependency:
-	pass
+	def getProject(self):
+		raise NotImplementedError()

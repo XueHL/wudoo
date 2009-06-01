@@ -1,4 +1,5 @@
-from wudoo.compile.dependency.IDependency import IDependency
+from wudoo.compile.dependency.BaseDependency import BaseDependency
 
-class CompiledObjsDependency(IDependency):
-	pass
+class CompiledObjsDependency(BaseDependency):
+	def __init__(self, project):
+		BaseDependency.__init__(self, project)
