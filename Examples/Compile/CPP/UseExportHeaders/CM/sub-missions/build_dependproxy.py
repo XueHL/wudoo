@@ -1,28 +1,21 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "SLib-UseExportHdr")
+project = Project(name = "UseExportHdr-dependProxy")
 
 MDL_FILE = moduleFile2basePath(__file__)
 project.setRoot(os.path.join("..", ".."), MDL_FILE)
 project.addSrcFolders(
 """
 Src
-CM/sub-missions/sub-src/slib
-"""
-)
-
-project.addExportHdrFolders(
-"""
-CM/sub-missions/sub-src/slib
+CM/sub-missions/sub-src/proxy
 """
 )
 
 ### ### Dependings  ### ###
-addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
-import build_exphdr
-exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(StaticLibDependency(exportHdrPrj))
+import build_useexphdr_asstatlib
+statLibPrj = build_useexphdr_asstatlib.getProject()
+project.addDependenceProject(StaticLibDependency(statLibPrj))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)

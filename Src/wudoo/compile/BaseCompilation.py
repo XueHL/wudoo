@@ -41,12 +41,12 @@ class BaseCompilation(ICompilation):
             if not self._skipObjectItem(src, **params):
                 obj = src2ObjMap[src]
                 result.append(obj)
-	for dep in self.getProject().getDependences():
-		result.extend(dep.getObjectItems())
+        for dep in self.getProject().getDependences():
+            result.extend(dep.getObjectItems())
         return result
 
     def getCompiler(self):
-    	return self.__compiler
+        return self.__compiler
 
     def setAllocateObjStrategy(self, strat):
         self.__allocObjStrategy = strat

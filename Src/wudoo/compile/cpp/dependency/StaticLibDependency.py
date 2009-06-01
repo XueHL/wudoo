@@ -15,4 +15,7 @@ class StaticLibDependency(BaseDependency):
 		compilation.getCompiler().archive(self.getProject(), compilation, willExecutor, self.__staticLibFSItem)
 
 	def getObjectItems(self):
-		return [self.__staticLibFSItem]		
+		result = []
+		if self.__staticLibFSItem is not None:
+			result.append(self.__staticLibFSItem)
+		return result		
