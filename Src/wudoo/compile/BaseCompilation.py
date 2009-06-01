@@ -23,7 +23,7 @@ class BaseCompilation(ICompilation):
         self.__compileObjs(willExecutor)
 
     def resolveDependings(self, willExecutor):
-        for p in self.getProject().getDependenceProjects():
+        for p in self.getProject().getDependences():
             compilation = self._newCompilation(p)
             compilation.setCompiler(self.__compiler)
             if self.__dependenceBuildRoot is not None:

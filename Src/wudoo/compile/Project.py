@@ -1,6 +1,7 @@
 import os, sys
 from wudoo.compile import SourceFilterColl
 from wudoo.FSItem import FSItem
+from wudoo.compile.cpp.dependency.CompiledObjsDependency import CompiledObjsDependency
 
 class Project:
 	"""\
@@ -14,7 +15,7 @@ Structure.\
 		if name is None:
 			name = self.getRoot().replace("/", "_").replace("\\", "_").replace(":", "_") + ".exe"
 		self.__name = name
-		self.__dependencePrjs = []
+		self.__dependences = []
 		
 	def getName(self):
 		return self.__name
@@ -55,11 +56,11 @@ Structure.\
 				curPr = os.path.join(cur, sub)
 				self.__recFS(srcFold, curPr);
 
-	def addDependenceProject(self, depPrj):
-		self.__dependencePrjs.append(depPrj)
+	def addDependenceProject(self, dependency):
+		self.__dependences.append(dependency)
 
-	def getDependenceProjects(self):
-		return self.__dependencePrjs
+	def getDependences(self):
+		return self.__dependences
 				
 	def __splitSrcDescr(descr):
 		descr = descr.split("\n")

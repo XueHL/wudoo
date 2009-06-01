@@ -46,7 +46,7 @@ class GPPCompiler(BaseCompiler):
 
 	def __dfsAddExportHderFromDependences(self, project, allhdrs):
 		self.__addHdrFolders(project.getExportHdrFolders(), project, allhdrs)
-		for depprj in project.getDependenceProjects():
+		for depprj in project.getDependences():
 			self.__dfsAddExportHderFromDependences(depprj, allhdrs)
 
 	def __addHdrFolders(self, folderList, project, dest):
