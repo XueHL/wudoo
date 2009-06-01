@@ -68,5 +68,11 @@ Structure.\
 			descr= descr[1:]
 		while len(descr) > 0 and len(descr[len(descr) - 1]) == 0:
 			descr= descr[:-1]
-		return descr
+		result = []
+		for s in descr:
+			s = os.path.join(*s.split("/"))
+			s = os.path.join(*s.split("\\"))
+			if not s.startswith("#"):
+				result.append(s)
+		return result
 	splitSrcDescr = staticmethod(__splitSrcDescr)
