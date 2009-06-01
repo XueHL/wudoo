@@ -3,11 +3,13 @@ from wudoo.compile.BaseCompiler import BaseCompiler
 from wudoo.compile.CreateDestOnPreCompile import CreateDestOnPreCompile
 
 class GPPCompiler(BaseCompiler):
-	GPP_Compiler_CMD = "g++"
+	GPP_COMPILER_CMD = "g++"
+	GPP_ARCHIVE_CMD = "ar"
 
 	def __init__(self, preCompileStrategy = CreateDestOnPreCompile()):
 		BaseCompiler.__init__(self)
-		self.__gppCmd = GPPCompiler.GPP_Compiler_CMD
+		self.__gppCmd = GPPCompiler.GPP_COMPILER_CMD
+		self.__arCmd = GPPCompiler.GPP_ARCHIVE_CMD
 		self.__preCompileStrategy = preCompileStrategy
 
 	def compile(self, src, compilation, willExecutor):
@@ -31,6 +33,18 @@ class GPPCompiler(BaseCompiler):
 			objStr + \
 			" -o " + \
 			'"' + goalFSItem.getPathNameExt() + '"' + \
+			""
+		self.__preCompileStrategy.onPreLink(goalFSItem)
+		willExecutor.execute(command)
+
+	def archive(self, project, compilation, willExecutor, goalFSItem):
+		objStr = ""
+		for obj in compilation.getAllObjectItems(addEntryPoints = False):
+			objStr += " \"" + obj.getPathNameExt() + '"'
+		command = self.__arCmd + \
+			" q " + \
+			'"' + goalFSItem.getPathNameExt() + '"' + \
+			objStr + \
 			""
 		self.__preCompileStrategy.onPreLink(goalFSItem)
 		willExecutor.execute(command)
