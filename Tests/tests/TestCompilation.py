@@ -75,7 +75,6 @@ class TestCompilation(unittest.TestCase):
         self.assertTrue(cmd.find("g++") > -1)
         self.assertTrue(cmd.find("Hello.o") > -1)
         self.assertTrue(cmd.find("Main.o") > -1)
-        #print "\n\n\t\t", cmd, "\n\n"
         self.assertTrue(cmd.find("-o \"C:\Work\hello.exe\"") > -1)
         
     def testEasyBuildReal(self):
