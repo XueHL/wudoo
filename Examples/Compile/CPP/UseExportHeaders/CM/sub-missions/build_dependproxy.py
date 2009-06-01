@@ -7,7 +7,7 @@ MDL_FILE = moduleFile2basePath(__file__)
 project.setRoot(os.path.join("..", ".."), MDL_FILE)
 project.addSrcFolders(
 """
-Src
+#Src
 CM/sub-missions/sub-src/proxy
 """
 )
@@ -16,6 +16,11 @@ CM/sub-missions/sub-src/proxy
 import build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
 project.addDependenceProject(StaticLibDependency(statLibPrj))
+
+addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
+import build_exphdr
+exportHdrPrj = build_exphdr.getProject()
+project.addDependenceProject(StaticLibDependency(exportHdrPrj))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
