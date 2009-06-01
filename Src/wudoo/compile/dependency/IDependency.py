@@ -1,0 +1,2 @@
+class IDependency:
+	pass

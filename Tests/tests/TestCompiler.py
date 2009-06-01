@@ -15,7 +15,7 @@ class TestCompiler(unittest.TestCase):
 		return []
 	def getExportHdrFolders(self):
 		return []
-	def getDependenceProjects(self):
+	def getDependences(self):
 		return []
 
 	def testProjectRootPathSet(self):
