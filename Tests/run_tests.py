@@ -11,11 +11,13 @@ import tests.compile.TestProject
 import tests.compile.TestItemsWork
 import tests.compile.TestCompilation
 import tests.compile.TestCompiler
+import tests.compile.examples.TestEasyExamples
 
 testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestItemsWork),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompilation),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompiler),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestEasyExamples),\
 	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)
