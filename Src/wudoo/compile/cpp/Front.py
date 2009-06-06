@@ -23,6 +23,11 @@ def nopSetupCompilation(compilation):
 def getCompilationGoalPath(compilation):
 	return compilation.getGoalFSItem().getPathNameExt()
 
+def wsetupDefaultPathsFromRoot(compilation, root):
+	compilation.setObjRoot(os.path.join(root, "Obj"))
+	compilation.setBinDestFSItem(os.path.join(root, "Bin", compilation.getProject().getName()))
+	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
+	
 def wdefaultBuild(project, setupCompilationCallback = nopSetupCompilation):
 	compilation = DefaultCPPCompilation(project)
 	setupCompilationCallback(compilation)

@@ -70,6 +70,8 @@ class BaseCompilation(ICompilation):
 		self.setGoalFSItem(binDestFSItem)
 
 	def setDependenceBuildRoot(self, dependenceBuildRoot):
+		if dependenceBuildRoot is None:
+			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
 		self.__dependenceBuildRoot = dependenceBuildRoot
 
 	def getDependenceBuildRoot(self):

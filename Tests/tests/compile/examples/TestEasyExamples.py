@@ -19,6 +19,12 @@ class TestEasyExamples(unittest.TestCase):
 	import build_useexphdr
 	build_useexphdr_prj = build_useexphdr
 	
+	sys.path.append(
+		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "UseExportHeaders", "CM", "sub-missions"))					
+		)
+	import build_dependproxy_1 as build_dependproxy
+	build_dependproxy_prj = build_dependproxy
+	
 	def testCompile(self):
 		from tests.compile.TestCompilation import TestCompilation
 		project = TestCompilation.build_easy_prj.getProject()
@@ -79,3 +85,23 @@ class TestEasyExamples(unittest.TestCase):
 		objPaths = [io.getPathNameExt(1) for io in objItems]
 		objPaths.sort()
 		self.assertEquals(["Bin\\UseExportHdr.exe", "Obj\\Src\\main.o", "Outer\\Obj\\ExportHdr\\SrcMain\\main.o", "Outer\\Obj\\ExportHdr\\Src\\ExportHello.o"], objPaths)
+
+	def testProxyStatlibEquilibristic(self):
+		project = TestEasyExamples.build_dependproxy_prj.getProject()
+		tmpDir = tempfile.mkdtemp()
+		from wudoo.compile.cpp.Front import wdefaultBuild, wsetupDefaultPathsFromRoot  
+		def setupTmpdirCallback(compilation):
+			wsetupDefaultPathsFromRoot(compilation, tmpDir)
+		wdefaultBuild(project, setupTmpdirCallback)
+	
+		project = Project(tmpDir)
+		project.addSrcFolders("\n".join(os.listdir(tmpDir)))
+		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
+		project.findSources()
+		objItems = project.getSourceItems()
+		objPaths = [io.getPathNameExt(1) for io in objItems]
+		objPaths.sort()
+		self.assertEquals(["Bin\\UseExportHdr-dependProxy.exe", "Obj\\CM\\sub-missions\\sub-src\\proxy\\main.o", "Outer\\ExportHdr\\SrcMain\\main.o", "Outer\\ExportHdr\\Src\\ExportHello.o", "Outer\\SLib-UseExportHdr\\CM\\sub-missions\\sub-src\\slib\\foo.o", "Outer\\SLib-UseExportHdr\\Src\\main.o"], 
+			objPaths
+			)
+
