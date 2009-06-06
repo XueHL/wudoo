@@ -10,6 +10,7 @@ class BaseCompilation(ICompilation):
 		self.__src2objMap = {}
 		self.__compiler = None
 		#self.__dependenceObjects = []
+		self.__dependenceBuildRoot = None
 		
 	def getProject(self):
 		return self.__project
@@ -52,7 +53,13 @@ class BaseCompilation(ICompilation):
 		self.__allocObjStrategy = strat
 
 	def setGoalFSItem(self, goalFSItem):
+		if isinstance(goalFSItem, str):
+			goalFSItem = os.path.abspath(goalFSItem)
+			goalFSItem = FSItem(*os.path.split(goalFSItem))
 		self.__goalFSItem = goalFSItem
+
+	def getGoalFSItem(self):
+		return self.__goalFSItem
 
 	def setCompiler(self, compiler):
 		self.__compiler = compiler

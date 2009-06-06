@@ -1,7 +1,6 @@
 import os, sys
 
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
-from wudoo.compile.cpp.DefaultCPPBuildSettings import DefaultCPPBuildSettings
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.dependency.StaticLibDependency import StaticLibDependency
@@ -12,16 +11,21 @@ from wudoo.SystemWillExecutor import SystemWillExecutor
 DEPENT_MODULE_PATH_STORRAGE = {}
 
 Project = CompileCPPProject
-DefaultBuildSettings = DefaultCPPBuildSettings
 
 def DefaultCPPCompilation(project, objRoot = None, binDestFSItem = None):
 	compilation = CPPCompilation(project, objRoot = objRoot, binDestFSItem = binDestFSItem) 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
-def wdefaultBuild(project, settings = DefaultCPPBuildSettings()):
+def nopSetupCompilation(compilation):
+	pass
+
+def getCompilationGoalPath(compilation):
+	return compilation.getGoalFSItem().getPathNameExt()
+
+def wdefaultBuild(project, setupCompilationCallback = nopSetupCompilation):
 	compilation = DefaultCPPCompilation(project)
-	settings.fillCompilation(compilation)
+	setupCompilationCallback(compilation)
 	we = SystemWillExecutor()
 	compilation.compile(we)
 	compilation.resolveDependings(we)
