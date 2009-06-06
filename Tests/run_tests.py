@@ -7,15 +7,15 @@ srcRoot = os.path.join(trunkPath, "Src")
 sys.path.append(srcRoot)
 sys.path.append(os.path.join(trunkPath, "Tests"))
 
-import tests.TestProject
-import tests.TestItemsWork
-import tests.TestCompilation
-import tests.TestCompiler
+import tests.compile.TestProject
+import tests.compile.TestItemsWork
+import tests.compile.TestCompilation
+import tests.compile.TestCompiler
 
 testsuit = unittest.TestSuite([\
-	unittest.TestLoader().loadTestsFromModule(tests.TestProject),\
-	unittest.TestLoader().loadTestsFromModule(tests.TestItemsWork),\
-	unittest.TestLoader().loadTestsFromModule(tests.TestCompilation),\
-	unittest.TestLoader().loadTestsFromModule(tests.TestCompiler),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.TestItemsWork),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompilation),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompiler),\
 	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)
