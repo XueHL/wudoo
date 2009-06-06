@@ -13,7 +13,7 @@ CM/sub-missions/sub-src/proxy
 )
 
 ### ### Dependings  ### ###
-import build_useexphdr_asstatlib
+import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
 project.addDependenceProject(StaticLibDependency(statLibPrj))
 
@@ -35,6 +35,11 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	settings = DefaultBuildSettings()
-	settings.setDependenceBuildRoot(os.path.join(MDL_FILE, "..", "..", "Outer", "Obj"))
-	wdefaultBuild(project, settings)
+	def setupSettCallback(compilation):
+		compilation.setObjRoot(os.path.join("Submission-out-1", "Obj"))
+		compilation.setGoalFSItem(os.path.join("Submission-out-1", "Bin", project.getName()))
+		exeFile = getCompilationGoalPath(compilation)
+		compilation.setDependenceBuildRoot(
+			os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
+			)
+	wdefaultBuild(project, setupSettCallback)
