@@ -28,7 +28,7 @@ if (__name__ == "__main__"):
 	print tmpDir
 	import os
 	project = getProject()
-	settings = DefaultBuildSettings()
-	settings.setObjRoot(os.path.join(tmpDir, "Ched-Out", "Obj"))
-	settings.setExeFile(os.path.join(tmpDir, "Ched-Out", "Bin", "ched-bin.exe"))
-	wdefaultBuild(project, settings)
+	def setupSettCallback(compilation):
+		compilation.setObjRoot(os.path.join(tmpDir, "Ched-Out", "Obj"))
+		compilation.setGoalFSItem(os.path.join(tmpDir, "Ched-Out", "Bin", "ched-bin.exe"))
+	wdefaultBuild(project, setupSettCallback)
