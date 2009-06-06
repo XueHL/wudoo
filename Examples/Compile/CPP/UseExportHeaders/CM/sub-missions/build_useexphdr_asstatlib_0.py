@@ -37,6 +37,12 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	settings = DefaultBuildSettings()
-	settings.setDependenceBuildRoot(os.path.join(MDL_FILE, "..", "..", "Outer", "Obj"))
-	wdefaultBuild(project, settings)
+	def setupSettCallback(compilation):
+		compilation.setObjRoot(os.path.join("Submission-out-0", "Obj"))
+		compilation.setGoalFSItem(os.path.join("Submission-out-0", "Bin", project.getName()))
+		exeFile = getCompilationGoalPath(compilation)
+		compilation.setDependenceBuildRoot(
+			os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
+			)
+	wdefaultBuild(project, setupSettCallback)
+
