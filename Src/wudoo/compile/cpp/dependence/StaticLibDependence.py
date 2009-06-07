@@ -8,11 +8,23 @@ class StaticLibDependence(BaseDependence):
 		self.__staticLibFSItem = None
 
 	def resolve(self, parentCompilation, willExecutor):
-		compilation = CompiledObjsDependence.createDependenceCompilation(self.getProject(), parentCompilation, willExecutor)
+		compilation = CompiledObjsDependence.createDependenceCompilation(
+			self.getProject(), 
+			parentCompilation, 
+			willExecutor
+			)
 		if parentCompilation.getDependenceBuildRoot() is not None:
 			depRoot = parentCompilation.getDependenceBuildRoot()
-		self.__staticLibFSItem = FSItem(depRoot, self.getProject().getName() + ".a")
-		compilation.getCompiler().archive(self.getProject(), compilation, willExecutor, self.__staticLibFSItem)
+		self.__staticLibFSItem = FSItem(
+			depRoot, 
+			self.getProject().getName() + ".a"
+			)
+		compilation.getCompiler().archive(
+			self.getProject(), 
+			compilation, 
+			willExecutor, 
+			self.__staticLibFSItem
+			)
 
 	def getObjectItems(self):
 		result = []
