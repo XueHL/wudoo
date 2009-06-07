@@ -1,6 +1,6 @@
-from wudoo.compile.dependency.IDependency import IDependency
+from wudoo.compile.dependence.IDependence import IDependence
 
-class BaseDependency(IDependency):
+class BaseDependence(IDependence):
 	def __init__(self, project, buildRoot = None):
 		self.__project = project
 		self.__buildRoot = buildRoot

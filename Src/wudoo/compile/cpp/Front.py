@@ -3,8 +3,8 @@ import os, sys
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
-from wudoo.compile.cpp.dependency.StaticLibDependency import StaticLibDependency
-from wudoo.compile.cpp.dependency.CompiledObjsDependency import CompiledObjsDependency
+from wudoo.compile.cpp.dependence.StaticLibDependence import StaticLibDependence
+from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
 
 from wudoo.SystemWillExecutor import SystemWillExecutor
 

@@ -15,12 +15,12 @@ CM/sub-missions/sub-src/proxy
 ### ### Dependings  ### ###
 import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
-project.addDependenceProject(StaticLibDependency(statLibPrj))
+project.addDependenceProject(StaticLibDependence(statLibPrj))
 
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(StaticLibDependency(exportHdrPrj))
+project.addDependenceProject(StaticLibDependence(exportHdrPrj))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)

@@ -1,14 +1,14 @@
-from wudoo.compile.cpp.dependency.CompiledObjsDependency import CompiledObjsDependency
-from wudoo.compile.dependency.BaseDependency import BaseDependency
+from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
+from wudoo.compile.dependence.BaseDependence import BaseDependence
 from wudoo.FSItem import FSItem
 
-class StaticLibDependency(BaseDependency):
+class StaticLibDependence(BaseDependence):
 	def __init__(self, project, buildRoot = None):
-		BaseDependency.__init__(self, project, buildRoot)
+		BaseDependence.__init__(self, project, buildRoot)
 		self.__staticLibFSItem = None
 
 	def resolve(self, parentCompilation, willExecutor):
-		compilation = CompiledObjsDependency.createDependencyCompilation(self.getProject(), parentCompilation, willExecutor)
+		compilation = CompiledObjsDependence.createDependenceCompilation(self.getProject(), parentCompilation, willExecutor)
 		if parentCompilation.getDependenceBuildRoot() is not None:
 			depRoot = parentCompilation.getDependenceBuildRoot()
 		self.__staticLibFSItem = FSItem(depRoot, self.getProject().getName() + ".a")
