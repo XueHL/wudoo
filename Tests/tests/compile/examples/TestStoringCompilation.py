@@ -9,6 +9,7 @@ from wudoo.SystemWillExecutor import SystemWillExecutor
 from wudoo.compile.Project import Project
 #from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
+from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
@@ -23,15 +24,15 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_user1 as usr1prj
 	
 	def testTheLibraryExample(self):
-		TheLibrary_compilations = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "StoreBuildResults", "TheLibrary", "CM", "TheLibrary.compilations"))
-		if os.path.exists(TheLibrary_compilations):
-			os.remove(TheLibrary_compilations)
-		self.assertFalse(os.path.exists(TheLibrary_compilations))
-		
 		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
 		tmp1 = os.path.join(tmpDir, "p1")
+		
+		def faikGPF(self, project):
+			return os.path.join(tmpDir, "StoreCompilationaPool.data")
+		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
+		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
 		 
 		usr0prj = TestStoringCompilation.usr0prj.getProject()
 		def setupTmpdirCallback0(compilation):
@@ -46,8 +47,6 @@ class TestStoringCompilation(unittest.TestCase):
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
 			'ar q "__TMP__\\p0\\Outer\\TheLibrary.a" "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
 			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\UseExportHdr"'
-#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User0\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-#			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "z:\\temp\\tmpxuvri_\\p1\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\UseExportHdr"'
 			], 
 			history
 			)
@@ -82,10 +81,6 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-#			'ar q "__TMP__\\p1\\Outer\\TheLibrary.a" "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
-#			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p1\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
 			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
 			], 
@@ -108,12 +103,8 @@ class TestStoringCompilation(unittest.TestCase):
 			[
 			'Bin\\UseExportHdr.exe', 
 			'Obj\\Src\\main.o', 
-#			'Outer\\TheLibrary.a', 
-#			'Outer\\TheLibrary\\Src\\NameHolder.o'
 			], 
 			objPaths
 			)
 
-		if os.path.exists(TheLibrary_compilations):
-			os.remove(TheLibrary_compilations)
-		self.assertFalse(os.path.exists(TheLibrary_compilations))
+		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = getPoolFile
