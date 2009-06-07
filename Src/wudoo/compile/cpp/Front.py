@@ -23,7 +23,9 @@ def nopSetupCompilation(compilation):
 def getCompilationGoalPath(compilation):
 	return compilation.getGoalFSItem().getPathNameExt()
 
-def wsetupDefaultPathsFromRoot(compilation, root):
+def wsetupDefaultPathsFromRoot(compilation, root = None):
+	if root is None:
+		root = os.path.join(compilation.getProject().getRoot(), "Out")
 	compilation.setObjRoot(os.path.join(root, "Obj"))
 	compilation.setBinDestFSItem(os.path.join(root, "Bin", compilation.getProject().getName()))
 	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
