@@ -30,21 +30,24 @@ def wsetupDefaultPathsFromRoot(compilation, root = None):
 	compilation.setBinDestFSItem(os.path.join(root, "Bin", compilation.getProject().getName()))
 	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
 	
-def wdefaultBuild(project, setupCompilationCallback = nopSetupCompilation):
+def wdefaultBuild(
+		project, 
+		setupCompilationCallback = nopSetupCompilation, 
+		willExecutor = SystemWillExecutor()
+		):
 	compilation = DefaultCPPCompilation(project)
 	setupCompilationCallback(compilation)
-	we = SystemWillExecutor()
-	compilation.compile(we)
-	compilation.resolveDependings(we)
-	compilation.buildBinary(we)
-	writeCompilation(compilation)
+	compilation.compile(willExecutor)
+	compilation.resolveDependings(willExecutor)
+	compilation.buildBinary(willExecutor)
+#	writeCompilation(compilation)
 #	compilation.setGoal(settings.getGoal())
 #	compilation.setOutputDir(settings.getOutputDir())
 #	compilation.setObjDir(settings.getObjDir())
 #	compilation.setBinDir(settings.getBinDir())
 	
-def writeCompilation(compilation):
-	pass
+#def writeCompilation(compilation):
+#	pass
 
 def moduleFile2basePath(modFile):
 	return os.path.abspath(os.path.normpath(os.path.join(modFile, "..")))

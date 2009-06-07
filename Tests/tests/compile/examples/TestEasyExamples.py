@@ -16,14 +16,12 @@ class TestEasyExamples(unittest.TestCase):
 	sys.path.append(
 		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "UseExportHeaders", "CM"))					
 		)
-	import build_useexphdr
-	build_useexphdr_prj = build_useexphdr
+	import build_useexphdr as build_useexphdr_prj
 	
 	sys.path.append(
 		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "UseExportHeaders", "CM", "sub-missions"))					
 		)
-	import build_dependproxy_1 as build_dependproxy
-	build_dependproxy_prj = build_dependproxy
+	import build_dependproxy_1 as build_dependproxy_prj
 	
 	def testCompile(self):
 		from tests.compile.TestCompilation import TestCompilation
