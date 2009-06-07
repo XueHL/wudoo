@@ -1,4 +1,4 @@
-class IDependency:
+class IDependence:
 	def getProject(self):
 		raise NotImplementedError()
 

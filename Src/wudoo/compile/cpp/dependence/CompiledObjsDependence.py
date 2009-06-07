@@ -1,20 +1,20 @@
 import os
 
-from wudoo.compile.dependency.BaseDependency import BaseDependency
+from wudoo.compile.dependence.BaseDependence import BaseDependence
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 
-class CompiledObjsDependency(BaseDependency):
+class CompiledObjsDependence(BaseDependence):
 	def __init__(self, project, buildRoot = None):
-		BaseDependency.__init__(self, project, buildRoot)
+		BaseDependence.__init__(self, project, buildRoot)
 
 	def resolve(self, parentCompilation, willExecutor):
-		compilation = CompiledObjsDependency.createDependencyCompilation(self.getProject(), parentCompilation, willExecutor)
+		compilation = CompiledObjsDependence.createDependenceCompilation(self.getProject(), parentCompilation, willExecutor)
 		self.setDependenceObjects(compilation.getAllObjectItems(addEntryPoints = False))
 
 	def getObjectItems(self):
 		return self.getDependenceObjects()
 
-	def __createDependencyCompilation(project, parentCompilation, willExecutor):
+	def __createDependenceCompilation(project, parentCompilation, willExecutor):
 		compilation = CPPCompilation(project)
 		compilation.setCompiler(parentCompilation.getCompiler())
 		#if self.getBuildRoot() is not None:
@@ -25,4 +25,4 @@ class CompiledObjsDependency(BaseDependency):
 		#compilation.resolveDependings(willExecutor)
 		return compilation
 
-	createDependencyCompilation = staticmethod(__createDependencyCompilation)
+	createDependenceCompilation = staticmethod(__createDependenceCompilation)

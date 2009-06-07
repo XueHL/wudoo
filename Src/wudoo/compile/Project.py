@@ -1,7 +1,7 @@
 import os, sys
 from wudoo.compile import SourceFilterColl
 from wudoo.FSItem import FSItem
-from wudoo.compile.cpp.dependency.CompiledObjsDependency import CompiledObjsDependency
+from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
 
 class Project:
 	"""\
@@ -56,8 +56,8 @@ Structure.\
 				curPr = os.path.join(cur, sub)
 				self.__recFS(srcFold, curPr);
 
-	def addDependenceProject(self, dependency):
-		self.__dependences.append(dependency)
+	def addDependenceProject(self, dependence):
+		self.__dependences.append(dependence)
 
 	def getDependences(self):
 		return self.__dependences

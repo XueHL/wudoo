@@ -22,7 +22,7 @@ CM/sub-missions/sub-src/slib
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(StaticLibDependency(exportHdrPrj))
+project.addDependenceProject(StaticLibDependence(exportHdrPrj))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
