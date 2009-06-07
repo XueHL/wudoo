@@ -1,0 +1,2 @@
+cd ..\
+erase *.pyc /S

@@ -8,7 +8,17 @@ class CompiledObjsDependence(BaseDependence):
 		BaseDependence.__init__(self, project, buildRoot)
 
 	def resolve(self, parentCompilation, willExecutor):
-		compilation = CompiledObjsDependence.createDependenceCompilation(self.getProject(), parentCompilation, willExecutor)
+#		compilation = self.getCompilationPoolStrategy().searchCompilation(
+#			self.getProject(),
+#			parentCompilation
+#			)
+		compilation = None
+		if compilation is None:
+			compilation = CompiledObjsDependence.createDependenceCompilation(
+				self.getProject(), 
+				parentCompilation, 
+				willExecutor
+				)
 		self.setDependenceObjects(compilation.getAllObjectItems(addEntryPoints = False))
 
 	def getObjectItems(self):
