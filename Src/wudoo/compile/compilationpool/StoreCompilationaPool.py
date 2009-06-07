@@ -22,12 +22,16 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 	
 	def onNewCompiled(self, compiledDependence):
 		poolFile = self.__getPoolFile(compiledDependence.getProject())
+		if poolFile is None:
+			return
 		buf = pickle.dumps(compiledDependence)
 		stream = open(poolFile, "wb")
 		stream.write(buf)
 		stream.close()
 	
 	def __getPoolFile(self, project):
+		if project.getModuleFile() is None:
+			return None
 		moduleDir = os.path.split(project.getModuleFile())[0]
 		poolFile = os.path.join(moduleDir, project.getName() + StoreCompilationaPool.POOL_EXT)
 		return poolFile
