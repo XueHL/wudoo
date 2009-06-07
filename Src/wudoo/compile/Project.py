@@ -7,7 +7,7 @@ class Project:
 	"""\
 Structure.\
 """
-	def __init__(self, rootPath = "", name = None):
+	def __init__(self, rootPath = "", name = None, moduleFile = None):
 		self.setRoot(rootPath)
 		self.__sourceFolders = []
 		self.__filter = SourceFilterColl.ACCEPT_ALL_FILTER
@@ -15,6 +15,7 @@ Structure.\
 		if name is None:
 			name = self.getRoot().replace("/", "_").replace("\\", "_").replace(":", "_") + ".exe"
 		self.__name = name
+		self.__moduleFile = moduleFile 
 		self.__dependences = []
 		
 	def getName(self):
@@ -76,3 +77,6 @@ Structure.\
 				result.append(s)
 		return result
 	splitSrcDescr = staticmethod(__splitSrcDescr)
+	
+	def getModuleFile(self):
+		return self.__moduleFile
