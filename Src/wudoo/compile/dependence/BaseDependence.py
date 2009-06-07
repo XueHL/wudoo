@@ -1,10 +1,17 @@
 from wudoo.compile.dependence.IDependence import IDependence
+from wudoo.compile.compilationpool.AlwaysRecompileStrategy import AlwaysRecompileStrategy
 
 class BaseDependence(IDependence):
-	def __init__(self, project, buildRoot = None):
+	def __init__(
+			self, 
+			project, 
+			buildRoot = None, 
+			compilationPoolStrategy = AlwaysRecompileStrategy()
+			):
 		self.__project = project
 		self.__buildRoot = buildRoot
 		self.__dependenceObjects = []
+		self.__compilationPoolStrategy = compilationPoolStrategy 
 
 	def getProject(self):
 		return self.__project
@@ -19,4 +26,7 @@ class BaseDependence(IDependence):
 		return self.__dependenceObjects
 
 	def __searchCompiled(self, parentCompilation):
-		return None
+		return self.__compilationPoolStrategy.findCompiled(
+			self.__project,
+			parentCompilation
+			)
