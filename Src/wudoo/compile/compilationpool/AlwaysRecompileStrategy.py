@@ -3,3 +3,6 @@ from wudoo.compile.compilationpool.ICompilationPoolStrategy import ICompilationP
 class AlwaysRecompileStrategy(ICompilationPoolStrategy):
 	def findCompiled(self, project, parentCompilation):
 		return None
+
+	def onNewCompiled(self, compiledDependence):
+		pass

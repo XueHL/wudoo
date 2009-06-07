@@ -15,11 +15,11 @@ import tests.compile.examples.TestEasyExamples
 import tests.compile.examples.TestStoringCompilation
 
 testsuit = unittest.TestSuite([\
-	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
-	unittest.TestLoader().loadTestsFromModule(tests.compile.TestItemsWork),\
-	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompilation),\
-	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompiler),\
-	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestEasyExamples),\
+#	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
+#	unittest.TestLoader().loadTestsFromModule(tests.compile.TestItemsWork),\
+#	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompilation),\
+#	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompiler),\
+#	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestEasyExamples),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestStoringCompilation),\
 	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)

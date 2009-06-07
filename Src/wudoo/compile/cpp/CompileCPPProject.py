@@ -2,8 +2,8 @@ from wudoo.compile.Project import Project
 from wudoo.compile import SourceFilterColl 
 
 class CompileCPPProject(Project):
-	def __init__(self, rootPath = "", name = None):
-		Project.__init__(self, rootPath, name)
+	def __init__(self, rootPath = "", name = None, moduleFile = None):
+		Project.__init__(self, rootPath, name, moduleFile)
 		self.setSourceFilter(SourceFilterColl.CPP_SOURCE_FILTER)
 		self.__hdrFolders = []
 		self.__exportHdrFolders = []

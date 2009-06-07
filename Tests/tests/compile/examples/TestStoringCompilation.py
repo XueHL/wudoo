@@ -23,6 +23,11 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_user1 as usr1prj
 	
 	def testTheLibraryExample(self):
+		TheLibrary_compilations = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "StoreBuildResults", "TheLibrary", "CM", "TheLibrary.compilations"))
+		if os.path.exists(TheLibrary_compilations):
+			os.remove(TheLibrary_compilations)
+		self.assertFalse(os.path.exists(TheLibrary_compilations))
+		
 		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
@@ -41,6 +46,8 @@ class TestStoringCompilation(unittest.TestCase):
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
 			'ar q "__TMP__\\p0\\Outer\\TheLibrary.a" "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
 			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\UseExportHdr"'
+#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User0\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
+#			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "z:\\temp\\tmpxuvri_\\p1\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\UseExportHdr"'
 			], 
 			history
 			)
@@ -75,10 +82,12 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
+#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
+#			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
+#			'ar q "__TMP__\\p1\\Outer\\TheLibrary.a" "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
+#			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p1\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-			'ar q "__TMP__\\p1\\Outer\\TheLibrary.a" "__TMP__\\p1\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
-			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p1\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
+			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
 			], 
 			history
 			)
@@ -99,8 +108,12 @@ class TestStoringCompilation(unittest.TestCase):
 			[
 			'Bin\\UseExportHdr.exe', 
 			'Obj\\Src\\main.o', 
-			'Outer\\TheLibrary.a', 
-			'Outer\\TheLibrary\\Src\\NameHolder.o'
+#			'Outer\\TheLibrary.a', 
+#			'Outer\\TheLibrary\\Src\\NameHolder.o'
 			], 
 			objPaths
 			)
+
+		if os.path.exists(TheLibrary_compilations):
+			os.remove(TheLibrary_compilations)
+		self.assertFalse(os.path.exists(TheLibrary_compilations))

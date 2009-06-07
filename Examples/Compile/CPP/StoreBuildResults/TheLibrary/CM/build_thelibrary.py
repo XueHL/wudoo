@@ -1,7 +1,7 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "TheLibrary")
+project = Project(name = "TheLibrary", moduleFile = __file__)
 
 MDL_FILE = moduleFile2basePath(__file__)
 project.setRoot("..", MDL_FILE)

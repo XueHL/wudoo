@@ -30,3 +30,7 @@ class BaseDependence(IDependence):
 			self.__project,
 			parentCompilation
 			)
+		
+	def getCompilationPoolStrategy(self):
+		return self.__compilationPoolStrategy
+	
