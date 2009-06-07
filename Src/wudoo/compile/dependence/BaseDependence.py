@@ -17,3 +17,6 @@ class BaseDependence(IDependence):
 
 	def getDependenceObjects(self):
 		return self.__dependenceObjects
+
+	def __searchCompiled(self, parentCompilation):
+		return None
