@@ -2,3 +2,7 @@ regexp:.*\.pyc
 regexp:Examples/Compile/CPP/EasyHelloWorld/Out.*
 regexp:Examples/Compile/CPP/ExportHeaders/Out.*
 regexp:Examples/Compile/CPP/UseExportHeaders/Out.*
+regexp:Examples/Compile/CPP/ChainResolveStrategy/User-0__0-s--1-o/Out/.*
+regexp:Examples/Compile/CPP/StoreBuildResults/User0/Out/.*
+regexp:.*\.compilations
+regexp:Examples/Compile/CPP/StoreBuildResults/User1/Out/.*
