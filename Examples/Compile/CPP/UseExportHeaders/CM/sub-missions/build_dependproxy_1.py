@@ -15,12 +15,12 @@ CM/sub-missions/sub-src/proxy
 ### ### Dependings  ### ###
 import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
-project.addDependenceProject(StaticLibDependence(statLibPrj))
+project.addDependenceProject(statLibPrj)
 
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(StaticLibDependence(exportHdrPrj))
+project.addDependenceProject(exportHdrPrj)
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
@@ -42,4 +42,5 @@ if (__name__ == "__main__"):
 		compilation.setDependenceBuildRoot(
 			os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
 			)
+		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())	
 	wdefaultBuild(project, setupSettCallback)

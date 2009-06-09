@@ -22,7 +22,7 @@ CM/sub-missions/sub-src/slib
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(StaticLibDependence(exportHdrPrj))
+project.addDependenceProject(exportHdrPrj)
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
@@ -44,5 +44,6 @@ if (__name__ == "__main__"):
 		compilation.setDependenceBuildRoot(
 			os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
 			)
+		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 	wdefaultBuild(project, setupSettCallback)
 
