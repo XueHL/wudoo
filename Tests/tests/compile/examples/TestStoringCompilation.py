@@ -10,6 +10,7 @@ from wudoo.compile.Project import Project
 #from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
+from wudoo.compile.cpp.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
@@ -37,6 +38,7 @@ class TestStoringCompilation(unittest.TestCase):
 		usr0prj = TestStoringCompilation.usr0prj.getProject()
 		def setupTmpdirCallback0(compilation):
 			wsetupDefaultPathsFromRoot(compilation, tmp0)
+			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr0prj, setupTmpdirCallback0, scwe)
 		trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
@@ -76,6 +78,7 @@ class TestStoringCompilation(unittest.TestCase):
 		usr1prj = TestStoringCompilation.usr1prj.getProject()
 		def setupTmpdirCallback1(compilation):
 			wsetupDefaultPathsFromRoot(compilation, tmp1)
+			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr1prj, setupTmpdirCallback1, scwe)
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
