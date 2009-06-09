@@ -1,6 +1,6 @@
 import os, pickle
 
-from wudoo.compile.dependence.IDependence import IDependence
+from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.compilationpool.ICompilationPoolStrategy import ICompilationPoolStrategy
 
 class StoreCompilationaPool(ICompilationPoolStrategy):
@@ -12,19 +12,19 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 			if not os.path.exists(poolFile):
 				return None
 			buf = open(poolFile, "rb").read()
-			compiledDependence = pickle.loads(buf)
-			if issubclass(compiledDependence.__class__, IDependence):
-				if self.__compareCompileFlags(compiledDependence, parentCompilation):
-					return compiledDependence
+			compilation = pickle.loads(buf)
+			if issubclass(compilation.__class__, ICompilation):
+				if self.__compareCompileFlags(compilation, parentCompilation):
+					return compilation
 		except:
 			return None
 		return None
 	
-	def onNewCompiled(self, compiledDependence):
-		poolFile = self.__getPoolFile(compiledDependence.getProject())
+	def onNewCompiled(self, compilation):
+		poolFile = self.__getPoolFile(compilation.getProject())
 		if poolFile is None:
 			return
-		buf = pickle.dumps(compiledDependence)
+		buf = pickle.dumps(compilation)
 		stream = open(poolFile, "wb")
 		stream.write(buf)
 		stream.close()
