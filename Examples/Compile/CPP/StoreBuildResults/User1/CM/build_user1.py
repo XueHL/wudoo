@@ -15,7 +15,7 @@ Src
 addDependProjDir(os.path.join(MDL_FILE, "..", "..", "TheLibrary", "CM"))
 import build_thelibrary as thelibrary
 theLibPrj = thelibrary.getProject()
-project.addDependenceProject(StaticLibDependence(theLibPrj))
+project.addDependenceProject(theLibPrj)
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
@@ -32,4 +32,5 @@ if (__name__ == "__main__"):
 	project = getProject()
 	def setupSettCallback(compilation):
 		wsetupDefaultPathsFromRoot(compilation)
+		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 	wdefaultBuild(project, setupSettCallback)

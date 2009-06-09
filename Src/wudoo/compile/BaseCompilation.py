@@ -1,5 +1,6 @@
 import os
 from wudoo.compile.ICompilation import ICompilation
+from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.FSItem import FSItem
 
 class BaseCompilation(ICompilation):
@@ -11,6 +12,8 @@ class BaseCompilation(ICompilation):
 		self.__compiler = None
 		#self.__dependenceObjects = []
 		self.__dependenceBuildRoot = None
+		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
+		self.__resolvingFSItem_s = []
 		
 	def getProject(self):
 		return self.__project
@@ -23,9 +26,14 @@ class BaseCompilation(ICompilation):
 		self.__buildObjMap()
 		self.__compileObjs(willExecutor)
 
+	def setResolveDependenceStrategy(self, resolveDependenceStrategy):
+		self.__resolveDependenceStrategy = resolveDependenceStrategy
+
 	def resolveDependings(self, willExecutor):
-		for dep in self.getProject().getDependences():
-			dep.resolve(self, willExecutor)
+		for depPrj in self.getProject().getDependences():
+			#dep.resolve(self, willExecutor)
+			resolvingItems = self.__resolveDependenceStrategy.resolve(depPrj, self, willExecutor)
+			self.__resolvingFSItem_s.extend(resolvingItems)
 			
 	def buildBinary(self, willExecutor):
 		self.__compiler.buildBinary(self, willExecutor, self.__goalFSItem)
@@ -42,8 +50,8 @@ class BaseCompilation(ICompilation):
 			if not self._skipObjectItem(src, **params):
 				obj = src2ObjMap[src]
 				result.append(obj)
-		for dep in self.getProject().getDependences():
-			result.extend(dep.getObjectItems())
+		#for dep in self.getProject().getDependences():
+		result.extend(self.__resolvingFSItem_s)
 		return result
 
 	def getCompiler(self):
