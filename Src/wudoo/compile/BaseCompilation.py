@@ -1,6 +1,5 @@
 import os
 from wudoo.compile.ICompilation import ICompilation
-from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.FSItem import FSItem
 
 class BaseCompilation(ICompilation):
@@ -12,6 +11,7 @@ class BaseCompilation(ICompilation):
 		self.__compiler = None
 		#self.__dependenceObjects = []
 		self.__dependenceBuildRoot = None
+		from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
 		self.__resolvingFSItem_s = []
 		

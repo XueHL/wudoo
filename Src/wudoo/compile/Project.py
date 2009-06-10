@@ -1,7 +1,6 @@
 import os, sys
 from wudoo.compile import SourceFilterColl
 from wudoo.FSItem import FSItem
-from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
 
 class Project:
 	"""\

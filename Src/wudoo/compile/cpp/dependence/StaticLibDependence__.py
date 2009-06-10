@@ -1,5 +1,3 @@
-from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
-from wudoo.compile.dependence.BaseDependence import BaseDependence
 from wudoo.FSItem import FSItem
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
 
