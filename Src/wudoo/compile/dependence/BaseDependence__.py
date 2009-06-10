@@ -1,7 +1,7 @@
 from wudoo.compile.dependence.IDependence import IDependence
 from wudoo.compile.compilationpool.AlwaysRecompileStrategy import AlwaysRecompileStrategy
 
-class BaseDependence(IDependence):
+class BaseDependence_deleted(IDependence):
 	def __init__(
 			self, 
 			project, 

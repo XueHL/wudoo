@@ -1,6 +1,5 @@
 import os
 
-from wudoo.compile.dependence.BaseDependence import BaseDependence
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 
 class CompiledObjsDependence(BaseDependence):
@@ -32,3 +31,4 @@ class CompiledObjsDependence(BaseDependence):
 		return compilation
 
 	createDependenceCompilation = staticmethod(__createDependenceCompilation)
+	

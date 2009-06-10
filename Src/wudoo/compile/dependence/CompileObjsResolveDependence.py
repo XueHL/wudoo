@@ -1,17 +1,32 @@
-from wudoo.compile.dependence.BaseDependence import BaseDependence
-from wudoo.compile.dependence.IResolveDependenceStrategy import IResolveDependenceStrategy
+import os
 
+from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
+from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
+from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 
-class CompileObjsResolveDependence(IResolveDependenceStrategy, BaseDependence):
+class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
-		BaseDependence.__init__(self, None)
+		BaseResolveDependenceStrategy.__init__(
+			self,
+			compilationPoolStrategy = StoreCompilationaPool(),
+			)
 
 	def resolve(self, depPrj, parentCompilation, willExecutor):
-		from wudoo.compile.cpp.dependence.CompiledObjsDependence import CompiledObjsDependence
-		compilation = CompiledObjsDependence.createDependenceCompilation(
+		compilation = CompileObjsResolveDependence.createDependenceCompilation(
 			depPrj, 
 			parentCompilation, 
 			willExecutor
 			)
-		self.getCompilationPoolStrategy().onNewCompiled(self)
+		self.getCompilationPoolStrategy().onNewCompiled(compilation)
 		return compilation.getAllObjectItems(addEntryPoints = False)
+
+
+	def __createDependenceCompilation(project, parentCompilation, willExecutor):
+		compilation = CPPCompilation(project)
+		compilation.setCompiler(parentCompilation.getCompiler())
+		if parentCompilation.getDependenceBuildRoot() is not None:
+			compilation.setObjRoot(os.path.join(parentCompilation.getDependenceBuildRoot(), project.getName()))
+		compilation.compile(willExecutor)
+		return compilation
+
+	createDependenceCompilation = staticmethod(__createDependenceCompilation)
