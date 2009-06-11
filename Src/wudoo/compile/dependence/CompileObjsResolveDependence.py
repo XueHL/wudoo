@@ -2,7 +2,7 @@ import os
 
 from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
-from wudoo.compile.cpp.CPPCompilation import CPPCompilation
+from wudoo.compile.ObjectsCompilationResult import ObjectsCompilationResult
 
 class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
@@ -22,11 +22,13 @@ class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 
 
 	def __createDependenceCompilation(project, parentCompilation, willExecutor):
-		compilation = CPPCompilation(project)
-		compilation.setCompiler(parentCompilation.getCompiler())
-		if parentCompilation.getDependenceBuildRoot() is not None:
-			compilation.setObjRoot(os.path.join(parentCompilation.getDependenceBuildRoot(), project.getName()))
-		compilation.compile(willExecutor)
-		return compilation
+		from wudoo.compile.cpp.CPPCompilation import CPPCompilation
+		#compilation = CPPCompilation(project)
+		#compilation.setCompiler(parentCompilation.getCompiler())
+		compileResult = ObjectsCompilationResult()
+		#if parentCompilation.getDependenceBuildRoot() is not None:
+		#	compilation.setObjRoot(os.path.join(parentCompilation.getDependenceBuildRoot(), project.getName()))
+		parentCompilation.buildCompilationResult(compileResult, willExecutor)
+		return compileResult
 
 	createDependenceCompilation = staticmethod(__createDependenceCompilation)
