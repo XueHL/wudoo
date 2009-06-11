@@ -35,8 +35,8 @@ class TestStoringCompilation(unittest.TestCase):
 		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
 		 
 		usr0prj = TestStoringCompilation.usr0prj.getProject()
-		def setupTmpdirCallback0(compilation):
-			wsetupDefaultPathsFromRoot(compilation, tmp0)
+		def setupTmpdirCallback0(compilation, project):
+			wsetupDefaultPathsFromRoot(compilation, project, tmp0)
 			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr0prj, setupTmpdirCallback0, scwe)
@@ -75,8 +75,8 @@ class TestStoringCompilation(unittest.TestCase):
 			)
 		
 		usr1prj = TestStoringCompilation.usr1prj.getProject()
-		def setupTmpdirCallback1(compilation):
-			wsetupDefaultPathsFromRoot(compilation, tmp1)
+		def setupTmpdirCallback1(compilation, project):
+			wsetupDefaultPathsFromRoot(compilation, project, tmp1)
 			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr1prj, setupTmpdirCallback1, scwe)

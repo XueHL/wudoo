@@ -22,27 +22,21 @@ class TestCompilation(unittest.TestCase):
 		project = TestCompilation.build_easy_prj.getProject()
 		compilation = BaseCompilation(project)
 		self.assertTrue(isinstance(compilation, ICompilation))
-		self.assertEquals(project, compilation.getProject())
 	
 	def testAllocObjStrategy(self):
 		project = TestCompilation.build_easy_prj.getProject()
 		compilation = BaseCompilation(project)
 		tmpDir = tempfile.mkdtemp()
-		strat = AllocInSpecifDirStrategy(tmpDir, ".o")
-		compilation.setAllocateObjStrategy(strat)
 		ex = None
 		try:
 			compilation.compile(StoreCallsWillExecutor())
 		except Exception, e:
 			ex = e
 		self.assertTrue(ex is not None)
-		src2obj = compilation.getSrc2ObjMap()
 		srcs = project.getSourceItems()
 		src = srcs[0]
 		if src.getName() != "Main":
 			src = srcs[1]
 		self.assertEquals("Main", src.getName())
-		obj = src2obj[src]
-		self.assertEquals(os.path.join("Src", "Main.o"), obj.getPathNameExt(1))
 		
 		
