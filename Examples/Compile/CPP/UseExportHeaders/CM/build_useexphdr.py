@@ -30,10 +30,4 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	def setupSettCallback(compilation):
-		pass
-		#exeFile = getCompilationGoalPath(compilation)
-		#compilation.setDependenceBuildRoot(
-		#	os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
-		#	)
-	wdefaultBuild(project, setupSettCallback)
+	wdefaultBuild(project)

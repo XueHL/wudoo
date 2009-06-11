@@ -1,7 +1,7 @@
 import os
 
 from wudoo.compile.BaseCompilation import BaseCompilation
-from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
+#from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
 from wudoo.compile.ObjectsCompilationResult import ObjectsCompilationResult
 from wudoo.compile.cpp.ExecutableBuilder import ExecutableBuilder
@@ -11,13 +11,13 @@ class CPPCompilation(BaseCompilation):
 	def __init__(
 			self,
 			project,
-			objRoot = None
+#			objRoot = None
 			):
 		BaseCompilation.__init__(
 			self, 
 			project,
 			)
-		self.setObjRoot(objRoot)
+#		self.setObjRoot(objRoot)
 		self.registerBuilder(
 			ExecutableCompilationResult,
 			ExecutableBuilder(self)
@@ -27,11 +27,11 @@ class CPPCompilation(BaseCompilation):
 			ObjectsBuilder(self)
 			)
 	
-	def setObjRoot(self, objRoot):
-		if objRoot is None:
-			objRoot = os.path.join(self.getProject().getRoot(), "Out", "Obj")
-		objRoot = os.path.abspath(objRoot)
-		self.setAllocateObjStrategy(AllocInSpecifDirStrategy(objRoot, ".o"))
+#	def setObjRoot(self, objRoot):
+#		if objRoot is None:
+#			objRoot = os.path.join(self.getProject().getRoot(), "Out", "Obj")
+#		objRoot = os.path.abspath(objRoot)
+#		self.setAllocateObjStrategy(AllocInSpecifDirStrategy(objRoot, ".o"))
 
 class Faik:
 	def __init__(

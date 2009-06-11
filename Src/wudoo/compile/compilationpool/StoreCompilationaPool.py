@@ -20,11 +20,11 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 			return None
 		return None
 	
-	def onNewCompiled(self, compilation):
-		poolFile = self.__getPoolFile(compilation.getProject())
+	def onNewCompiled(self, compilationResult):
+		poolFile = self.__getPoolFile(compilationResult.getProject())
 		if poolFile is None:
 			return
-		buf = pickle.dumps(compilation)
+		buf = pickle.dumps(compilationResult)
 		stream = open(poolFile, "wb")
 		stream.write(buf)
 		stream.close()

@@ -16,6 +16,8 @@ Structure.\
 		self.__name = name
 		self.__moduleFile = moduleFile 
 		self.__dependences = []
+		self.__entryPointNames = set()
+		self.__entryPointNames.add("main")
 		
 	def getName(self):
 		return self.__name
@@ -79,3 +81,6 @@ Structure.\
 	
 	def getModuleFile(self):
 		return self.__moduleFile
+	
+	def isEntryPointObject(self, objFSItem):
+		return self.__entryPointNames.__contains__(objFSItem.getName())

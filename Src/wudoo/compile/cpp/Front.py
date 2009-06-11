@@ -6,6 +6,7 @@ from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
 
+from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
 from wudoo.SystemWillExecutor import SystemWillExecutor
 from wudoo.FSItem import FSItem
 
@@ -13,41 +14,50 @@ DEPENT_MODULE_PATH_STORRAGE = {}
 
 Project = CompileCPPProject
 
-def DefaultCPPCompilation(project, objRoot = None, binDestFSItem = None):
+def DefaultCPPCompilation(
+		project, 
+#		objRoot = None, 
+		binDestFSItem = None
+		):
 	compilation = CPPCompilation(
 		project, 
-		objRoot = objRoot, 
+#		objRoot = objRoot, 
 #		binDestFSItem = binDestFSItem
 		) 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
-def nopSetupCompilation(compilation):
-	pass
-
 #def getCompilationGoalPath(compilation):
 #	return compilation.getGoalFSItem().getPathNameExt()
 
-def wsetupDefaultPathsFromRoot(compilation, root = None):
+def wsetupDefaultPathsFromRoot(compilation, project, root = None):
 	if root is None:
-		root = os.path.join(compilation.getProject().getRoot(), "Out")
-	compilation.setObjRoot(os.path.join(root, "Obj"))
+		root = os.path.join(project.getRoot(), "Out")
+	allocStrat = OutputRootBasedAllocate(
+		root = root,
+		binFolder = "Bin",
+		outerFolder = "Outer",
+		objFolder = "Obj",
+		objExt = ".o",
+		)
+	compilation.setAllocateStrategy(allocStrat)
+#	compilation.setObjRoot(os.path.join(root, "Obj"))
 #	compilation.setBinDestFSItem(os.path.join(root, "Bin", compilation.getProject().getName()))
-	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
+#	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
 	
 def wdefaultBuild(
 		project, 
-		setupCompilationCallback = nopSetupCompilation, 
+		setupCompilationCallback = wsetupDefaultPathsFromRoot, 
 		willExecutor = SystemWillExecutor(),
 		compilationResult = None
 		):
 	compilation = DefaultCPPCompilation(project)
-	setupCompilationCallback(compilation)
+	setupCompilationCallback(compilation, project)
 	if compilationResult is None:
 		#executableFSItem = compilation.getAllocationStrategy().allocateExecutable(compilation)
-		root = os.path.join(compilation.getProject().getRoot(), "Out")
-		os.path.join(root, "Bin", compilation.getProject().getName())
-		compilationResult = ExecutableCompilationResult(FSItem(root, "Bin", compilation.getProject().getName()))
+		root = os.path.join(project.getRoot(), "Out")
+		os.path.join(root, "Bin", project.getName())
+		compilationResult = ExecutableCompilationResult(project, FSItem(root, "Bin", project.getName()))
 	compilation.buildCompilationResult(compilationResult, willExecutor)
 
 def moduleFile2basePath(modFile):

@@ -7,20 +7,21 @@ from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsRes
 
 class BaseCompilation(ICompilation):
 	def __init__(self, project, *faik0, **faik1):
-		self.__project = project
-		self.__allocObjStrategy = None
-		self.__src2objMap = {}
+#		self.__project = project
+#		self.__allocObjStrategy = None
+#		self.__src2objMap = {}
 		self.__compiler = None
+		self.__allocateStrategy = None
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
 		self.__buildersMap = {}
-		self.setDependenceBuildRoot(None)
+#		self.setDependenceBuildRoot(None)
 		project.findSources()
 		
-	def getProject(self):
-		return self.__project
+#	def getProject(self):
+#		return self.__project
 
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
-		self.__buildObjMap()
+#		self.__buildObjMap()
 		builder = self.__buildersMap[emptyCompilationResult.__class__]
 		builder.build(emptyCompilationResult, self, willExecutor)
 		
@@ -33,13 +34,13 @@ class BaseCompilation(ICompilation):
 	def setResolveDependenceStrategy(self, resolveDependenceStrategy):
 		self.__resolveDependenceStrategy = resolveDependenceStrategy
 		
-	def setAllocateObjStrategy(self, allocObjStrategy):
-		self.__allocObjStrategy = allocObjStrategy
+#	def setAllocateObjStrategy(self, allocObjStrategy):
+#		self.__allocObjStrategy = allocObjStrategy
 
-	def setDependenceBuildRoot(self, dependenceBuildRoot):
-		if dependenceBuildRoot is None:
-			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
-		self.__dependenceBuildRoot = dependenceBuildRoot
+#	def setDependenceBuildRoot(self, dependenceBuildRoot):
+#		if dependenceBuildRoot is None:
+#			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
+#		self.__dependenceBuildRoot = dependenceBuildRoot
 
 	def getDependenceBuildRoot(self):
 		return self.__dependenceBuildRoot
@@ -49,14 +50,20 @@ class BaseCompilation(ICompilation):
 
 	def getCompiler(self):
 		return self.__compiler
+	
+	def getAllocateStrategy(self):
+	    return self.__allocateStrategy
+	
+	def setAllocateStrategy(self, allocateStrategy):
+	    self.__allocateStrategy = allocateStrategy
 
-	def getSrc2ObjMap(self):
-		return self.__src2objMap
+#	def getSrc2ObjMap(self):
+#		return self.__src2objMap
 
-	def __buildObjMap(self):
-		for src in self.__project.getSourceItems():
-			obj = self.__allocObjStrategy.allocate(src)
-			self.__src2objMap[src] = obj
+#	def __buildObjMap(self):
+#		for src in self.__project.getSourceItems():
+#			obj = self.__allocObjStrategy.allocate(src)
+#			self.__src2objMap[src] = obj
 	
 class Faik:
 	def __init__(self, project):
