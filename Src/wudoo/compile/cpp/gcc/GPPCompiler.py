@@ -38,7 +38,7 @@ class GPPCompiler(BaseCompiler):
 
 	def archive(self, project, compilation, willExecutor, goalFSItem):
 		objStr = ""
-		for obj in compilation.getAllObjectItems(addEntryPoints = False):
+		for obj in compilation.getObjectFSItems():
 			objStr += " \"" + obj.getPathNameExt() + '"'
 		command = self.__arCmd + \
 			" q " + \

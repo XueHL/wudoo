@@ -42,8 +42,8 @@ class BaseCompilation(ICompilation):
 #			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
 #		self.__dependenceBuildRoot = dependenceBuildRoot
 
-	def getDependenceBuildRoot(self):
-		return self.__dependenceBuildRoot
+#	def getDependenceBuildRoot(self):
+#		return self.__dependenceBuildRoot
 
 	def getResolveDependenceStrategy(self):
 		return self.__resolveDependenceStrategy
