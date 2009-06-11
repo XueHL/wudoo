@@ -5,3 +5,6 @@ class IAllocateStrategy:
 	def allocateExecutable(self, project):
 		raise NotImplementedError()
 	
+	def allocateStaticLib(self, project):
+		raise NotImplementedError()
+	

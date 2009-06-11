@@ -3,6 +3,7 @@ from wudoo.FSItem import FSItem
 from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
+from wudoo.compile.StaticLibCompilationResult import StaticLibCompilationResult
 
 class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
@@ -18,23 +19,18 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			)
 		if compiled is not None:
 			return compiled._ggg_archive
-		compilation = CompileObjsResolveDependence.createDependenceCompilation(
+		compileObjectsResult = CompileObjsResolveDependence.compileObjsResolve(
 			depPrj, 
 			parentCompilation, 
-			willExecutor
+			willExecutor,
+			self.getCompilationPoolStrategy()
 			)
-		if parentCompilation.getDependenceBuildRoot() is not None:
-			depRoot = parentCompilation.getDependenceBuildRoot()
-		self.__staticLibFSItem = FSItem(
-			depRoot, 
-			depPrj.getName() + ".a"
-			)
+		staticLibFSItem = parentCompilation.getAllocateStrategy().allocateStaticLib(depPrj)
 		parentCompilation.getCompiler().archive(
 			depPrj, 
-			compilation, 
+			compileObjectsResult, 
 			willExecutor, 
-			self.__staticLibFSItem
+			staticLibFSItem
 			)
-		compilation._ggg_archive = [self.__staticLibFSItem]
-		self.getCompilationPoolStrategy().onNewCompiled(compilation)
-		return [self.__staticLibFSItem]
+		self.getCompilationPoolStrategy().onNewCompiled(compileObjectsResult)
+		return StaticLibCompilationResult(depPrj, staticLibFSItem)

@@ -35,7 +35,8 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	def setupSettCallback(compilation):
+	def setupSettCallback(compilation, project):
 		wsetupDefaultPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Submission-out-1")))
+		#wsetupDefaultPathsFromRoot(compilation, project, "z:\\uaa")
 		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())	
 	wdefaultBuild(project, setupSettCallback)

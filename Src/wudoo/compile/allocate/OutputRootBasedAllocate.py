@@ -12,6 +12,7 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 			binFolder,
 			outerFolder,
 			rootProject,
+			libext = ".a",
 			):
 		self.__objFolder = os.path.join(root, objFolder)
 		self.__binFolder = os.path.join(root, binFolder)
@@ -19,6 +20,7 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 		self.__objExt = objExt
 		self.__objSubFld = objFolder
 		self.__rootProject = rootProject
+		self.__libext = libext 
 	
 	def allocateExecutable(self, project):
 		return FSItem(self.__binFolder, project.getName())
@@ -31,4 +33,7 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 		path.extend(src.getPathArr(1)) 
 		path.append(src.getName() + self.__objExt)
 		return FSItem(*path)
+	
+	def allocateStaticLib(self, project):
+		return FSItem(self.__outerFolder, project.getName() + self.__libext)
 		
