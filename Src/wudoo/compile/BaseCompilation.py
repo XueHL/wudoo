@@ -1,15 +1,70 @@
 import os
-from wudoo.compile.ICompilation import ICompilation
+
 from wudoo.FSItem import FSItem
 
+from wudoo.compile.ICompilation import ICompilation
+from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
+
 class BaseCompilation(ICompilation):
+	def __init__(self, project, *faik0, **faik1):
+		self.__project = project
+		self.__allocObjStrategy = None
+		self.__src2objMap = {}
+		self.__compiler = None
+		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
+		self.__buildersMap = {}
+		self.setDependenceBuildRoot(None)
+		project.findSources()
+		
+	def getProject(self):
+		return self.__project
+
+	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
+		self.__buildObjMap()
+		builder = self.__buildersMap[emptyCompilationResult.__class__]
+		builder.build(emptyCompilationResult, self, willExecutor)
+		
+	def registerBuilder(self, compilationResultClazz, builder):
+		self.__buildersMap[compilationResultClazz] = builder
+
+	def setCompiler(self, compiler):
+		self.__compiler = compiler
+		
+	def setResolveDependenceStrategy(self, resolveDependenceStrategy):
+		self.__resolveDependenceStrategy = resolveDependenceStrategy
+		
+	def setAllocateObjStrategy(self, allocObjStrategy):
+		self.__allocObjStrategy = allocObjStrategy
+
+	def setDependenceBuildRoot(self, dependenceBuildRoot):
+		if dependenceBuildRoot is None:
+			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
+		self.__dependenceBuildRoot = dependenceBuildRoot
+
+	def getDependenceBuildRoot(self):
+		return self.__dependenceBuildRoot
+
+	def getResolveDependenceStrategy(self):
+		return self.__resolveDependenceStrategy
+
+	def getCompiler(self):
+		return self.__compiler
+
+	def getSrc2ObjMap(self):
+		return self.__src2objMap
+
+	def __buildObjMap(self):
+		for src in self.__project.getSourceItems():
+			obj = self.__allocObjStrategy.allocate(src)
+			self.__src2objMap[src] = obj
+	
+class Faik:
 	def __init__(self, project):
 		self.__project = project
 		self.__goalFSItem = None
 		self.__allocObjStrategy = None
 		self.__src2objMap = {}
 		self.__compiler = None
-		#self.__dependenceObjects = []
 		self.__dependenceBuildRoot = None
 		from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
@@ -57,9 +112,6 @@ class BaseCompilation(ICompilation):
 	def getCompiler(self):
 		return self.__compiler
 
-	def setAllocateObjStrategy(self, strat):
-		self.__allocObjStrategy = strat
-
 	def setGoalFSItem(self, goalFSItem):
 		if isinstance(goalFSItem, str):
 			goalFSItem = os.path.abspath(goalFSItem)
@@ -68,19 +120,11 @@ class BaseCompilation(ICompilation):
 
 	def getGoalFSItem(self):
 		return self.__goalFSItem
-
-	def setCompiler(self, compiler):
-		self.__compiler = compiler
 		
 	def setBinDestFSItem(self, binDestFSItem):
 		if binDestFSItem is None:
 			binDestFSItem = FSItem(self.getProject().getRoot(), os.path.join("Out", "Bin"), self.getProject().getName())
 		self.setGoalFSItem(binDestFSItem)
-
-	def setDependenceBuildRoot(self, dependenceBuildRoot):
-		if dependenceBuildRoot is None:
-			dependenceBuildRoot = os.path.join(self.__project.getRoot(), "Outer")
-		self.__dependenceBuildRoot = dependenceBuildRoot
 
 	def getDependenceBuildRoot(self):
 		return self.__dependenceBuildRoot

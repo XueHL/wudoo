@@ -25,9 +25,9 @@ class GPPCompiler(BaseCompiler):
 		self.__preCompileStrategy.onPreCompile(obj)
 		willExecutor.execute(command)
 	
-	def buildBinary(self, compilation, willExecutor, goalFSItem):
+	def linkExecutable(self, objectFSItems, goalFSItem, willExecutor):
 		objStr = ""
-		for obj in compilation.getAllObjectItems():
+		for obj in objectFSItems:
 			objStr += " \"" + obj.getPathNameExt() + '"'
 		command = self.__gppCmd + \
 			objStr + \
