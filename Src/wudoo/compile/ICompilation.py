@@ -19,10 +19,10 @@ but not set obj-s, lib-s, dll-s ...
 		raise NotImplementedError()
 	
 	def getAllocateStrategy(self):
-	    raise NotImplementedError()
+		raise NotImplementedError()
 	
 	def setAllocateStrategy(self, allocateStrategy):
-	    raise NotImplementedError()
+		raise NotImplementedError()
 	   	
 #	def resolveDependings(self, willExecutor):
 #		raise NotImplementedError()

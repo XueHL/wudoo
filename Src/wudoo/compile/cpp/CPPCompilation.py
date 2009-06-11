@@ -1,7 +1,6 @@
 import os
 
 from wudoo.compile.BaseCompilation import BaseCompilation
-#from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
 from wudoo.compile.ObjectsCompilationResult import ObjectsCompilationResult
 from wudoo.compile.cpp.ExecutableBuilder import ExecutableBuilder

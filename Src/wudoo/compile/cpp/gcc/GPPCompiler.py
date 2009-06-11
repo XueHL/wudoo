@@ -13,7 +13,7 @@ class GPPCompiler(BaseCompiler):
 		self.__preCompileStrategy = preCompileStrategy
 
 	def compile(self, src, project, compilation, willExecutor):
-		obj = compilation.getAllocateStrategy().allocateObj(src)
+		obj = compilation.getAllocateStrategy().allocateObj(src, project)
 		command = self.__gppCmd + \
 			" -c " + \
 			'"' + src.getPathNameExt() + '"' + \

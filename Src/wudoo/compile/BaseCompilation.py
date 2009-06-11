@@ -52,10 +52,10 @@ class BaseCompilation(ICompilation):
 		return self.__compiler
 	
 	def getAllocateStrategy(self):
-	    return self.__allocateStrategy
+		return self.__allocateStrategy
 	
 	def setAllocateStrategy(self, allocateStrategy):
-	    self.__allocateStrategy = allocateStrategy
+		self.__allocateStrategy = allocateStrategy
 
 #	def getSrc2ObjMap(self):
 #		return self.__src2objMap

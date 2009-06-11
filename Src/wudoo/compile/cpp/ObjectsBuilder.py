@@ -11,7 +11,7 @@ class ObjectsBuilder(BaseBuilder):
 		#print "!!", project.getSourceItems()
 		for src in project.getSourceItems():
 			compiler.compile(src, project, compilation, willExecutor)
-			obj = compilation.getAllocateStrategy().allocateObj(src)
+			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
 			
 		

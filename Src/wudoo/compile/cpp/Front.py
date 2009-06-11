@@ -35,10 +35,11 @@ def wsetupDefaultPathsFromRoot(compilation, project, root = None):
 		root = os.path.join(project.getRoot(), "Out")
 	allocStrat = OutputRootBasedAllocate(
 		root = root,
-		binFolder = "Bin",
-		outerFolder = "Outer",
 		objFolder = "Obj",
 		objExt = ".o",
+		binFolder = "Bin",
+		outerFolder = "Outer",
+		rootProject = project
 		)
 	compilation.setAllocateStrategy(allocStrat)
 #	compilation.setObjRoot(os.path.join(root, "Obj"))
@@ -57,7 +58,10 @@ def wdefaultBuild(
 		#executableFSItem = compilation.getAllocationStrategy().allocateExecutable(compilation)
 		root = os.path.join(project.getRoot(), "Out")
 		os.path.join(root, "Bin", project.getName())
-		compilationResult = ExecutableCompilationResult(project, FSItem(root, "Bin", project.getName()))
+		compilationResult = ExecutableCompilationResult(
+			project, 
+			compilation.getAllocateStrategy().allocateExecutable(project)
+			)
 	compilation.buildCompilationResult(compilationResult, willExecutor)
 
 def moduleFile2basePath(modFile):
