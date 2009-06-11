@@ -29,7 +29,7 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 		if project == self.__rootProject:
 			path = [self.__objFolder]
 		else:
-			path = [os.path.join(self.__outerFolder, self.__objSubFld, project.getName())]
+			path = [os.path.join(self.__outerFolder, project.getName())]
 		path.extend(src.getPathArr(1)) 
 		path.append(src.getName() + self.__objExt)
 		return FSItem(*path)

@@ -12,7 +12,7 @@ class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 			)
 
 	def resolve(self, depPrj, parentCompilation, willExecutor):
-		CompileObjsResolveDependence.compileObjsResolve(
+		return CompileObjsResolveDependence.compileObjsResolve(
 			depPrj, 
 			parentCompilation, 
 			willExecutor,
