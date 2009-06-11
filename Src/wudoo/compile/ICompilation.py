@@ -1,15 +1,15 @@
 class ICompilation:
 	"""\
 Represents a process of compilation.
-Stores compilation results that was built.
-Allocates obj files.
+Stories compilation results that was built.
 Holds compiler.
+Stories compilation flags.
 """
 #	def buildWorkFlow(self, willExecutor):
 #		raise NotImplementedError()
 
-	def getProject(self):
-		raise NotImplementedError()
+#	def getProject(self):
+#		raise NotImplementedError()
 	
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		"""\
@@ -18,6 +18,12 @@ but not set obj-s, lib-s, dll-s ...
 """
 		raise NotImplementedError()
 	
+	def getAllocateStrategy(self):
+	    raise NotImplementedError()
+	
+	def setAllocateStrategy(self, allocateStrategy):
+	    raise NotImplementedError()
+	   	
 #	def resolveDependings(self, willExecutor):
 #		raise NotImplementedError()
 
@@ -27,8 +33,8 @@ but not set obj-s, lib-s, dll-s ...
 #	def getAllObjectItems(self, **params):
 #		raise NotImplementedError()
 
-	def getSrc2ObjMap(self):
-		raise NotImplementedError()
+#	def getSrc2ObjMap(self):
+#		raise NotImplementedError()
 	
 	def getCompiler(self):
 		raise NotImplementedError()
@@ -45,9 +51,9 @@ but not set obj-s, lib-s, dll-s ...
 #	def setObjRoot(self, objRoot):
 #		raise NotImplementedError()
 
-	def setAllocateObjStrategy(self, strat):
-		raise NotImplementedError()
+#	def setAllocateObjStrategy(self, strat):
+#		raise NotImplementedError()
 
-	def setDependenceBuildRoot(self, dependenceBuildRoot):
-		raise NotImplementedError()
+#	def setDependenceBuildRoot(self, dependenceBuildRoot):
+#		raise NotImplementedError()
 	

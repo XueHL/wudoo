@@ -1,7 +1,8 @@
-from wudoo.compile.ICompilationResult import ICompilationResult
+from wudoo.compile.BaseCompilationResult import BaseCompilationResult
 
-class ObjectsCompilationResult(ICompilationResult):
-	def __init__(self):
+class ObjectsCompilationResult(BaseCompilationResult):
+	def __init__(self, project):
+		BaseCompilationResult.__init__(self, project)
 		self.__objectFSItems = []
 
 	def getObjectFSItems(self):

@@ -6,11 +6,12 @@ class ObjectsBuilder(BaseBuilder):
 		BaseBuilder.__init__(self, compilation)
 		
 	def build(self, emptyCompilationResult, compilation, willExecutor):
-		project = compilation.getProject()
+		project = emptyCompilationResult.getProject()
 		compiler = compilation.getCompiler()
+		#print "!!", project.getSourceItems()
 		for src in project.getSourceItems():
-			compiler.compile(src, compilation, willExecutor)
-			obj = compilation.getSrc2ObjMap()[src]
+			compiler.compile(src, project, compilation, willExecutor)
+			obj = compilation.getAllocateStrategy().allocateObj(src)
 			emptyCompilationResult.getObjectFSItems().append(obj)
 			
 		

@@ -12,9 +12,8 @@ class GPPCompiler(BaseCompiler):
 		self.__arCmd = GPPCompiler.GPP_ARCHIVE_CMD
 		self.__preCompileStrategy = preCompileStrategy
 
-	def compile(self, src, compilation, willExecutor):
-		obj = compilation.getSrc2ObjMap()[src]
-		project = compilation.getProject()
+	def compile(self, src, project, compilation, willExecutor):
+		obj = compilation.getAllocateStrategy().allocateObj(src)
 		command = self.__gppCmd + \
 			" -c " + \
 			'"' + src.getPathNameExt() + '"' + \
