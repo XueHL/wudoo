@@ -37,13 +37,8 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	def setupSettCallback(compilation):
-		compilation.setObjRoot(os.path.join("Submission-out-0", "Obj"))
-		compilation.setGoalFSItem(os.path.join("Submission-out-0", "Bin", project.getName()))
-		exeFile = getCompilationGoalPath(compilation)
-		compilation.setDependenceBuildRoot(
-			os.path.normpath(os.path.join(exeFile, "..", "..", "Outer"))
-			)
+	def setupSettCallback(compilation, project):
+		wsetupDefaultPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Submission-out-0")))
 		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 	wdefaultBuild(project, setupSettCallback)
 

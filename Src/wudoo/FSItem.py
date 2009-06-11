@@ -29,3 +29,5 @@ class FSItem:
 	def getName(self):
 		return os.path.splitext(self.getNameExt())[0]
 		
+	def __str__(self):
+		return self.getPathNameExt();

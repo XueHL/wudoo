@@ -2,7 +2,6 @@ import unittest, os, sys, tempfile
 
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.BaseCompilation import BaseCompilation
-from wudoo.compile.AllocInSpecifDirStrategy import AllocInSpecifDirStrategy
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.Front import DefaultCPPCompilation
 from wudoo.compile.Project import Project
