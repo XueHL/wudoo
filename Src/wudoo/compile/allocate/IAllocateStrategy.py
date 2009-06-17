@@ -1,5 +1,5 @@
 class IAllocateStrategy:
-	def allocateObj(self):
+	def allocateObj(self, src, project):
 		raise NotImplementedError()
 	
 	def allocateExecutable(self, project):

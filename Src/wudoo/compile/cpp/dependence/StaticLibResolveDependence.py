@@ -12,21 +12,23 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			compilationPoolStrategy = StoreCompilationaPool(),
 			)
 
-	def resolve(self, depPrj, parentCompilation, willExecutor):
+	def resolve(self, depPrj, rootCompilation, willExecutor):
 		compiledResult = self.getCompilationPoolStrategy().findCompiled(
 			depPrj,
-			parentCompilation
+			rootCompilation
 			)
 		if compiledResult is not None:
 			return compiledResult
 		compileObjectsResult = CompileObjsResolveDependence.compileObjsResolve(
 			depPrj, 
-			parentCompilation, 
+			rootCompilation, 
 			willExecutor,
 			self.getCompilationPoolStrategy()
 			)
-		staticLibFSItem = parentCompilation.getAllocateStrategy().allocateStaticLib(depPrj)
-		parentCompilation.getCompiler().archive(
+#		staticLibCompilationResult = StaticLibCompilationResult(depPrj)
+#		rootCompilation.buildCompilationResult(staticLibCompilationResult, willExecutor)
+		staticLibFSItem = rootCompilation.getAllocateStrategy().allocateStaticLib(depPrj)
+		rootCompilation.getCompiler().archive(
 			depPrj, 
 			compileObjectsResult, 
 			willExecutor, 
