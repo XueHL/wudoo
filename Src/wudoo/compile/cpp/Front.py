@@ -56,8 +56,8 @@ def wdefaultBuild(
 	setupCompilationCallback(compilation, project)
 	if compilationResult is None:
 		#executableFSItem = compilation.getAllocationStrategy().allocateExecutable(compilation)
-		root = os.path.join(project.getRoot(), "Out")
-		os.path.join(root, "Bin", project.getName())
+#		root = os.path.join(project.getRoot(), "Out")
+#		os.path.join(root, "Bin", project.getName())
 		compilationResult = ExecutableCompilationResult(
 			project, 
 			compilation.getAllocateStrategy().allocateExecutable(project)

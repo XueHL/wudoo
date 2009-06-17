@@ -13,12 +13,12 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			)
 
 	def resolve(self, depPrj, parentCompilation, willExecutor):
-		compiled = self.getCompilationPoolStrategy().findCompiled(
+		compiledResult = self.getCompilationPoolStrategy().findCompiled(
 			depPrj,
 			parentCompilation
 			)
-		if compiled is not None:
-			return compiled._ggg_archive
+		if compiledResult is not None:
+			return compiledResult
 		compileObjectsResult = CompileObjsResolveDependence.compileObjsResolve(
 			depPrj, 
 			parentCompilation, 
@@ -32,5 +32,6 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			willExecutor, 
 			staticLibFSItem
 			)
-		self.getCompilationPoolStrategy().onNewCompiled(compileObjectsResult)
-		return StaticLibCompilationResult(depPrj, staticLibFSItem)
+		staticLibCompilationResult = StaticLibCompilationResult(depPrj, staticLibFSItem)
+		self.getCompilationPoolStrategy().onNewCompiled(staticLibCompilationResult)
+		return staticLibCompilationResult

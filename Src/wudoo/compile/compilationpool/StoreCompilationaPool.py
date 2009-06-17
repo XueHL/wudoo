@@ -2,6 +2,7 @@ import os, pickle
 
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.compilationpool.ICompilationPoolStrategy import ICompilationPoolStrategy
+from wudoo.compile.ICompilationResult import ICompilationResult
 
 class StoreCompilationaPool(ICompilationPoolStrategy):
 	POOL_EXT = ".compilations" 
@@ -13,7 +14,7 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 				return None
 			buf = open(poolFile, "rb").read()
 			compilation = pickle.loads(buf)
-			if issubclass(compilation.__class__, ICompilation):
+			if issubclass(compilation.__class__, ICompilationResult):
 				if self.__compareCompileFlags(compilation, parentCompilation):
 					return compilation
 		except:

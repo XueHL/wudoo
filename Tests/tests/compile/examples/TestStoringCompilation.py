@@ -47,7 +47,7 @@ class TestStoringCompilation(unittest.TestCase):
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User0\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
 			'ar q "__TMP__\\p0\\Outer\\TheLibrary.a" "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
-			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\UseExportHdr"'
+			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\Store-User-0"'
 			], 
 			history
 			)
@@ -66,7 +66,7 @@ class TestStoringCompilation(unittest.TestCase):
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\UseExportHdr.exe', 
+			'Bin\\Store-User-0.exe', 
 			'Obj\\Src\\main.o', 
 			'Outer\\TheLibrary.a', 
 			'Outer\\TheLibrary\\Src\\NameHolder.o'
@@ -84,7 +84,7 @@ class TestStoringCompilation(unittest.TestCase):
 		self.assertEqual(
 			[
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\UseExportHdr"'
+			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\Store-User-1"'
 			], 
 			history
 			)
@@ -103,7 +103,7 @@ class TestStoringCompilation(unittest.TestCase):
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\UseExportHdr.exe', 
+			'Bin\\Store-User-1.exe', 
 			'Obj\\Src\\main.o', 
 			], 
 			objPaths
