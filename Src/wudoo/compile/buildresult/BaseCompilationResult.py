@@ -1,4 +1,4 @@
-from wudoo.compile.ICompilationResult import ICompilationResult
+from wudoo.compile.buildresult.ICompilationResult import ICompilationResult
 
 class BaseCompilationResult(ICompilationResult):
 	def __init__(self, project):

@@ -1,4 +1,4 @@
-from wudoo.compile.BaseCompilationResult import BaseCompilationResult
+from wudoo.compile.buildresult.BaseCompilationResult import BaseCompilationResult
 
 class StaticLibCompilationResult(BaseCompilationResult):
 	def __init__(self, project, staticlibFSItem = None):

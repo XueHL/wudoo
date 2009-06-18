@@ -2,7 +2,7 @@ import os, pickle
 
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.compilationpool.ICompilationPoolStrategy import ICompilationPoolStrategy
-from wudoo.compile.ICompilationResult import ICompilationResult
+from wudoo.compile.buildresult.ICompilationResult import ICompilationResult
 
 class StoreCompilationaPool(ICompilationPoolStrategy):
 	POOL_EXT = ".compilations" 
