@@ -3,7 +3,7 @@ from wudoo.FSItem import FSItem
 from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
-from wudoo.compile.StaticLibCompilationResult import StaticLibCompilationResult
+from wudoo.compile.buildresult.StaticLibCompilationResult import StaticLibCompilationResult
 
 class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
@@ -19,21 +19,7 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			)
 		if compiledResult is not None:
 			return compiledResult
-		compileObjectsResult = CompileObjsResolveDependence.compileObjsResolve(
-			depPrj, 
-			rootCompilation, 
-			willExecutor,
-			self.getCompilationPoolStrategy()
-			)
-#		staticLibCompilationResult = StaticLibCompilationResult(depPrj)
-#		rootCompilation.buildCompilationResult(staticLibCompilationResult, willExecutor)
-		staticLibFSItem = rootCompilation.getAllocateStrategy().allocateStaticLib(depPrj)
-		rootCompilation.getCompiler().archive(
-			depPrj, 
-			compileObjectsResult, 
-			willExecutor, 
-			staticLibFSItem
-			)
-		staticLibCompilationResult = StaticLibCompilationResult(depPrj, staticLibFSItem)
+		staticLibCompilationResult = StaticLibCompilationResult(depPrj)
+		rootCompilation.buildCompilationResult(staticLibCompilationResult, willExecutor)
 		self.getCompilationPoolStrategy().onNewCompiled(staticLibCompilationResult)
 		return staticLibCompilationResult

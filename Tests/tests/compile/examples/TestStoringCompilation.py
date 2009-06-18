@@ -1,15 +1,11 @@
 import unittest, os, sys, tempfile
 
-#from wudoo.FSItem import FSItem
 from wudoo.SystemWillExecutor import SystemWillExecutor
 
-#from wudoo.compile.cpp.Front import DefaultCPPCompilation
-#from wudoo.compile.BaseCompilation import BaseCompilation
 from wudoo.compile.Project import Project
-#from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
-from wudoo.compile.cpp.dependence.StaticLibResolveDependence import StaticLibResolveDependence
+from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 

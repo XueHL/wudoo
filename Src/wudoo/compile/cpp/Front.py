@@ -3,7 +3,7 @@ import os, sys
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
-from wudoo.compile.cpp.dependence.StaticLibResolveDependence import StaticLibResolveDependence
+from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
@@ -16,19 +16,13 @@ Project = CompileCPPProject
 
 def DefaultCPPCompilation(
 		project, 
-#		objRoot = None, 
 		binDestFSItem = None
 		):
 	compilation = CPPCompilation(
 		project, 
-#		objRoot = objRoot, 
-#		binDestFSItem = binDestFSItem
 		) 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
-
-#def getCompilationGoalPath(compilation):
-#	return compilation.getGoalFSItem().getPathNameExt()
 
 def wsetupDefaultPathsFromRoot(compilation, project, root = None):
 	if root is None:
@@ -42,9 +36,6 @@ def wsetupDefaultPathsFromRoot(compilation, project, root = None):
 		rootProject = project
 		)
 	compilation.setAllocateStrategy(allocStrat)
-#	compilation.setObjRoot(os.path.join(root, "Obj"))
-#	compilation.setBinDestFSItem(os.path.join(root, "Bin", compilation.getProject().getName()))
-#	compilation.setDependenceBuildRoot(os.path.join(root, "Outer"))
 	
 def wdefaultBuild(
 		project, 
@@ -55,9 +46,6 @@ def wdefaultBuild(
 	compilation = DefaultCPPCompilation(project)
 	setupCompilationCallback(compilation, project)
 	if compilationResult is None:
-		#executableFSItem = compilation.getAllocationStrategy().allocateExecutable(compilation)
-#		root = os.path.join(project.getRoot(), "Out")
-#		os.path.join(root, "Bin", project.getName())
 		compilationResult = ExecutableCompilationResult(
 			project, 
 			compilation.getAllocateStrategy().allocateExecutable(project)
