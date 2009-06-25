@@ -1,7 +1,7 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "User-0__0-s--1-o", moduleFile = __file__)
+project = Project(name = "User-1__0-s--1-s", moduleFile = __file__)
 
 MDL_FILE = moduleFile2basePath(__file__)
 project.setRoot("..", MDL_FILE)
@@ -35,14 +35,8 @@ if (__name__ == "__main__"):
 	import os
 	project = getProject()
 
-	resStrat_0_s_1_o = ChainCaseDependencyResolve(StaticLibResolveDependence())
-	def ifLib1ThenObj(project):
-		if project.getName() == "Lib0":
-			return CompileObjsResolveDependence()
-	resStrat_0_s_1_o.addStage(ifLib1ThenObj)
-
 	def setupSettCallback(compilation, project):
 		wsetupDefaultPathsFromRoot(compilation, project)
-		compilation.setResolveDependenceStrategy(resStrat_0_s_1_o)
+		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 
 	wdefaultBuild(project, setupSettCallback)
