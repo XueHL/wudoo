@@ -30,7 +30,7 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	project = getProject()
-	def setupSettCallback(compilation):
-		wsetupDefaultPathsFromRoot(compilation)
+	def setupSettCallback(compilation, project):
+		wsetupDefaultPathsFromRoot(compilation, project)
 		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 	wdefaultBuild(project, setupSettCallback)
