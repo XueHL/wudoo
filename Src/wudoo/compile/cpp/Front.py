@@ -4,6 +4,8 @@ from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
+from wudoo.compile.dependence.ChainCaseDependencyResolve import ChainCaseDependencyResolve
+from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
