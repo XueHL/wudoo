@@ -37,7 +37,7 @@ if (__name__ == "__main__"):
 
 	resStrat_0_s_1_o = ChainCaseDependencyResolve(StaticLibResolveDependence())
 	def ifLib1ThenObj(project):
-		if project.getName() == "Lib0":
+		if project.getName() == "Lib1":
 			return CompileObjsResolveDependence()
 	resStrat_0_s_1_o.addStage(ifLib1ThenObj)
 

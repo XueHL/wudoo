@@ -15,7 +15,8 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 	def resolve(self, depPrj, rootCompilation, willExecutor):
 		compiledResult = self.getCompilationPoolStrategy().findCompiled(
 			depPrj,
-			rootCompilation
+			rootCompilation,
+			self
 			)
 		if compiledResult is not None:
 			return compiledResult

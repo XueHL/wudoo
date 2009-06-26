@@ -6,17 +6,29 @@ from wudoo.compile.buildresult.ICompilationResult import ICompilationResult
 
 class StoreCompilationaPool(ICompilationPoolStrategy):
 	POOL_EXT = ".compilations" 
+	COMPILE_SATISFACTION_MAP = None
+
+	def __init__(self):
+		if StoreCompilationaPool.COMPILE_SATISFACTION_MAP is None:
+			from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
+			from wudoo.compile.buildresult.StaticLibCompilationResult import StaticLibCompilationResult
+			from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
+			from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilationResult
+			StoreCompilationaPool.COMPILE_SATISFACTION_MAP = {
+				StaticLibResolveDependence: set([StaticLibCompilationResult]),
+				CompileObjsResolveDependence: set([ObjectsCompilationResult]),
+			}
 	
-	def findCompiled(self, project, parentCompilation):
+	def findCompiled(self, project, rootCompilation, resolveDependenceStrat):
 		try:
 			poolFile = self.__getPoolFile(project)
 			if not os.path.exists(poolFile):
 				return None
 			buf = open(poolFile, "rb").read()
-			compilation = pickle.loads(buf)
-			if issubclass(compilation.__class__, ICompilationResult):
-				if self.__compareCompileFlags(compilation, parentCompilation):
-					return compilation
+			prevCompileResult = pickle.loads(buf)
+			if issubclass(prevCompileResult.__class__, ICompilationResult):
+				if self.__isResultSatisfyes(rootCompilation, resolveDependenceStrat, prevCompileResult):
+					return prevCompileResult
 		except:
 			return None
 		return None
@@ -37,5 +49,9 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 		poolFile = os.path.join(moduleDir, project.getName() + StoreCompilationaPool.POOL_EXT)
 		return poolFile
 	
-	def __compareCompileFlags(self, compiledDependence, parentcompiledDependence):
-		return True
+	def __isResultSatisfyes(self, rootCompilation, resolveDependenceStrat, prevCompileResult):
+		try:
+			satisfResults = StoreCompilationaPool.COMPILE_SATISFACTION_MAP[resolveDependenceStrat.__class__]
+			return prevCompileResult.__class__ in satisfResults
+		except:
+			return False
