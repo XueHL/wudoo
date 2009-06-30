@@ -125,7 +125,7 @@ class TestStoringCompilation(unittest.TestCase):
 		tmp1 = os.path.join(tmpDir, "p1")
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool.data")
+			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
 		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
 		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
 		 
@@ -177,25 +177,20 @@ class TestStoringCompilation(unittest.TestCase):
 			], 
 			objPaths
 			)
-		return
 		
 		chain1prj = TestStoringCompilation.chain1prj.getProject()
 		def setupTmpdirCallback1(compilation, project):
 			wsetupDefaultPathsFromRoot(compilation, project, tmp1)
-			#compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
-			resStrat_0_s_1_o = ChainCaseDependencyResolve(StaticLibResolveDependence())
-			def ifLib1ThenObj(project):
-				if project.getName() == "Lib1":
-					return CompileObjsResolveDependence()
-			resStrat_0_s_1_o.addStage(ifLib1ThenObj)
-			compilation.setResolveDependenceStrategy(resStrat_0_s_1_o)
+			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(chain1prj, setupTmpdirCallback1, scwe)
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User1\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr"', 
-			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p1\\Bin\\Store-User-1"'
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\User-1__0-s--1-s\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr"', 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\Src\\NameHolder1.cpp" -o "__TMP__\\p1\\Outer\\Lib1\\Src\\NameHolder1.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr"', 
+			'ar q "__TMP__\\p1\\Outer\\Lib1.a" "__TMP__\\p1\\Outer\\Lib1\\Src\\NameHolder1.o"', 
+			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\Lib0.a" "__TMP__\\p1\\Outer\\Lib1.a" -o "__TMP__\\p1\\Bin\\User-1__0-s--1-s"'
 			], 
 			history
 			)
@@ -214,8 +209,10 @@ class TestStoringCompilation(unittest.TestCase):
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\Store-User-1.exe', 
-			'Obj\\Src\\main.o', 
+			'Bin\\User-1__0-s--1-s.exe',
+			'Obj\\Src\\main.o',
+			'Outer\\Lib1.a',
+			'Outer\\Lib1\\Src\\NameHolder1.o',
 			], 
 			objPaths
 			)
