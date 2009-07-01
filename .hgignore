@@ -9,3 +9,4 @@ regexp:Examples/Compile/CPP/StoreBuildResults/User1/Out/.*
 glob:Examples/Compile/CPP/EasyHelloWorld/CM/w
 glob:Tests/w
 regexp:Examples/Compile/CPP/ChainResolveStrategy/User-1__0-s--1-s/Out/.*
+regexp:Examples/Compile/CPP-flags/EasuDebugInfo/Out/.*
