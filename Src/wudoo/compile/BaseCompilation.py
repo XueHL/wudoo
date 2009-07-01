@@ -11,6 +11,7 @@ class BaseCompilation(ICompilation):
 		self.__allocateStrategy = None
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
 		self.__buildersMap = {}
+		self.__debugInfoLevel = 0
 		project.findSources()
 		
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
@@ -37,3 +38,9 @@ class BaseCompilation(ICompilation):
 	
 	def setAllocateStrategy(self, allocateStrategy):
 		self.__allocateStrategy = allocateStrategy
+
+	def setDebugInfoLevel(self, debugInfoLevel):
+		self.__debugInfoLevel = debugInfoLevel
+
+	def getDebugInfoLevel(self):
+		return self.__debugInfoLevel

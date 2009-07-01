@@ -20,6 +20,7 @@ class GPPCompiler(BaseCompiler):
 			" -o " + \
 			'"' + obj.getPathNameExt() + '"' + \
 			self.__buildHdrString(project) + \
+			" " + self.__getFlags(compilation) + \
 			""
 		self.__preCompileStrategy.onPreCompile(obj)
 		willExecutor.execute(command)
@@ -65,3 +66,15 @@ class GPPCompiler(BaseCompiler):
 	def __addHdrFolders(self, folderList, project, dest):
 		for hdr in folderList:
 			dest.append(os.path.join(project.getRoot(), hdr))
+
+	def __getFlags(self, compilation):
+		debugInfoLevel = compilation.getDebugInfoLevel()
+		debugInfoLevel = self.__reduce2range(debugInfoLevel, 0, 3)
+		return "-g" + str(debugInfoLevel)
+
+	def __reduce2range(self, debugInfoLevel, beg, end):
+		rnge = end - beg
+		rnge *= debugInfoLevel / 100.0
+		rnge = int(rnge)
+		assert(rnge >= beg and rnge <= end)
+		return rnge + beg
