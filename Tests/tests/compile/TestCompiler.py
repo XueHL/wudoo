@@ -21,7 +21,12 @@ class TestCompiler(unittest.TestCase):
 	
 	def getDependences(self):
 		return []
-	
+	def getDebugInfoLevel(self):
+		return 0
+
+	def getOptimisationLevel(self):
+		return 100
+
 	def testProjectRootPathSet(self):
 		we = StoreCallsWillExecutor()
 		compiler = GPPCompiler()

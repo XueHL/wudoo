@@ -12,6 +12,7 @@ class BaseCompilation(ICompilation):
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
 		self.__buildersMap = {}
 		self.__debugInfoLevel = 0
+		self.__optimisationLevel = 100
 		project.findSources()
 		
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
@@ -44,3 +45,9 @@ class BaseCompilation(ICompilation):
 
 	def getDebugInfoLevel(self):
 		return self.__debugInfoLevel
+
+	def setOptimisationLevel(self, optimisationLevel):
+		self.__optimisationLevel = optimisationLevel
+
+	def getOptimisationLevel(self):
+		return self.__optimisationLevel

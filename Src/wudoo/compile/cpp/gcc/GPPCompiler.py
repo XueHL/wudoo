@@ -68,9 +68,19 @@ class GPPCompiler(BaseCompiler):
 			dest.append(os.path.join(project.getRoot(), hdr))
 
 	def __getFlags(self, compilation):
+		return self.__getDebugInfoFlags(compilation) + " " + \
+			self.__getOptimisationFlags(compilation) + \
+			""
+
+	def __getDebugInfoFlags(self, compilation):
 		debugInfoLevel = compilation.getDebugInfoLevel()
 		debugInfoLevel = self.__reduce2range(debugInfoLevel, 0, 3)
 		return "-g" + str(debugInfoLevel)
+
+	def __getOptimisationFlags(self, compilation):
+		optimisationLevel = compilation.getOptimisationLevel()
+		optimisationLevel = self.__reduce2range(optimisationLevel, 0, 3)
+		return "-O" + str(optimisationLevel)
 
 	def __reduce2range(self, debugInfoLevel, beg, end):
 		rnge = end - beg
