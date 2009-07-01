@@ -34,3 +34,15 @@ Stories compilation flags.
 debugInfoLevel in [0 .. 100]
 """		
 		raise NotImplementedError()
+
+	def setOptimisationLevel(self, optimisationLevel):
+		"""\
+optimisationLevel in [0 .. 100]
+"""		
+		raise NotImplementedError()
+
+	def getDebugInfoLevel(self):
+		raise NotImplementedError()
+
+	def getOptimisationLevel(self):
+		raise NotImplementedError()

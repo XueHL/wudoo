@@ -1,7 +1,7 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "EasyDbg")
+project = Project(name = "EasyOpt")
 
 project.setRoot("..", moduleFile2basePath(__file__))
 project.addSrcFolders(
@@ -24,6 +24,6 @@ if (__name__ == "__main__"):
 	import os
 	def setupSettCallback(compilation, project):
 		wsetupDefaultPathsFromRoot(compilation, project)
-		compilation.setDebugInfoLevel(100)
+		compilation.setOptimisationLevel(0)
 	project = getProject()
 	wdefaultBuild(project, setupSettCallback)
