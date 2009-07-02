@@ -33,3 +33,7 @@ class TestConsole2Obj(unittest.TestCase):
 			}
 			, consInfo.__dict__
 			)
+
+	def testSysArgv(self):
+		consInfo = Console2obj.consoleaArgs2obj()
+		self.assertEquals({}, consInfo.__dict__)

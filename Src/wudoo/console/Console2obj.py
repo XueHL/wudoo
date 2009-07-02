@@ -1,3 +1,5 @@
+import sys
+
 class Empty:
 	pass
 
@@ -14,3 +16,6 @@ def argArr2obj(argv):
 			if top is not None:
 				top.append(it)
 	return obj
+
+def consoleaArgs2obj():
+	return argArr2obj(sys.argv)
