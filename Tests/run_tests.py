@@ -13,6 +13,7 @@ import tests.compile.TestCompilation
 import tests.compile.TestCompiler
 import tests.compile.examples.TestEasyExamples
 import tests.compile.examples.TestStoringCompilation
+import tests.console.TestConsole2Obj
 
 testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
@@ -21,5 +22,6 @@ testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestCompiler),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestEasyExamples),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.TestStoringCompilation),\
+	unittest.TestLoader().loadTestsFromModule(tests.console.TestConsole2Obj),\
 	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)
