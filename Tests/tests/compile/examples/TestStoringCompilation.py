@@ -218,3 +218,110 @@ class TestStoringCompilation(unittest.TestCase):
 			)
 
 		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = getPoolFile
+
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+
+	sys.path.append(
+		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-flags", "EasyDebugInfo", "CM"))
+		)
+	import build_dbg as dbgprj
+
+	def testDbgInfo(self):
+		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
+		tmpDir = tempfile.mktemp()
+		
+		def faikGPF(self, project):
+			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
+		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+		 
+		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
+		def setupTmpdirCallback0(compilation, project):
+			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			compilation.setDebugInfoLevel(100)
+		scwe = StoreCallsWillExecutor()
+		wdefaultBuild(dbginfoprj, setupTmpdirCallback0, scwe)
+		trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		self.assertEqual(
+			[
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-flags\\EasyDebugInfo\\Src\\Hello.cpp" -o "__TMP__\\Obj\\Src\\Hello.o"  -g3 -O3', 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-flags\\EasyDebugInfo\\Src\\Main.cpp" -o "__TMP__\\Obj\\Src\\Main.o"  -g3 -O3', 
+			'g++ "__TMP__\\Obj\\Src\\Hello.o" "__TMP__\\Obj\\Src\\Main.o" -o "__TMP__\\Bin\\EasyDbg"'
+			], 
+			history
+			)
+		del history
+		swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+
+		project = Project(tmpDir)
+		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
+		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
+		project.findSources()
+		objItems = project.getSourceItems()
+		objPaths = [io.getPathNameExt(1) for io in objItems]
+		objPaths.sort()
+		self.assertEquals(
+			[
+			'Bin\\EasyDbg.exe', 
+			'Obj\\Src\\Hello.o', 
+			'Obj\\Src\\Main.o',
+			], 
+			objPaths
+			)
+		
+		hellobuf = open(os.path.join(tmpDir, objPaths[1]), "r").read()
+		self.assertTrue(hellobuf.find("CPP-flags") > 0)
+
+		### no debuginfo
+
+		tmpDir = tempfile.mktemp()
+		
+		def faikGPF(self, project):
+			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
+		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+		 
+		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
+		def setupTmpdirCallback0(compilation, project):
+			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			#compilation.setDebugInfoLevel(100)
+		scwe = StoreCallsWillExecutor()
+		wdefaultBuild(dbginfoprj, setupTmpdirCallback0, scwe)
+		trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		self.assertEqual(
+			[
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-flags\\EasyDebugInfo\\Src\\Hello.cpp" -o "__TMP__\\Obj\\Src\\Hello.o"  -g0 -O3', 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-flags\\EasyDebugInfo\\Src\\Main.cpp" -o "__TMP__\\Obj\\Src\\Main.o"  -g0 -O3', 
+			'g++ "__TMP__\\Obj\\Src\\Hello.o" "__TMP__\\Obj\\Src\\Main.o" -o "__TMP__\\Bin\\EasyDbg"'
+			], 
+			history
+			)
+		del history
+		swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+
+		project = Project(tmpDir)
+		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
+		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
+		project.findSources()
+		objItems = project.getSourceItems()
+		objPaths = [io.getPathNameExt(1) for io in objItems]
+		objPaths.sort()
+		self.assertEquals(
+			[
+			'Bin\\EasyDbg.exe', 
+			'Obj\\Src\\Hello.o', 
+			'Obj\\Src\\Main.o',
+			], 
+			objPaths
+			)
+		
+		hellobuf = open(os.path.join(tmpDir, objPaths[1]), "r").read()
+		self.assertTrue(hellobuf.find("CPP-flags") < 0)
