@@ -18,10 +18,10 @@ from wudoo.console import Console2obj
 
 DEPENT_MODULE_PATH_STORRAGE = {}
 
-CONSOLE_DEFAULTS =  ["profile"]
-CONSOLE_KW_DEFAULTS = {
-	"buildroot": [None],
-	}
+class DefaultArgsObj:
+	def __init__(self):
+		self.profile = []
+		self.buildroot = [None]
 
 Project = CompileCPPProject
 
@@ -40,7 +40,7 @@ def nopSetupCompilationCallback(compilation, project):
 	
 def profilesChain(compilation, project, argsObj = None):
 	if argsObj is None:
-		argsObj = Console2obj.consoleaArgs2obj(*CONSOLE_DEFAULTS, **CONSOLE_KW_DEFAULTS)
+		argsObj = Console2obj.consoleaArgs2obj(DefaultArgsObj())
 	if not (BuildProfiles.DEFAULT_PROFILE_NAME in argsObj.profile):
 		argsObj.profile = [BuildProfiles.DEFAULT_PROFILE_NAME] + argsObj.profile
 	for profileName in argsObj.profile:
