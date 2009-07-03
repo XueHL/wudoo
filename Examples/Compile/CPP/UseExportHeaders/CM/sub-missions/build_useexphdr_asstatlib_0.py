@@ -38,8 +38,8 @@ if (__name__ == "__main__"):
 	import os
 	project = getProject()
 	def setupSettCallback(compilation, project):
-		wsetupDefaultPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Submission-out-0")))
-		#wsetupDefaultPathsFromRoot(compilation, project, "z:\\uaa")
+		setupPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Submission-out-0")))
+		#setupPathsFromRoot(compilation, project, "z:\\uaa")
 		compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 	wdefaultBuild(project, setupSettCallback)
 

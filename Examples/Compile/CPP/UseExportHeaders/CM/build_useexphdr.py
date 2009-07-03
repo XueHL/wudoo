@@ -31,7 +31,7 @@ if (__name__ == "__main__"):
 	import os
 	def setupBuildRoot(compilation, project):
 		pass
-		wsetupDefaultPathsFromRoot(compilation, project)
-#		wsetupDefaultPathsFromRoot(compilation, project, "z:\\uaa")
+		setupPathsFromRoot(compilation, project)
+#		setupPathsFromRoot(compilation, project, "z:\\uaa")
 	project = getProject()
 	wdefaultBuild(project, setupBuildRoot)

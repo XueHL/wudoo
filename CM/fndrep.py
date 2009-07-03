@@ -1,7 +1,7 @@
 import os, sys
 
-SRC = "pendence"
-GOAL = "pendence"
+SRC = "setupPathsFromRoot"
+GOAL = "setupPathsFromRoot"
 
 def rec(p):
 	if p.find(".svn") > -1:

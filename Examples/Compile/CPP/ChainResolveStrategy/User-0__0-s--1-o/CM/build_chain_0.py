@@ -42,7 +42,7 @@ if (__name__ == "__main__"):
 	resStrat_0_s_1_o.addStage(ifLib1ThenObj)
 
 	def setupSettCallback(compilation, project):
-		wsetupDefaultPathsFromRoot(compilation, project)
+		setupPathsFromRoot(compilation, project)
 		compilation.setResolveDependenceStrategy(resStrat_0_s_1_o)
 
 	wdefaultBuild(project, setupSettCallback)

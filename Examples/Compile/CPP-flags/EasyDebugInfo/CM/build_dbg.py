@@ -23,7 +23,7 @@ def getProject():
 if (__name__ == "__main__"):
 	import os
 	def setupSettCallback(compilation, project):
-		wsetupDefaultPathsFromRoot(compilation, project)
+		setupPathsFromRoot(compilation, project)
 		compilation.setDebugInfoLevel(100)
 	project = getProject()
 	wdefaultBuild(project, setupSettCallback)
