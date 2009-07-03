@@ -57,3 +57,39 @@ class TestConsole2Obj(unittest.TestCase):
 			}
 			, consInfo.__dict__
 			)
+
+	def testKWDefaultBool(self):
+		consInfo = Console2obj.argArr2obj(
+			[
+			"python",
+			"TestConsole2Obj.py",
+			"--setField", "v0", "v1"
+			],
+			"notSetField0",
+			boolField = True,
+			)
+		self.assertEquals(
+			{
+			"setField": ["v0", "v1"], 
+			"notSetField0": [],
+			"boolField": True,
+			}
+			, consInfo.__dict__
+			)
+
+	def testBool(self):
+		consInfo = Console2obj.argArr2obj(
+			[
+			"python",
+			"TestConsole2Obj.py",
+			"--setField", "v0", "v1",
+			"-b-boolField", "True",
+			]
+			)
+		self.assertEquals(
+			{
+			"setField": ["v0", "v1"], 
+			"boolField": True,
+			}
+			, consInfo.__dict__
+			)
