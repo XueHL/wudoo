@@ -6,12 +6,12 @@ class SystemWillExecutor(IWillExecutor):
 		#print cmd
 		result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 		if self.__isErr(result):
-			print result[0]
+			print result[1]
 
 	def __isErr(self, stdErrOut):
-		err = stdErrOut[0]
+		err = stdErrOut[1]
 		if err is None:
 			return False
-		if len(err) == 0:
+		if len(err) == 1:
 			return False
 		return True

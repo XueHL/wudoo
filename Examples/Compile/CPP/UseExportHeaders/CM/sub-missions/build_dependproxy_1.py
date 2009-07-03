@@ -17,10 +17,10 @@ import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
 project.addDependenceProject(statLibPrj)
 
-addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
-import build_exphdr
-exportHdrPrj = build_exphdr.getProject()
-project.addDependenceProject(exportHdrPrj)
+#addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
+#import build_exphdr
+#exportHdrPrj = build_exphdr.getProject()
+#project.addDependenceProject(exportHdrPrj)
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
