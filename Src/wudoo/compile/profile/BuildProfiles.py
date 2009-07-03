@@ -10,15 +10,19 @@ DEFAULT_PROFILE_NAME = "default"
 BUILD_ROOT_ARGUMENT_NAME = "buildroot"
 
 def releaseProfileExecutor(compilation, project, argsObj):
-	root = None
 	root = argsObj.buildroot[0]
 	setupPathsFromRoot(compilation, project, root)
 
+def developProfileExecutor(compilation, project, argsObj):
+	releaseProfileExecutor(compilation, project, argsObj)
+	compilation.setDebugInfoLevel(100)
+	compilation.setOptimisationLevel(0)
+
 EXECUTORS = {
-	RELEASE_PROFILE_NAME: releaseProfileExecutor
+	RELEASE_PROFILE_NAME: releaseProfileExecutor,
+	DEVELOP_PROFILE_NAME: developProfileExecutor,
 }
 EXECUTORS[DEFAULT_PROFILE_NAME] = EXECUTORS[RELEASE_PROFILE_NAME]
-EXECUTORS[DEVELOP_PROFILE_NAME] = EXECUTORS[RELEASE_PROFILE_NAME]
 
 def applyProfile(compilation, project, profileName, argsObj):
 	profileExecutor = EXECUTORS[profileName]
