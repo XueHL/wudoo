@@ -4,6 +4,7 @@ from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilatio
 class StaticLibBuilder(IBuilder):
 	def build(self, emptyCompilationResult, compilation, willExecutor):
 		project = emptyCompilationResult.getProject()
+		#project.findSources()
 		objectsCompilationResult = ObjectsCompilationResult(project)
 		compilation.buildCompilationResult(objectsCompilationResult, willExecutor)
 		staticLibFSItem = compilation.getAllocateStrategy().allocateStaticLib(project)

@@ -95,6 +95,7 @@ class TestEasyExamples(unittest.TestCase):
 
 	def testProxyStatlibEquilibristic(self):
 		project = TestEasyExamples.build_dependproxy_prj.getProject()
+		project.findSources()
 		tmpDir = tempfile.mkdtemp()
 		from wudoo.compile.cpp.Front import wdefaultBuild, setupPathsFromRoot  
 		def setupTmpdirCallback(compilation, project):

@@ -33,10 +33,9 @@ class TestCompilation(unittest.TestCase):
 		except Exception, e:
 			ex = e
 		self.assertTrue(ex is not None)
+		project.findSources()
 		srcs = project.getSourceItems()
 		src = srcs[0]
 		if src.getName() != "Main":
 			src = srcs[1]
 		self.assertEquals("Main", src.getName())
-		
-		

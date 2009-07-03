@@ -10,5 +10,3 @@ class ObjectsBuilder(IBuilder):
 			compiler.compile(src, project, compilation, willExecutor)
 			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
-			
-		
