@@ -1,17 +1,12 @@
 import sys
 
-class Empty:
+class EmptyObj:
 	pass
 
-def argArr2obj(argv, *defaultsEmptyList, **kwDefaults):
-	obj = Empty()
+def argArr2obj(argv, obj = None):
+	if obj is None:
+		obj = EmptyObj()
 	dict = obj.__dict__
-
-	for default in defaultsEmptyList:
-		dict[default] = []
-
-	for k in kwDefaults.keys():
-		dict[k] = kwDefaults[k]
 
 	top = None
 	bn = None
@@ -32,5 +27,5 @@ def argArr2obj(argv, *defaultsEmptyList, **kwDefaults):
 				top.append(it)
 	return obj
 
-def consoleaArgs2obj(*args, **kwargs):
-	return argArr2obj(sys.argv, *args, **kwargs)
+def consoleaArgs2obj(obj = None):
+	return argArr2obj(sys.argv, obj)

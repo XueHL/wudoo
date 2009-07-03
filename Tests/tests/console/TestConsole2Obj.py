@@ -38,58 +38,28 @@ class TestConsole2Obj(unittest.TestCase):
 		consInfo = Console2obj.consoleaArgs2obj()
 		self.assertEquals({}, consInfo.__dict__)
 	
-	def testDefaultEmptyList(self):
+	def testDefaults(self):
+		class Defl: pass
+		obj = Defl()
+		obj.setField = ["v0"]
+		obj.setBoolField = True
+		obj.resetBoolField = False
 		consInfo = Console2obj.argArr2obj(
 			[
 			"python",
 			"TestConsole2Obj.py",
-			"--setField", "v0", "v1"
+			"--setField", "v1", "v2",
+			"-b-resetBoolField", "True",
+			"-b-notsetBoolField", "True"
 			],
-			"notSetField0",
-			"notSetField1",
-			"setField",
+			obj,
 			)
 		self.assertEquals(
 			{
-			"setField": ["v0", "v1"], 
-			"notSetField0": [],
-			"notSetField1": [],
-			}
-			, consInfo.__dict__
-			)
-
-	def testKWDefaultBool(self):
-		consInfo = Console2obj.argArr2obj(
-			[
-			"python",
-			"TestConsole2Obj.py",
-			"--setField", "v0", "v1"
-			],
-			"notSetField0",
-			boolField = True,
-			)
-		self.assertEquals(
-			{
-			"setField": ["v0", "v1"], 
-			"notSetField0": [],
-			"boolField": True,
-			}
-			, consInfo.__dict__
-			)
-
-	def testBool(self):
-		consInfo = Console2obj.argArr2obj(
-			[
-			"python",
-			"TestConsole2Obj.py",
-			"--setField", "v0", "v1",
-			"-b-boolField", "True",
-			]
-			)
-		self.assertEquals(
-			{
-			"setField": ["v0", "v1"], 
-			"boolField": True,
+			"setField": ["v1", "v2"], 
+			"setBoolField": True, 
+			"resetBoolField": True, 
+			"notsetBoolField": True,
 			}
 			, consInfo.__dict__
 			)

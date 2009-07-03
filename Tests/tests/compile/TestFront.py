@@ -12,5 +12,5 @@ class TestCompilation(unittest.TestCase):
 		from wudoo.console import Console2obj
 		project = TestCompilation.build_useexphdr_prj.getProject()
 		compilation = DefaultCPPCompilation(project)
-		argsObj = Console2obj.argArr2obj("--profile develop".split(" "), buildroot = [None])
+		argsObj = Console2obj.argArr2obj("--profile develop".split(" "), DefaultArgsObj())
 		profilesChain(compilation, project, argsObj)
