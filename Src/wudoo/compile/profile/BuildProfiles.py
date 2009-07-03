@@ -11,8 +11,7 @@ BUILD_ROOT_ARGUMENT_NAME = "buildroot"
 
 def releaseProfileExecutor(compilation, project, argsObj):
 	root = None
-	if hasattr(argsObj, BUILD_ROOT_ARGUMENT_NAME):
-		root = argsObj.buildroot[0]
+	root = argsObj.buildroot[0]
 	setupPathsFromRoot(compilation, project, root)
 
 EXECUTORS = {
