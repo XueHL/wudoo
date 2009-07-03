@@ -26,5 +26,5 @@ if (__name__ == "__main__"):
 	import os
 	project = getProject()
 	def setupSettCallback(compilation, project):
-		wsetupDefaultPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Ched-Out")))
+		setupPathsFromRoot(compilation, project, os.path.normpath(os.path.join("Ched-Out")))
 	wdefaultBuild(project, setupSettCallback)

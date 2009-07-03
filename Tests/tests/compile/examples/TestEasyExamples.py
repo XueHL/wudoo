@@ -32,9 +32,9 @@ class TestEasyExamples(unittest.TestCase):
 #		compilation.setAllocateObjStrategy(strat)
 #		compilation.setCompiler(GPPCompiler())
 		we = StoreCallsWillExecutor()
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		def setupCompilationCallback(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupCompilationCallback, we)
 #		compilation.compile(we)
 #		compilation.resolveDependings(we)
@@ -53,14 +53,14 @@ class TestEasyExamples(unittest.TestCase):
 		
 	def testEasyBuildReal(self):
 		from tests.compile.TestCompilation import TestCompilation
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		project = TestCompilation.build_easy_prj.getProject()
 #		compilation = DefaultCPPCompilation(project)
 		tmpDir = tempfile.mkdtemp()
 #		strat = AllocInSpecifDirStrategy(tmpDir, ".o")
 #		compilation.setAllocateObjStrategy(strat)
 		def setupCompilationCallback(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupCompilationCallback)
 #		compilation.buildWorkFlow(SystemWillExecutor())
 		project = Project(tmpDir)
@@ -76,9 +76,9 @@ class TestEasyExamples(unittest.TestCase):
 		project = TestEasyExamples.build_useexphdr_prj.getProject()
 #		compilation = DefaultCPPCompilation(project)
 		tmpDir = tempfile.mkdtemp()
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		def setupCompilationCallback(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupCompilationCallback)
 #		compilation.setGoalFSItem(FSItem(tmpDir, "Bin", project.getName() + ".exe"));
 #		compilation.setObjRoot(os.path.join(tmpDir, "Obj"))
@@ -96,9 +96,9 @@ class TestEasyExamples(unittest.TestCase):
 	def testProxyStatlibEquilibristic(self):
 		project = TestEasyExamples.build_dependproxy_prj.getProject()
 		tmpDir = tempfile.mkdtemp()
-		from wudoo.compile.cpp.Front import wdefaultBuild, wsetupDefaultPathsFromRoot  
+		from wudoo.compile.cpp.Front import wdefaultBuild, setupPathsFromRoot  
 		def setupTmpdirCallback(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupTmpdirCallback)
 	
 		project = Project(tmpDir)

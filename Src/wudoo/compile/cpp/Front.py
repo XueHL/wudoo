@@ -3,14 +3,18 @@ import os, sys
 from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
+from wudoo.compile.cpp.SetupCompilationUtils import *
 from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 from wudoo.compile.dependence.ChainCaseDependencyResolve import ChainCaseDependencyResolve
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
+from wudoo.compile.profile import BuildProfiles
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
 from wudoo.SystemWillExecutor import SystemWillExecutor
 from wudoo.FSItem import FSItem
+
+from wudoo.console import Console2obj
 
 DEPENT_MODULE_PATH_STORRAGE = {}
 
@@ -26,32 +30,31 @@ def DefaultCPPCompilation(
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
-def wsetupDefaultPathsFromRoot(compilation, project, root = None):
-	if root is None:
-		root = os.path.join(project.getRoot(), "Out")
-	allocStrat = OutputRootBasedAllocate(
-		root = root,
-		objFolder = "Obj",
-		objExt = ".o",
-		binFolder = "Bin",
-		outerFolder = "Outer",
-		rootProject = project
-		)
-	compilation.setAllocateStrategy(allocStrat)
+def nopSetupCompilationCallback(compilation, project):
+	pass
+	
+def profilesChain(compilation, project, argsObj = None):
+	if argsObj is None:
+		argsObj = Console2obj.consoleaArgs2obj()
+	if not hasattr(argsObj, "profile"):
+		argsObj.profile = []
+	if not (BuildProfiles.DEFAULT_PROFILE_NAME in argsObj.profile):
+		argsObj.profile = [BuildProfiles.DEFAULT_PROFILE_NAME] + argsObj.profile
+	for profileName in argsObj.profile:
+		BuildProfiles.applyProfile(compilation, project, profileName, argsObj)
 	
 def wdefaultBuild(
 		project, 
-		setupCompilationCallback = wsetupDefaultPathsFromRoot, 
+		setupCompilationCallback = nopSetupCompilationCallback, 
 		willExecutor = SystemWillExecutor(),
-		compilationResult = None
 		):
 	compilation = DefaultCPPCompilation(project)
+	profilesChain(compilation, project)
 	setupCompilationCallback(compilation, project)
-	if compilationResult is None:
-		compilationResult = ExecutableCompilationResult(
-			project, 
-			compilation.getAllocateStrategy().allocateExecutable(project)
-			)
+	compilationResult = ExecutableCompilationResult(
+		project, 
+		compilation.getAllocateStrategy().allocateExecutable(project)
+		)
 	compilation.buildCompilationResult(compilationResult, willExecutor)
 
 def moduleFile2basePath(modFile):

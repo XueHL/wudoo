@@ -20,7 +20,7 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_user1 as usr1prj
 	
 	def testTheLibraryExample(self):
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
 		tmp1 = os.path.join(tmpDir, "p1")
@@ -32,7 +32,7 @@ class TestStoringCompilation(unittest.TestCase):
 		 
 		usr0prj = TestStoringCompilation.usr0prj.getProject()
 		def setupTmpdirCallback0(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmp0)
+			setupPathsFromRoot(compilation, project, tmp0)
 			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr0prj, setupTmpdirCallback0, scwe)
@@ -72,7 +72,7 @@ class TestStoringCompilation(unittest.TestCase):
 		
 		usr1prj = TestStoringCompilation.usr1prj.getProject()
 		def setupTmpdirCallback1(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmp1)
+			setupPathsFromRoot(compilation, project, tmp1)
 			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(usr1prj, setupTmpdirCallback1, scwe)
@@ -119,7 +119,7 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_chain_1 as chain1prj
 
 	def testChainResolve_so_ss(self):
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
 		tmp1 = os.path.join(tmpDir, "p1")
@@ -131,7 +131,7 @@ class TestStoringCompilation(unittest.TestCase):
 		 
 		chain0prj = TestStoringCompilation.chain0prj.getProject()
 		def setupTmpdirCallback0(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmp0)
+			setupPathsFromRoot(compilation, project, tmp0)
 			#compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 			resStrat_0_s_1_o = ChainCaseDependencyResolve(StaticLibResolveDependence())
 			def ifLib1ThenObj(project):
@@ -180,7 +180,7 @@ class TestStoringCompilation(unittest.TestCase):
 		
 		chain1prj = TestStoringCompilation.chain1prj.getProject()
 		def setupTmpdirCallback1(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmp1)
+			setupPathsFromRoot(compilation, project, tmp1)
 			compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(chain1prj, setupTmpdirCallback1, scwe)
@@ -227,7 +227,7 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_dbg as dbgprj
 
 	def testDbgInfo(self):
-		from wudoo.compile.cpp.Front import wsetupDefaultPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
@@ -237,7 +237,7 @@ class TestStoringCompilation(unittest.TestCase):
 		 
 		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
 		def setupTmpdirCallback0(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 			compilation.setDebugInfoLevel(100)
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(dbginfoprj, setupTmpdirCallback0, scwe)
@@ -287,7 +287,7 @@ class TestStoringCompilation(unittest.TestCase):
 		 
 		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
 		def setupTmpdirCallback0(compilation, project):
-			wsetupDefaultPathsFromRoot(compilation, project, tmpDir)
+			setupPathsFromRoot(compilation, project, tmpDir)
 			#compilation.setDebugInfoLevel(100)
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(dbginfoprj, setupTmpdirCallback0, scwe)
