@@ -13,7 +13,6 @@ class BaseCompilation(ICompilation):
 		self.__buildersMap = {}
 		self.__debugInfoLevel = 0
 		self.__optimisationLevel = 100
-		project.findSources()
 		
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		builder = self.__buildersMap[emptyCompilationResult.__class__]
