@@ -37,3 +37,23 @@ class TestConsole2Obj(unittest.TestCase):
 	def testSysArgv(self):
 		consInfo = Console2obj.consoleaArgs2obj()
 		self.assertEquals({}, consInfo.__dict__)
+	
+	def testDefaultEmptyList(self):
+		consInfo = Console2obj.argArr2obj(
+			[
+			"python",
+			"TestConsole2Obj.py",
+			"--setField", "v0", "v1"
+			],
+			"notSetField0",
+			"notSetField1",
+			"setField",
+			)
+		self.assertEquals(
+			{
+			"setField": ["v0", "v1"], 
+			"notSetField0": [],
+			"notSetField1": [],
+			}
+			, consInfo.__dict__
+			)
