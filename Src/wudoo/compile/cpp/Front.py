@@ -35,9 +35,7 @@ def nopSetupCompilationCallback(compilation, project):
 	
 def profilesChain(compilation, project, argsObj = None):
 	if argsObj is None:
-		argsObj = Console2obj.consoleaArgs2obj("profile")
-	#if not hasattr(argsObj, "profile"):
-	#	argsObj.profile = []
+		argsObj = Console2obj.consoleaArgs2obj("profile", buildroot = [None])
 	if not (BuildProfiles.DEFAULT_PROFILE_NAME in argsObj.profile):
 		argsObj.profile = [BuildProfiles.DEFAULT_PROFILE_NAME] + argsObj.profile
 	for profileName in argsObj.profile:
