@@ -325,3 +325,53 @@ class TestStoringCompilation(unittest.TestCase):
 		
 		hellobuf = open(os.path.join(tmpDir, objPaths[1]), "r").read()
 		self.assertTrue(hellobuf.find("CPP-flags") < 0)
+
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+
+	sys.path.append(
+		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-skip", "EasySkip", "CM"))
+		)
+	import build_easyskip as skipprj
+
+	def testSkipStrat(self):
+		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
+		tmpDir = tempfile.mktemp()
+		
+		def faikGPF(self, project):
+			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
+		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+		 
+		skipinfoprj = TestStoringCompilation.skipprj.getProject()
+		def setupTmpdirCallback0(compilation, project):
+			setupPathsFromRoot(compilation, project, tmpDir)
+			compilation.setDebugInfoLevel(100)
+		scwe = StoreCallsWillExecutor()
+		wdefaultBuild(skipinfoprj, setupTmpdirCallback0, scwe)
+		trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		self.assertEqual(
+			[
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			], 
+			history
+			)
+		del history
+		swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+
+		project = Project(tmpDir)
+		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
+		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
+		project.findSources()
+		objItems = project.getSourceItems()
+		objPaths = [io.getPathNameExt(1) for io in objItems]
+		objPaths.sort()
+		self.assertEquals(
+			[
+			'Bin\\EasySkip.exe', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\main.o'
+			], 
+			objPaths
+			)
