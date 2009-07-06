@@ -328,12 +328,31 @@ class TestStoringCompilation(unittest.TestCase):
 
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
-	sys.path.append(
-		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-skip", "EasySkip", "CM"))
-		)
-	import build_easyskip as skipprj
+	def __recCP(src, dest):
+		if os.path.isfile(src):
+			b = open(src, "r").read()
+			if not os.path.exists(os.path.split(dest)[0]):
+				os.makedirs(os.path.split(dest)[0])
+			f = open(dest, "w")
+			f.write(b)
+			f.close()
+		else:
+			for sub in os.listdir(src):
+				TestStoringCompilation.recCP(os.path.join(src, sub), os.path.join(dest, sub))
+		pass
+	recCP = staticmethod(__recCP)
+
+	def __cloneSkipTest():
+		skroot = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-skip", "EasySkip"))
+		sktemp = tempfile.mktemp()
+		sys.path.append(os.path.join(sktemp, "CM"))
+		TestStoringCompilation.recCP(skroot, sktemp)
+		return sktemp
+	cloneSkipTest = staticmethod(__cloneSkipTest)
 
 	def testSkipStrat(self):
+		skroot = TestStoringCompilation.cloneSkipTest()
+		import build_easyskip as skipprj
 		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
 		tmpDir = tempfile.mktemp()
 		
@@ -342,17 +361,18 @@ class TestStoringCompilation(unittest.TestCase):
 		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
 		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
 		 
-		skipinfoprj = TestStoringCompilation.skipprj.getProject()
+		skipinfoprj = skipprj.getProject()
 		def setupTmpdirCallback0(compilation, project):
 			setupPathsFromRoot(compilation, project, tmpDir)
 			compilation.setDebugInfoLevel(100)
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(skipinfoprj, setupTmpdirCallback0, scwe)
-		trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
-		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		#trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		print skroot
+		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP-skip\\EasySkip\\Hdr" -g3 -O3', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
@@ -374,4 +394,17 @@ class TestStoringCompilation(unittest.TestCase):
 			'Bin\\EasySkip.exe', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\main.o'
 			], 
 			objPaths
+			)
+		
+		## no ch
+
+		scwe = StoreCallsWillExecutor()
+		wdefaultBuild(skipinfoprj, setupTmpdirCallback0, scwe)
+		#trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		self.assertEqual(
+			[
+			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O3', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			], 
+			history
 			)
