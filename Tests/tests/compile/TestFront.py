@@ -19,7 +19,6 @@ class TestFront(unittest.TestCase):
 		willExecutor = StoreCallsWillExecutor()
 		def setupCompilationCallback(compilation, project):
 			profilesChain(compilation, project, argsObj)
-			pass
 		wdefaultBuild(project, setupCompilationCallback, willExecutor)
 		history = willExecutor.history
 		history = "@@@".join(history).replace(tmpDir, "__WS__").split("@@@")
