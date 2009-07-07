@@ -33,5 +33,6 @@ class TestCompiler(unittest.TestCase):
 		srcItem = FSItem("C:/Work/Src/main.cpp")
 		objItem = FSItem("C:/Work/Out/Obj/main.o")
 		self.__map = { srcItem: objItem }
-		compiler.compile(srcItem, self, self, we)
+		objItem = self.allocateObj(srcItem, None)
+		compiler.compile(srcItem, objItem, self, self, we)
 		self.assertEquals(["g++ -c \"C:/Work/Src/main.cpp\" -o \"C:/Work/Out/Obj/main.o\"  -g0 -O3"], we.history)

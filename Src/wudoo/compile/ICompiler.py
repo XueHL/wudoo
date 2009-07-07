@@ -1,5 +1,5 @@
 class ICompiler:
-	def compile(self, src, project, compilation, willExecutor):
+	def compile(self, srcFSItem, objFSItem, project, compilation, willExecutor):
 		raise NotImplementedError()
 	
 	def linkExecutable(self, objectFSItems, goalFSItem, willExecutor):

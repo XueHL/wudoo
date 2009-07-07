@@ -12,19 +12,16 @@ class GPPCompiler(BaseCompiler):
 		self.__arCmd = GPPCompiler.GPP_ARCHIVE_CMD
 		self.__preCompileStrategy = preCompileStrategy
 
-	def compile(self, src, project, compilation, willExecutor):
-		obj = compilation.getAllocateStrategy().allocateObj(src, project)
-		if self.getSkipItemsStrategy().skip(src, obj):
-			return
+	def compile(self, srcFSItem, objFSItem, project, compilation, willExecutor):
 		command = self.__gppCmd + \
 			" -c " + \
-			'"' + src.getPathNameExt() + '"' + \
+			'"' + srcFSItem.getPathNameExt() + '"' + \
 			" -o " + \
-			'"' + obj.getPathNameExt() + '"' + \
+			'"' + objFSItem.getPathNameExt() + '"' + \
 			self.__buildHdrString(project) + \
 			" " + self.__getFlags(compilation) + \
 			""
-		self.__preCompileStrategy.onPreCompile(obj)
+		self.__preCompileStrategy.onPreCompile(objFSItem)
 		willExecutor.execute(command)
 	
 	def linkExecutable(self, objectFSItems, goalFSItem, willExecutor):
