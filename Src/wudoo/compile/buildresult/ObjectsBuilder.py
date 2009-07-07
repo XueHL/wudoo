@@ -1,12 +1,19 @@
 from wudoo.compile.buildresult.IBuilder import IBuilder
 from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilationResult
+from wudoo.compile.CompileAllStrategy import CompileAllStrategy
 
 class ObjectsBuilder(IBuilder):
+	def __init__(self, skipItemsStrategy = CompileAllStrategy()):
+		self.__skipItemsStrategy = skipItemsStrategy
+	
 	def build(self, emptyCompilationResult, compilation, willExecutor):
 		project = emptyCompilationResult.getProject()
 		project.findSources()
 		compiler = compilation.getCompiler()
 		for src in project.getSourceItems():
-			compiler.compile(src, project, compilation, willExecutor)
+			obj = compilation.getAllocateStrategy().allocateObj(src, project)
+			if self.__skipItemsStrategy.skip(src, obj):
+				continue
+			compiler.compile(src, obj, project, compilation, willExecutor)
 			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
