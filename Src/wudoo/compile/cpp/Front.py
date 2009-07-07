@@ -8,7 +8,7 @@ from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolve
 from wudoo.compile.dependence.ChainCaseDependencyResolve import ChainCaseDependencyResolve
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationResult
-from wudoo.compile.profile import BuildProfiles
+from wudoo.compile.cpp.profile import BuildProfiles
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
 from wudoo.SystemWillExecutor import SystemWillExecutor
