@@ -1,6 +1,7 @@
 import os
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
+from wudoo.compile.CRCSkipItemStrategy import CRCSkipItemStrategy
 from wudoo.compile.cpp.SetupCompilationUtils import *
 
 RELEASE_PROFILE_NAME = "release"
@@ -17,6 +18,7 @@ def developProfileExecutor(compilation, project, argsObj):
 	releaseProfileExecutor(compilation, project, argsObj)
 	compilation.setDebugInfoLevel(100)
 	compilation.setOptimisationLevel(0)
+	compilation.setSkipItemsStrategy(CRCSkipItemStrategy())
 
 EXECUTORS = {
 	RELEASE_PROFILE_NAME: releaseProfileExecutor,

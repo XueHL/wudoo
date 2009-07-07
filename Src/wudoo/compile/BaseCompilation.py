@@ -4,6 +4,7 @@ from wudoo.FSItem import FSItem
 
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
+from wudoo.compile.CompileAllStrategy import CompileAllStrategy
 
 class BaseCompilation(ICompilation):
 	def __init__(self, project, *faik0, **faik1):
@@ -13,6 +14,7 @@ class BaseCompilation(ICompilation):
 		self.__buildersMap = {}
 		self.__debugInfoLevel = 0
 		self.__optimisationLevel = 100
+		self.__skipItemsStrategy = CompileAllStrategy()
 		
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		builder = self.__buildersMap[emptyCompilationResult.__class__]
@@ -50,3 +52,9 @@ class BaseCompilation(ICompilation):
 
 	def getOptimisationLevel(self):
 		return self.__optimisationLevel
+
+	def setSkipItemsStrategy(self, skipItemsStrategy):
+		self.__skipItemsStrategy = skipItemsStrategy
+
+	def getSkipItemsStrategy(self):
+		return self.__skipItemsStrategy
