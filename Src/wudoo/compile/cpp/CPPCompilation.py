@@ -29,3 +29,10 @@ class CPPCompilation(BaseCompilation):
 			StaticLibCompilationResult,
 			StaticLibBuilder()
 			)
+
+	def setSkipItemsStrategy(self, skipItemsStrategy):
+		BaseCompilation.setSkipItemsStrategy(self, skipItemsStrategy)
+		self.registerBuilder(
+			ObjectsCompilationResult,
+			ObjectsBuilder(skipItemsStrategy)
+			)
