@@ -17,3 +17,4 @@ class ObjectsBuilder(IBuilder):
 			compiler.compile(src, obj, project, compilation, willExecutor)
 			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
+			self.__skipItemsStrategy.onCompiled(src, obj)
