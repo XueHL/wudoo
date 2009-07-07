@@ -14,6 +14,8 @@ class GPPCompiler(BaseCompiler):
 
 	def compile(self, src, project, compilation, willExecutor):
 		obj = compilation.getAllocateStrategy().allocateObj(src, project)
+		if self.getSkipItemsStrategy().skip(src, obj):
+			return
 		command = self.__gppCmd + \
 			" -c " + \
 			'"' + src.getPathNameExt() + '"' + \
