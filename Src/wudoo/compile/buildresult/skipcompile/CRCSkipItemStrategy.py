@@ -6,7 +6,8 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 	def __init__(self, objExt = ".skipcrc"):
 		self.__objExt = objExt
 
-	def skip(self, srcFsItem, objFsItem):
+	def skip(self, srcFsItem, compilation, project):
+		objFsItem = compilation.getAllocateStrategy().allocateObj(srcFsItem, project)
 		crcFSItem = self.__getCRCFile(objFsItem)
 		if not os.path.exists(crcFSItem.getPathNameExt()):
 			return False
@@ -14,7 +15,8 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 		bufSrc = open(srcFsItem.getPathNameExt(), "r").read()
 		return bufSrc == bufCmpld
 
-	def onCompiled(self, srcFsItem, objFsItem):
+	def onCompiled(self, srcFsItem, compilation, project):
+		objFsItem = compilation.getAllocateStrategy().allocateObj(srcFsItem, project)
 		buf = open(srcFsItem.getPathNameExt(), "r").read()
 		crcFSItem = self.__getCRCFile(objFsItem)
 		f = open(crcFSItem.getPathNameExt(), "w")

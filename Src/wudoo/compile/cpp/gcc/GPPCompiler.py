@@ -1,6 +1,7 @@
 import os
 from wudoo.compile.BaseCompiler import BaseCompiler
 from wudoo.compile.CreateDestOnPreCompile import CreateDestOnPreCompile
+from wudoo.fsrecutils import CPPDependUtils
 
 class GPPCompiler(BaseCompiler):
 	GPP_COMPILER_CMD = "g++"
@@ -49,22 +50,11 @@ class GPPCompiler(BaseCompiler):
 		willExecutor.execute(command)
 
 	def __buildHdrString(self, project):
-		allhdrs = []
-		self.__addHdrFolders(project.getHdrFolders(), project, allhdrs)
-		self.__dfsAddExportHderFromDependences(project, allhdrs)
+		allhdrs = CPPDependUtils.getAllHeadersByProject(project)
 		result = " "
 		for hdr in allhdrs:
 			result += ' -I"' + hdr + '"'
 		return result
-
-	def __dfsAddExportHderFromDependences(self, project, allhdrs):
-		self.__addHdrFolders(project.getExportHdrFolders(), project, allhdrs)
-		for depPrj in project.getDependences():
-			self.__dfsAddExportHderFromDependences(depPrj, allhdrs)
-
-	def __addHdrFolders(self, folderList, project, dest):
-		for hdr in folderList:
-			dest.append(os.path.join(project.getRoot(), hdr))
 
 	def __getFlags(self, compilation):
 		return self.__getDebugInfoFlags(compilation) + " " + \

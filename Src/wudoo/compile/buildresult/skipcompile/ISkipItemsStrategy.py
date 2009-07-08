@@ -1,6 +1,6 @@
 class ISkipItemsStrategy:
-	def skip(self, srcFsItem, objFsItem):
+	def skip(self, srcFsItem, compilation, project):
 		raise NotImplementedError()
 
-	def onCompiled(self, srcFsItem, objFsItem):
+	def onCompiled(self, srcFsItem, compilation, project):
 		raise NotImplementedError()
