@@ -1,6 +1,7 @@
 import os, sys
 from wudoo.compile import SourceFilterColl
 from wudoo.FSItem import FSItem
+from wudoo.fsrecutils import CPPDependUtils
 
 class Project:
 	"""\
@@ -41,23 +42,11 @@ Structure.\
 		return self.__sourceFolders
 	
 	def findSources(self):
-		self.__sourceItems = []
-		for srcFold in self.__sourceFolders:
-			self.__recFS(srcFold, "")
+		self.__sourceItems = CPPDependUtils.getFilteredFiles(self.__rootPath, self.__sourceFolders, self.__filter)
 
 	def getSourceItems(self):
 		return self.__sourceItems
 	
-	def __recFS(self, srcFold, cur):
-		curGl = os.path.join(self.__rootPath, srcFold, cur)
-		if os.path.isfile(curGl):
-			if self.__filter.accepts(curGl):
-				self.__sourceItems.append(FSItem(self.__rootPath, srcFold, cur))
-		else:
-			for sub in os.listdir(curGl):
-				curPr = os.path.join(cur, sub)
-				self.__recFS(srcFold, curPr);
-
 	def addDependenceProject(self, dependence):
 		self.__dependences.append(dependence)
 
