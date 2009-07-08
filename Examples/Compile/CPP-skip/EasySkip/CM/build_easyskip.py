@@ -28,4 +28,8 @@ def getProject():
 ### ### ### ### ### ### ### ### ### ### 
 if (__name__ == "__main__"):
 	project = getProject()
-	wdefaultBuild(project)
+	def setupSettCallback(compilation, project):
+		argsObj = DefaultArgsObj()
+		argsObj.profile = ["develop"]
+		profilesChain(compilation, project, argsObj)
+	wdefaultBuild(project, setupSettCallback)
