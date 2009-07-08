@@ -8,5 +8,5 @@ class IAllocateStrategy:
 	def allocateStaticLib(self, project):
 		raise NotImplementedError()
 
-	def allocateSingleProjInfo(self, project, typeStr):
+	def allocateSingleCompileInfo(self, typeStr):
 		raise NotImplementedError()
