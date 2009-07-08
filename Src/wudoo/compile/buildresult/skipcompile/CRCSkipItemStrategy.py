@@ -1,6 +1,6 @@
 import os
 from wudoo.FSItem import FSItem
-from wudoo.compile.ISkipItemsStrategy import ISkipItemsStrategy
+from wudoo.compile.buildresult.skipcompile.ISkipItemsStrategy import ISkipItemsStrategy
 
 class CRCSkipItemStrategy(ISkipItemsStrategy):
 	def __init__(self, objExt = ".skipcrc"):

@@ -1,6 +1,6 @@
 from wudoo.compile.buildresult.IBuilder import IBuilder
 from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilationResult
-from wudoo.compile.CompileAllStrategy import CompileAllStrategy
+from wudoo.compile.buildresult.skipcompile.CompileAllStrategy import CompileAllStrategy
 
 class ObjectsBuilder(IBuilder):
 	def __init__(self, skipItemsStrategy = CompileAllStrategy()):
