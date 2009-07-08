@@ -36,4 +36,9 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 	
 	def allocateStaticLib(self, project):
 		return FSItem(self.__outerFolder, project.getName() + self.__libext)
-		
+
+	def allocateSingleProjInfo(self, project, typeStr):
+		if typeStr[0] != '.':
+			typeStr = '.' + typeStr
+		path = [self.__objFolder, self.__rootProject.getName() + "-info" + typeStr]
+		return FSItem(*path)
