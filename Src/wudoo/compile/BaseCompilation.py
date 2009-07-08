@@ -4,7 +4,7 @@ from wudoo.FSItem import FSItem
 
 from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
-from wudoo.compile.CompileAllStrategy import CompileAllStrategy
+from wudoo.compile.buildresult.skipcompile.CompileAllStrategy import CompileAllStrategy
 
 class BaseCompilation(ICompilation):
 	def __init__(self, project, *faik0, **faik1):

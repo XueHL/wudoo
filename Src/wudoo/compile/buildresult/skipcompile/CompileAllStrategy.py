@@ -1,4 +1,4 @@
-from wudoo.compile.ISkipItemsStrategy import ISkipItemsStrategy
+from wudoo.compile.buildresult.skipcompile.ISkipItemsStrategy import ISkipItemsStrategy
 
 class CompileAllStrategy(ISkipItemsStrategy):
 	def skip(self, srcFsItem, objFsItem):
