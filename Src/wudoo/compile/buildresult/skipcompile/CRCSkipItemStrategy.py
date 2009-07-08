@@ -1,4 +1,5 @@
 import os
+import pickle
 from wudoo.FSItem import FSItem
 from wudoo.compile.buildresult.skipcompile.ISkipItemsStrategy import ISkipItemsStrategy
 
@@ -7,20 +8,29 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 		self.__objExt = objExt
 
 	def skip(self, srcFsItem, compilation, project):
-		objFsItem = compilation.getAllocateStrategy().allocateObj(srcFsItem, project)
-		crcFSItem = self.__getCRCFile(objFsItem)
+		crcFSItem = compilation.getAllocateStrategy().allocateSingleProjInfo(project, self.__objExt)
 		if not os.path.exists(crcFSItem.getPathNameExt()):
 			return False
-		bufCmpld = open(crcFSItem.getPathNameExt(), "r").read()
+		crcStorr = open(crcFSItem.getPathNameExt(), "r").read()
+		crcStorr = pickle.loads(crcStorr)
+		if not crcStorr.has_key(srcFsItem.getPathNameExt()):
+			return False
+		bufCmpld = crcStorr[srcFsItem.getPathNameExt()]
 		bufSrc = open(srcFsItem.getPathNameExt(), "r").read()
 		return bufSrc == bufCmpld
 
 	def onCompiled(self, srcFsItem, compilation, project):
-		objFsItem = compilation.getAllocateStrategy().allocateObj(srcFsItem, project)
+		crcFSItem = compilation.getAllocateStrategy().allocateSingleProjInfo(project, self.__objExt)
+		if os.path.exists(crcFSItem.getPathNameExt()):
+			crcStorr = open(crcFSItem.getPathNameExt(), "r").read()
+			crcStorr = pickle.loads(crcStorr)
+		else:
+			crcStorr = {}
 		buf = open(srcFsItem.getPathNameExt(), "r").read()
-		crcFSItem = self.__getCRCFile(objFsItem)
+		crcStorr[srcFsItem.getPathNameExt()] = buf
 		f = open(crcFSItem.getPathNameExt(), "w")
-		f.write(buf)
+		crcStorr = pickle.dumps(crcStorr)
+		f.write(crcStorr)
 		f.close()
 
 	def __getCRCFile(self, objFSItem):

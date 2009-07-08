@@ -395,7 +395,7 @@ class TestStoringCompilation(unittest.TestCase):
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\EasySkip.exe', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-0-nch.skipcrc', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\foo-1-ch.skipcrc', 'Obj\\Src\\main.o', 'Obj\\Src\\main.skipcrc'
+			'Bin\\EasySkip.exe', 'Obj\\EasySkip-info.skipcrc', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\main.o',
 			], 
 			objPaths
 			)
