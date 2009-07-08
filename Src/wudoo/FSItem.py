@@ -7,6 +7,9 @@ class FSItem:
 	def getPathNameExt(self, start = 0):
 		return os.path.join(*self.__pathSteps[start:])
 	
+	#def getPathName(self, start = 0):
+	#	return os.path.splitext(self.getPathNameExt(start))[0]
+
 	def getPath(self, start = 0):
 		if len(self.__pathSteps) <= 1:
 			return ""

@@ -373,7 +373,10 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
@@ -385,14 +388,14 @@ class TestStoringCompilation(unittest.TestCase):
 
 		project = Project(tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
-		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
+		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a", "skipcrc": "skipcrc"}));
 		project.findSources()
 		objItems = project.getSourceItems()
 		objPaths = [io.getPathNameExt(1) for io in objItems]
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\EasySkip.exe', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\main.o'
+			'Bin\\EasySkip.exe', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-0-nch.skipcrc', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\foo-1-ch.skipcrc', 'Obj\\Src\\main.o', 'Obj\\Src\\main.skipcrc'
 			], 
 			objPaths
 			)
@@ -404,7 +407,10 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
@@ -423,7 +429,10 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)

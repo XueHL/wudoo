@@ -12,9 +12,8 @@ class ObjectsBuilder(IBuilder):
 		compiler = compilation.getCompiler()
 		for src in project.getSourceItems():
 			obj = compilation.getAllocateStrategy().allocateObj(src, project)
-			if self.__skipItemsStrategy.skip(src, obj):
-				continue
-			compiler.compile(src, obj, project, compilation, willExecutor)
+			if not self.__skipItemsStrategy.skip(src, obj):
+				compiler.compile(src, obj, project, compilation, willExecutor)
 			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
 			self.__skipItemsStrategy.onCompiled(src, obj)
