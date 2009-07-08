@@ -4,17 +4,23 @@ from wudoo.FSItem import FSItem
 def getAllHeadersByProject(project):
 	result = []
 	appendHeaderFolders(project.getHdrFolders(), project, result)
-	dfs_getAllHeadersByProject(project, result)
+	for depPrj in getAllDependProjects(project):
+		appendHeaderFolders(depPrj.getExportHdrFolders(), depPrj, result)
 	return result
-
-def dfs_getAllHeadersByProject(project, dest):
-	appendHeaderFolders(project.getExportHdrFolders(), project, dest)
-	for depPrj in project.getDependences():
-		dfs_getAllHeadersByProject(depPrj, dest)
 
 def appendHeaderFolders(folderList, project, dest):
 	for hdr in folderList:
 		dest.append(os.path.join(project.getRoot(), hdr))
+
+def getAllDependProjects(project):
+	dest = []
+	dfs_getAllDependProjects(project, dest)
+	return dest
+
+def dfs_getAllDependProjects(project, dest):
+	dest.append(project)
+	for depPrj in project.getDependences():
+		dfs_getAllDependProjects(depPrj, dest)
 
 def getFilteredFiles(rootPath, folderList, filter):
 	dest = []
@@ -31,3 +37,7 @@ def dfs_getFilteredFiles(rootPath, srcFold, cur, filter, dest):
 		for sub in os.listdir(curGl):
 			curPr = os.path.join(cur, sub)
 			dfs_getFilteredFiles(rootPath, srcFold, curPr, filter, dest)
+
+def getDependHeaders(project):
+	dest = []
+	return dest
