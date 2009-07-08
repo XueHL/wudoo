@@ -3,8 +3,11 @@ import pickle
 from wudoo.FSItem import FSItem
 from wudoo.compile.buildresult.skipcompile.ISkipItemsStrategy import ISkipItemsStrategy
 from wudoo.fsrecutils import CPPDependUtils
+from wudoo.compile import SourceFilterColl
 
 class CRCSkipItemStrategy(ISkipItemsStrategy):
+	HEADER_FILTER = None
+
 	def __init__(self, objExt = ".skipcrc"):
 		self.__objExt = objExt
 		self.__projects = set()
@@ -44,5 +47,9 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 	def __addProjectHeaders(self, project):
 		if project in self.__projects:
 			return
-		self.__projects.add(project)
-		headers = CPPDependUtils.getDependHeaders(project)
+		allHdrFolders = []
+		for depPrj in CPPDependUtils.getAllDependProjects(project):
+			self.__projects.add(depPrj)
+			CPPDependUtils.appendHeaderFolders(depPrj.getExportHdrFolders(), depPrj, allHdrFolders)
+			CPPDependUtils.appendHeaderFolders(depPrj.getHdrFolders(), depPrj, allHdrFolders)
+		allHeaderItems = CPPDependUtils.getFilteredFiles([], allHdrFolders, SourceFilterColl.HDR_SOURCE_FILTER)
