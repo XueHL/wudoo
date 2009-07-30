@@ -30,7 +30,7 @@ def parseSqbrbuf(buf_ptr):
 def isDigit(d):
 	return d >= '0' and d <= '9'
 
-def parseTime(buf_ptr):
+def parseTime(buf_ptr, date):
 	ddp = buf_ptr[0].find(":")
 	assert ddp > -1
 	bp = ddp - 1
@@ -38,9 +38,13 @@ def parseTime(buf_ptr):
 	if bp > 0 and isDigit(buf_ptr[0][bp - 1]):
 		bp -= 1
 	ep = ddp + 3
-	resultBuf = buf_ptr[0][bp:ep]
+	#resultBuf = buf_ptr[0][bp:ep]
+	hour = buf_ptr[0][bp:ddp]
+	hour = int(hour)
+	minute = buf_ptr[0][ddp+1:ep]
+	minute = int(minute)
 	buf_ptr[0] = buf_ptr[0][ep:]
-	return resultBuf
+	return datetime.datetime(year = date.year, month = date.month, day = date.day, hour = hour, minute = minute)
 
 def eatDayDistSep(buf_ptr):
 	p = buf_ptr[0].find(" - ")
@@ -53,7 +57,7 @@ class WorkDay:
 		self.dayEndTime = dayEndTime
 
 	def __str__(self):
-		return self.dayBegTime + " -> " + self.dayEndTime
+		return str(self.dayBegTime) + " -> " + str(self.dayEndTime) + " :: " + str(self.dayEndTime - self.dayBegTime)
 
 class WorkWeek:
 	def __init__(self, dayDists):
@@ -73,9 +77,9 @@ def parseMonth(buf):
 		eatDayNumber(buf_ptr, date)
 		qsbrbuf = parseSqbrbuf(buf_ptr)
 		if qsbrbuf is not None:
-			dayBegTime = parseTime(buf_ptr)
+			dayBegTime = parseTime(buf_ptr, date)
 			eatDayDistSep(buf_ptr)
-			dayEndTime = parseTime(buf_ptr)
+			dayEndTime = parseTime(buf_ptr, date)
 			lastWeek[date.weekday()] = WorkDay(dayBegTime, dayEndTime)
 		date += delta
 		if date.weekday() == 0:
