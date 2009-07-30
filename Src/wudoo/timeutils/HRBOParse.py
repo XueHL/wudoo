@@ -32,6 +32,13 @@ def isDigit(d):
 
 def parseTime(buf_ptr, date):
 	ddp = buf_ptr[0].find(":")
+	qstp = buf_ptr[0].find("?")
+	if qstp < ddp and qstp > -1:
+		buf_ptr[0] = buf_ptr[0][qstp+1:]
+		nw = datetime.datetime.now()
+		return datetime.datetime(year = nw.year, month = nw.month, day = nw.day, hour = nw.hour, minute = nw.minute)
+	if ddp > 3:#vihodnoy
+		return None
 	assert ddp > -1
 	bp = ddp - 1
 	assert isDigit(buf_ptr[0][bp])
@@ -76,11 +83,13 @@ def parseMonth(buf):
 	while date.month == initMonth:
 		eatDayNumber(buf_ptr, date)
 		qsbrbuf = parseSqbrbuf(buf_ptr)
-		if qsbrbuf is not None:
-			dayBegTime = parseTime(buf_ptr, date)
+		#
+		dayBegTime = parseTime(buf_ptr, date)
+		if dayBegTime is not None:
 			eatDayDistSep(buf_ptr)
 			dayEndTime = parseTime(buf_ptr, date)
 			lastWeek[date.weekday()] = WorkDay(dayBegTime, dayEndTime)
+		#
 		date += delta
 		if date.weekday() == 0:
 			weeks.append(WorkWeek(lastWeek))
