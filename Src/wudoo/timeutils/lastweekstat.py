@@ -9,6 +9,7 @@ from wudoo.timeutils.HRBOParse import *
 ### ### ### ### ### ### ### ### ### ###
 
 buf = open(inputName, "r").read()
-weekDists = parseWeekDists(buf)
-lastWeek = weekDists[len(weekDists) - 1]
-print lastWeek.dayDists
+weekList = parseMonth(buf)
+lastWeek = weekList[len(weekList) - 1]
+for dayDist in lastWeek.dayDists:
+	print dayDist

@@ -47,7 +47,19 @@ def eatDayDistSep(buf_ptr):
 	assert p == 0
 	buf_ptr[0] = buf_ptr[0][3:]
 
-def parseWeekDists(buf):
+class WorkDay:
+	def __init__(self, dayBegTime, dayEndTime):
+		self.dayBegTime = dayBegTime
+		self.dayEndTime = dayEndTime
+
+	def __str__(self):
+		return self.dayBegTime + " -> " + self.dayEndTime
+
+class WorkWeek:
+	def __init__(self, dayDists):
+		self.dayDists = dayDists
+
+def parseMonth(buf):
 	p = buf.find(START_CALENDAR_PATTERN)
 	p += len(START_CALENDAR_PATTERN)
 	buf = buf[p:]
@@ -55,6 +67,8 @@ def parseWeekDists(buf):
 	initMonth = date.month
 	delta = datetime.timedelta(days = 1)
 	buf_ptr = [buf]
+	weeks = []
+	lastWeek = [None] * 7
 	while date.month == initMonth:
 		eatDayNumber(buf_ptr, date)
 		qsbrbuf = parseSqbrbuf(buf_ptr)
@@ -62,5 +76,11 @@ def parseWeekDists(buf):
 			dayBegTime = parseTime(buf_ptr)
 			eatDayDistSep(buf_ptr)
 			dayEndTime = parseTime(buf_ptr)
+			lastWeek[date.weekday()] = WorkDay(dayBegTime, dayEndTime)
 		date += delta
-
+		if date.weekday() == 0:
+			weeks.append(WorkWeek(lastWeek))
+			lastWeek = [None] * 7
+	if lastWeek[0] is not None:
+		weeks.append(WorkWeek(lastWeek))
+	return weeks
