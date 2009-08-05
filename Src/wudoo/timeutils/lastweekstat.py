@@ -1,5 +1,12 @@
 inputName = "calendar.txt"
 
+import datetime
+DAYNORM = 8.5
+DAYNORM = datetime.timedelta(seconds = int(60.0 * 60.0 * DAYNORM))
+
+WEEKNORM = DAYNORM * 4
+print WEEKNORM
+
 ### ### ### ### ### ### ### ### ### ###
 
 import sys, os
@@ -15,9 +22,11 @@ for dayDist in lastWeek.dayDists:
 	print dayDist
 
 weeksum = None
+remaindDays = 5
 for dayDist in lastWeek.dayDists:
 	if dayDist is None:
 		continue
+	remaindDays -= 1
 	cd = dayDist.dayEndTime - dayDist.dayBegTime
 	if weeksum is None:
 		weeksum = cd
@@ -33,3 +42,8 @@ minutes -= minutesint
 seconds = minutes * 60.0
 secondsint = int(seconds)
 print str(hoursint) + " H " + str(minutesint) + " M " + str(secondsint) + " S"
+
+print "remaind", WEEKNORM - weeksum
+
+if remaindDays > 0:
+	print "remaind per day", (WEEKNORM - weeksum) / remaindDays
