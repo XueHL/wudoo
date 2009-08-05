@@ -373,10 +373,10 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-0.cpp" -o "__TMP__\\Obj\\Src\\foo-0.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-1.cpp" -o "__TMP__\\Obj\\Src\\foo-1.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
 			'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ "__TMP__\\Obj\\Src\\foo-0.o" "__TMP__\\Obj\\Src\\foo-1.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
@@ -395,7 +395,7 @@ class TestStoringCompilation(unittest.TestCase):
 		objPaths.sort()
 		self.assertEquals(
 			[
-			'Bin\\EasySkip.exe', 'Obj\\EasySkip-info.skipcrc', 'Obj\\Src\\foo-0-nch.o', 'Obj\\Src\\foo-1-ch.o', 'Obj\\Src\\main.o',
+			'Bin\\EasySkip.exe', 'Obj\\EasySkip-info.skipcrc', 'Obj\\Src\\foo-0.o', 'Obj\\Src\\foo-1.o', 'Obj\\Src\\main.o',
 			], 
 			objPaths
 			)
@@ -407,17 +407,17 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			#'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-0.cpp" -o "__TMP__\\Obj\\Src\\foo-0.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-1.cpp" -o "__TMP__\\Obj\\Src\\foo-1.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
 			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ "__TMP__\\Obj\\Src\\foo-0.o" "__TMP__\\Obj\\Src\\foo-1.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
 
 		## with ch cpp
 
-		chpth = os.path.join(skroot, "Src", "foo-1-ch.cpp")
+		chpth = os.path.join(skroot, "Src", "foo-1.cpp")
 		b = open(chpth, "r").read().replace("THE_RESULT", "THE_RESULT_CH")
 		f = open(chpth, "w")
 		f.write(b)
@@ -429,17 +429,17 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-0.cpp" -o "__TMP__\\Obj\\Src\\foo-0.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-1.cpp" -o "__TMP__\\Obj\\Src\\foo-1.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
 			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ "__TMP__\\Obj\\Src\\foo-0.o" "__TMP__\\Obj\\Src\\foo-1.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)
 
 		## with ch hdr
 
-		chpth = os.path.join(skroot, "Hdr", "foo-1-ch.h")
+		chpth = os.path.join(skroot, "Hdr", "results.h")
 		b = open(chpth, "r").read().replace('"Foo-1 - ch"', '"Foo-1 - ch - hdr"')
 		f = open(chpth, "w")
 		f.write(b)
@@ -451,10 +451,10 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			#'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\foo-0.cpp" -o "__TMP__\\Obj\\Src\\foo-0.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-1.cpp" -o "__TMP__\\Obj\\Src\\foo-1.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
 			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
-			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			'g++ "__TMP__\\Obj\\Src\\foo-0.o" "__TMP__\\Obj\\Src\\foo-1.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
 			], 
 			history
 			)

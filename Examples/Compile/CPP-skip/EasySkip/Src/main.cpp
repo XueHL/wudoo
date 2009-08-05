@@ -1,6 +1,6 @@
 #include <iostream>
-#include "foo-0-nch.h"
-#include "foo-1-ch.h"
+#include "foo-0.h"
+#include "foo-1.h"
 
 int main( int count, char * * args )
 {
