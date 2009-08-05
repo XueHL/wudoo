@@ -1,4 +1,4 @@
-#include "foo-0-nch.h"
+#include "foo-0.h"
 
 char * Foo0()
 {
