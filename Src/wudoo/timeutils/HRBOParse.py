@@ -91,7 +91,7 @@ def parseMonth(buf):
 			lastWeek[date.weekday()] = WorkDay(dayBegTime, dayEndTime)
 		#
 		date += delta
-		if date.weekday() == 0:
+		if date.weekday() == 0 and (not lastWeek == [None] * 7):
 			weeks.append(WorkWeek(lastWeek))
 			lastWeek = [None] * 7
 	if lastWeek[0] is not None:
