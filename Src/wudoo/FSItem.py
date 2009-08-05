@@ -34,3 +34,9 @@ class FSItem:
 		
 	def __str__(self):
 		return self.getPathNameExt();
+
+	def __eq__(self, that):
+		return self.getPathNameExt().__eqq__(that.getPathNameExt())
+
+	def __hash__(self):
+		return self.getPathNameExt().__hash__()

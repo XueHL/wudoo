@@ -11,6 +11,8 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 	def __init__(self, objExt = ".skipcrc"):
 		self.__objExt = objExt
 		self.__projects = set()
+		self.__includedItems = {}
+		self.__headers = set()
 
 	def skip(self, srcFsItem, compilation, project):
 		self.__addProjectHeaders(project)
@@ -53,3 +55,15 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 			CPPDependUtils.appendHeaderFolders(depPrj.getExportHdrFolders(), depPrj, allHdrFolders)
 			CPPDependUtils.appendHeaderFolders(depPrj.getHdrFolders(), depPrj, allHdrFolders)
 		allHeaderItems = CPPDependUtils.getFilteredFiles([], allHdrFolders, SourceFilterColl.HDR_SOURCE_FILTER)
+		self.__registerHeaders(allHeaderItems)
+
+	def __registerHeaders(self, headersList):
+		pass
+
+	def __getIncludedList(self, fsItem):
+		if self.__includedItems.has_key(fsItem):
+			return self.__includedItems[fsItem]
+		else:
+			inclList = []
+			self.__includedItems[fsItem] = inclList
+			return inclList
