@@ -2,5 +2,5 @@
 
 char * Foo1()
 {
-	return "Foo-1";
+	return THE_RESULT;
 }

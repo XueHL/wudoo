@@ -415,10 +415,32 @@ class TestStoringCompilation(unittest.TestCase):
 			history
 			)
 
-		## with ch
+		## with ch cpp
+
+		chpth = os.path.join(skroot, "Src", "foo-1-ch.cpp")
+		b = open(chpth, "r").read().replace("THE_RESULT", "THE_RESULT_CH")
+		f = open(chpth, "w")
+		f.write(b)
+		f.close()
+			
+		scwe = StoreCallsWillExecutor()
+		wdefaultBuild(skipinfoprj, setupCompilationCallback, scwe)
+		#trunk = os.path.normpath(os.path.join(sys.path[0], "..")) 
+		history = "@".join(scwe.history).replace(skroot, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
+		self.assertEqual(
+			[
+			#'g++ -c "__TRUNK__\\Src\\foo-0-nch.cpp" -o "__TMP__\\Obj\\Src\\foo-0-nch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ -c "__TRUNK__\\Src\\foo-1-ch.cpp" -o "__TMP__\\Obj\\Src\\foo-1-ch.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			#'g++ -c "__TRUNK__\\Src\\main.cpp" -o "__TMP__\\Obj\\Src\\main.o"  -I"__TRUNK__\\Hdr" -g3 -O0', 
+			'g++ "__TMP__\\Obj\\Src\\foo-0-nch.o" "__TMP__\\Obj\\Src\\foo-1-ch.o" "__TMP__\\Obj\\Src\\main.o" -o "__TMP__\\Bin\\EasySkip"'
+			], 
+			history
+			)
+
+		## with ch hdr
 
 		chpth = os.path.join(skroot, "Hdr", "foo-1-ch.h")
-		b = open(chpth, "r").read() + "\n\n// CH"
+		b = open(chpth, "r").read().replace('"Foo-1 - ch"', '"Foo-1 - ch - hdr"')
 		f = open(chpth, "w")
 		f.write(b)
 		f.close()
