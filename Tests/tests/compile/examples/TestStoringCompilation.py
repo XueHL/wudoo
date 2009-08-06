@@ -365,7 +365,6 @@ class TestStoringCompilation(unittest.TestCase):
 
 		class DefaultArgsObj: pass
 		argsObj = Console2obj.argArr2obj(("--profile develop --buildroot " + tmpDir).split(" "), DefaultArgsObj())
-		willExecutor = StoreCallsWillExecutor()
 		def setupCompilationCallback(compilation, project):
 			profilesChain(compilation, project, argsObj)
 		scwe = StoreCallsWillExecutor()
@@ -401,6 +400,8 @@ class TestStoringCompilation(unittest.TestCase):
 			)
 		
 		## no ch
+		import subprocess
+		executableLoc = os.path.join(tmpDir, "Bin")
 
 		scwe = StoreCallsWillExecutor()
 		wdefaultBuild(skipinfoprj, setupCompilationCallback, scwe)
@@ -414,6 +415,18 @@ class TestStoringCompilation(unittest.TestCase):
 			], 
 			history
 			)
+                swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+		executable = None
+		for sf in os.listdir(executableLoc):
+			if os.path.splitext(sf)[0] == "EasySkip":
+				executable = sf
+		self.assertFalse(executable is None)
+		executable = os.path.join(executableLoc, executable)
+		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+		self.assertEqual("Foo-0\r\nFoo-1", result)
 
 		## with ch cpp
 
@@ -436,6 +449,12 @@ class TestStoringCompilation(unittest.TestCase):
 			], 
 			history
 			)
+		swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+		self.assertEqual("Foo-0\r\nFoo-1 - ch", result)
 
 		## with ch hdr
 
@@ -458,3 +477,9 @@ class TestStoringCompilation(unittest.TestCase):
 			], 
 			history
 			)
+		swe = SystemWillExecutor()
+		for cmd in scwe.history:
+			swe.execute(cmd)
+		del scwe
+		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+		self.assertEqual("Foo-0\r\nFoo-1 - ch - hdr", result)
