@@ -16,6 +16,8 @@ from wudoo.FSItem import FSItem
 
 from wudoo.console import Console2obj
 
+from wudoo.compile.cpp.libscenter import PredefinedLibs
+
 DEPENT_MODULE_PATH_STORRAGE = {}
 
 class DefaultArgsObj:

@@ -17,7 +17,7 @@ Hdr
 )
 
 ### ### Dependings  ### ###
-#project.addDependenceProject(PredefinedLibs.BOOST)
+project.addDependenceProject(PredefinedLibs.BOOST.HEADERS_LIB)
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
