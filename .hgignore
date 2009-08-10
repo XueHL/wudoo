@@ -12,3 +12,4 @@ regexp:Examples/Compile/CPP/ChainResolveStrategy/User-1__0-s--1-s/Out/.*
 regexp:Examples/Compile/CPP-flags/EasuDebugInfo/Out/.*
 regexp:Examples/Compile/CPP/UseExportHeaders/CM/sub-missions/Submission-out-1/.*
 regexp:Examples/Compile/CPP-skip/EasySkip/Out/.*
+regexp:Examples/Compile/CPP-predefined-libs/Boost/EasySkip/Out/.*

@@ -43,8 +43,8 @@ void RunShPtrTest()
 		std::vector< boost::shared_ptr< ShPtrTst > > spvec( 10 );
 		for ( int i = 0; i < spvec.size(); i++ )
 		{
-			spvec[i] = new ShPtrTst();
+			spvec[i] = boost::shared_ptr< ShPtrTst >( new ShPtrTst() );
 		}
-		ShPtrTst elem3 = spvec[3].get();
+		ShPtrTst * elem3 = spvec[3].get();
 	}
 }
