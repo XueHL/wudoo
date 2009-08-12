@@ -4,7 +4,7 @@ from wudoo.SystemWillExecutor import SystemWillExecutor
 
 from wudoo.compile.Project import Project
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
-from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
+from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationPool
 from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
@@ -26,9 +26,9 @@ class TestStoringCompilation(unittest.TestCase):
 		tmp1 = os.path.join(tmpDir, "p1")
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool.data")
-		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+			return os.path.join(tmpDir, "StoreCompilationPool.data")
+		getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
 		 
 		usr0prj = TestStoringCompilation.usr0prj.getProject()
 		def setupTmpdirCallback0(compilation, project):
@@ -105,7 +105,7 @@ class TestStoringCompilation(unittest.TestCase):
 			objPaths
 			)
 
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = getPoolFile
 
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
@@ -125,9 +125,9 @@ class TestStoringCompilation(unittest.TestCase):
 		tmp1 = os.path.join(tmpDir, "p1")
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
-		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+			return os.path.join(tmpDir, "StoreCompilationPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
 		 
 		chain0prj = TestStoringCompilation.chain0prj.getProject()
 		def setupTmpdirCallback0(compilation, project):
@@ -216,7 +216,7 @@ class TestStoringCompilation(unittest.TestCase):
 			objPaths
 			)
 
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = getPoolFile
 
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 
@@ -230,9 +230,9 @@ class TestStoringCompilation(unittest.TestCase):
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
-		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+			return os.path.join(tmpDir, "StoreCompilationPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
 		 
 		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
 		def setupTmpdirCallback0(compilation, project):
@@ -280,9 +280,9 @@ class TestStoringCompilation(unittest.TestCase):
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
-		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+			return os.path.join(tmpDir, "StoreCompilationPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
 		 
 		dbginfoprj = TestStoringCompilation.dbgprj.getProject()
 		def setupTmpdirCallback0(compilation, project):
@@ -357,9 +357,9 @@ class TestStoringCompilation(unittest.TestCase):
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
-			return os.path.join(tmpDir, "StoreCompilationaPool_" + project.getName() + ".data")
-		getPoolFile = StoreCompilationaPool._StoreCompilationaPool__getPoolFile
-		StoreCompilationaPool._StoreCompilationaPool__getPoolFile = faikGPF
+			return os.path.join(tmpDir, "StoreCompilationPool_" + project.getName() + ".data")
+		getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
 		 
 		skipinfoprj = skipprj.getProject()
 

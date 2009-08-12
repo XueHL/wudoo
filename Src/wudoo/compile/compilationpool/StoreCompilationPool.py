@@ -4,17 +4,17 @@ from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.compilationpool.ICompilationPoolStrategy import ICompilationPoolStrategy
 from wudoo.compile.buildresult.ICompilationResult import ICompilationResult
 
-class StoreCompilationaPool(ICompilationPoolStrategy):
+class StoreCompilationPool(ICompilationPoolStrategy):
 	POOL_EXT = ".compilations" 
 	COMPILE_SATISFACTION_MAP = None
 
 	def __init__(self):
-		if StoreCompilationaPool.COMPILE_SATISFACTION_MAP is None:
+		if StoreCompilationPool.COMPILE_SATISFACTION_MAP is None:
 			from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
 			from wudoo.compile.buildresult.StaticLibCompilationResult import StaticLibCompilationResult
 			from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 			from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilationResult
-			StoreCompilationaPool.COMPILE_SATISFACTION_MAP = {
+			StoreCompilationPool.COMPILE_SATISFACTION_MAP = {
 				StaticLibResolveDependence: set([StaticLibCompilationResult]),
 				CompileObjsResolveDependence: set([ObjectsCompilationResult]),
 			}
@@ -38,6 +38,8 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 		if poolFile is None:
 			return
 		buf = pickle.dumps(compilationResult)
+		if not os.path.exists(os.path.split(poolFile)[0]):
+			os.makedirs(os.path.split(poolFile)[0])
 		stream = open(poolFile, "wb")
 		stream.write(buf)
 		stream.close()
@@ -46,12 +48,12 @@ class StoreCompilationaPool(ICompilationPoolStrategy):
 		if project.getModuleFile() is None:
 			return None
 		moduleDir = os.path.split(project.getModuleFile())[0]
-		poolFile = os.path.join(moduleDir, project.getName() + StoreCompilationaPool.POOL_EXT)
+		poolFile = os.path.join(moduleDir, project.getName() + StoreCompilationPool.POOL_EXT)
 		return poolFile
 	
 	def __isResultSatisfyes(self, rootCompilation, resolveDependenceStrat, prevCompileResult):
 		try:
-			satisfResults = StoreCompilationaPool.COMPILE_SATISFACTION_MAP[resolveDependenceStrat.__class__]
+			satisfResults = StoreCompilationPool.COMPILE_SATISFACTION_MAP[resolveDependenceStrat.__class__]
 			return prevCompileResult.__class__ in satisfResults
 		except:
 			return False

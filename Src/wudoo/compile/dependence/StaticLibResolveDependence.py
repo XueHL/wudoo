@@ -1,7 +1,7 @@
 from wudoo.FSItem import FSItem
 
 from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
-from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
+from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationPool
 from wudoo.compile.dependence.CompileObjsResolveDependence import CompileObjsResolveDependence
 from wudoo.compile.buildresult.StaticLibCompilationResult import StaticLibCompilationResult
 
@@ -9,7 +9,7 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
 		BaseResolveDependenceStrategy.__init__(
 			self,
-			compilationPoolStrategy = StoreCompilationaPool(),
+			compilationPoolStrategy = StoreCompilationPool(),
 			)
 
 	def resolve(self, depPrj, rootCompilation, willExecutor):

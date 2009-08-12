@@ -3,6 +3,7 @@ class HeadersLib:
 
 	def __init__(self):
 		self.__moduleFile = __file__
+		self.__includeList = ["Include"]
 
 	def getDependences(self):
 		return HeadersLib.EMPTY_LIST
@@ -11,7 +12,7 @@ class HeadersLib:
 		return "D:\\/Work/_Outer/Boost/Output/1-39-0/boost-1-39-0-output"
 
 	def getExportHdrFolders(self):
-		return ["Include"]
+		return self.__includeList
 
 	def findSources(self):
 		pass
