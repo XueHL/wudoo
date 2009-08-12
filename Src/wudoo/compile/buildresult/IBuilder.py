@@ -1,4 +1,4 @@
 class IBuilder:
-	def build(self, emptyCompilationResult, compilation, willExecutor):
+	def build(self, emptyCompilationResult, willExecutor):
 		raise NotImplementedError()
 	

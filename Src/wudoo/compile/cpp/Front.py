@@ -57,7 +57,8 @@ def wdefaultBuild(
 	profilesChain(compilation, project)
 	setupCompilationCallback(compilation, project)
 	compilationResult = ExecutableCompilationResult(
-		project, 
+		project,
+		compilation,
 		compilation.getAllocateStrategy().allocateExecutable(project)
 		)
 	compilation.buildCompilationResult(compilationResult, willExecutor)

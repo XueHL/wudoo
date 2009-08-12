@@ -4,3 +4,6 @@ class ICompilationResult:
 
 	def getProject(self):
 		raise NotImplementedError()
+
+	def getCompilation(self):
+		raise NotImplementedError()

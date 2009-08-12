@@ -1,8 +1,8 @@
 from wudoo.compile.buildresult.BaseCompilationResult import BaseCompilationResult
 
 class StaticLibCompilationResult(BaseCompilationResult):
-	def __init__(self, project, staticlibFSItem = None):
-		BaseCompilationResult.__init__(self, project)
+	def __init__(self, project, compilation, staticlibFSItem = None):
+		BaseCompilationResult.__init__(self, project, compilation)
 		self.__staticlibFSItem = staticlibFSItem
 		
 	def getObjectFSItems(self):

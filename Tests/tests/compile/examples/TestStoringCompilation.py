@@ -9,6 +9,11 @@ from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolve
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
+def ifLib1ThenObj(project):
+	from wudoo.compile.cpp.Front import CompileObjsResolveDependence
+	if project.getName() == "Lib1":
+		return CompileObjsResolveDependence()
+
 class TestStoringCompilation(unittest.TestCase):
 	sys.path.append(
 		os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP", "StoreBuildResults", "User0", "CM"))					
@@ -134,9 +139,6 @@ class TestStoringCompilation(unittest.TestCase):
 			setupPathsFromRoot(compilation, project, tmp0)
 			#compilation.setResolveDependenceStrategy(StaticLibResolveDependence())
 			resStrat_0_s_1_o = ChainCaseDependencyResolve(StaticLibResolveDependence())
-			def ifLib1ThenObj(project):
-				if project.getName() == "Lib1":
-					return CompileObjsResolveDependence()
 			resStrat_0_s_1_o.addStage(ifLib1ThenObj)
 			compilation.setResolveDependenceStrategy(resStrat_0_s_1_o)
 		scwe = StoreCallsWillExecutor()

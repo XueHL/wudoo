@@ -21,7 +21,7 @@ class BaseCompilation(ICompilation):
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		#builder = self.__buildersMap[emptyCompilationResult.__class__]
 		builder = self.__emptyCompileResult2builderStrategy.emptyCompileResult2builder(emptyCompilationResult)
-		builder.build(emptyCompilationResult, self, willExecutor)
+		builder.build(emptyCompilationResult, willExecutor)
 		
 	#def registerBuilder(self, compilationResultClazz, builder):
 	#	self.__buildersMap[compilationResultClazz] = builder
