@@ -1,7 +1,7 @@
 import os, sys
 
-SRC = "setupPathsFromRoot"
-GOAL = "setupPathsFromRoot"
+SRC = "StoreCompilationPool"
+GOAL = "StoreCompilationPool"
 
 def rec(p):
 	if p.find(".svn") > -1:

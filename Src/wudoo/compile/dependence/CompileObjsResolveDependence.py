@@ -1,14 +1,14 @@
 import os
 
 from wudoo.compile.dependence.BaseResolveDependenceStrategy import BaseResolveDependenceStrategy
-from wudoo.compile.compilationpool.StoreCompilationaPool import StoreCompilationaPool
+from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationPool
 from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilationResult
 
 class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 	def __init__(self):
 		BaseResolveDependenceStrategy.__init__(
 			self,
-			compilationPoolStrategy = StoreCompilationaPool(),
+			compilationPoolStrategy = StoreCompilationPool(),
 			)
 
 	def resolve(self, depPrj, rootCompilation, willExecutor):
