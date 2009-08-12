@@ -1,6 +1,6 @@
 import os
 
-class HeadersBuilder:
+class BoostCommonBuilder:
 	def __init__(self, archiveLocation, boostInclude):
 		self.__archiveLocation = archiveLocation
 		self.__boostInclude = boostInclude
@@ -27,7 +27,7 @@ class HeadersBuilder:
 	def __getBoostIncludeRoot(self):
 		return os.path.split(self.__boostInclude)[0]
 
-class HeadersLib:
+class BOOSTCommonLib:
 	EMPTY_LIST = []
 
 	def __init__(self):
@@ -35,7 +35,7 @@ class HeadersLib:
 		self.__includeList = ["Include"]
 
 	def getDependences(self):
-		return HeadersLib.EMPTY_LIST
+		return BOOSTCommonLib.EMPTY_LIST
 
 	def getRoot(self):
 		return "D:/Other/MPS/_Projects/WuDoo/boost/boost-output"
@@ -47,15 +47,15 @@ class HeadersLib:
 		pass
 
 	def getSourceItems(self):
-		return HeadersLib.EMPTY_LIST
+		return BOOSTCommonLib.EMPTY_LIST
 
 	def getModuleFile(self):
 		return self.__moduleFile
 
 	def getName(self):
-		return "BOOST_HEADERS"
+		return "BOOST_COMMON_LIB"
 
 	def getSpecialBuilder(self):
-		return HeadersBuilder("D:/Other/MPS/_Projects/WuDoo/boost/archive/boost_1_39_0.rar", "D:/Other/MPS/_Projects/WuDoo/boost/boost-output/Include")
+		return BoostCommonBuilder("D:/Other/MPS/_Projects/WuDoo/boost/archive/boost_1_39_0.rar", "D:/Other/MPS/_Projects/WuDoo/boost/boost-output/Include")
 
-HEADERS_LIB = HeadersLib()
+BOOST_COMMON_LIB = BOOSTCommonLib()
