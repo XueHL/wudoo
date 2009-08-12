@@ -17,22 +17,24 @@ class CPPCompilation(BaseCompilation):
 			self, 
 			project,
 			)
-		self.registerBuilder(
+		ecr2bStrat = self.getEmptyCompileResult2builderStrategy()
+		ecr2bStrat.registerBuilder(
 			ExecutableCompilationResult,
 			ExecutableBuilder()
 			)
-		self.registerBuilder(
+		ecr2bStrat.registerBuilder(
 			ObjectsCompilationResult,
 			ObjectsBuilder()
 			)
-		self.registerBuilder(
+		ecr2bStrat.registerBuilder(
 			StaticLibCompilationResult,
 			StaticLibBuilder()
 			)
 
 	def setSkipItemsStrategy(self, skipItemsStrategy):
 		BaseCompilation.setSkipItemsStrategy(self, skipItemsStrategy)
-		self.registerBuilder(
+		ecr2bStrat = self.getEmptyCompileResult2builderStrategy()
+		ecr2bStrat.registerBuilder(
 			ObjectsCompilationResult,
 			ObjectsBuilder(skipItemsStrategy)
 			)

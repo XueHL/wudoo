@@ -8,8 +8,8 @@ Stories compilation flags.
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		raise NotImplementedError()
 		
-	def registerBuilder(self, compilationResultClazz, builder):
-		raise NotImplementedError()
+	#def registerBuilder(self, compilationResultClazz, builder):
+	#	raise NotImplementedError()
 
 	def setCompiler(self, compiler):
 		raise NotImplementedError()

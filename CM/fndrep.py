@@ -1,7 +1,7 @@
 import os, sys
 
-SRC = "StoreCompilationPool"
-GOAL = "StoreCompilationPool"
+SRC = "DefaultEmptyCompileResult2builderStrategy"
+GOAL = "DefaultEmptyCompileResult2builderStrategy"
 
 def rec(p):
 	if p.find(".svn") > -1:
