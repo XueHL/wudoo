@@ -1,3 +1,6 @@
+class HeadersBuilder:
+	pass
+
 class HeadersLib:
 	EMPTY_LIST = []
 
@@ -25,5 +28,9 @@ class HeadersLib:
 
 	def getName(self):
 		return "BOOST_HEADERS"
+
+	def getSpecialBuilder(self):
+		raise NotImplementedError()
+		return HeadersBuilder()
 
 HEADERS_LIB = HeadersLib()
