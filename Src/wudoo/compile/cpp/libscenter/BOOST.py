@@ -1,6 +1,31 @@
+import os
+
 class HeadersBuilder:
+	def __init__(self, archiveLocation, boostInclude):
+		self.__archiveLocation = archiveLocation
+		self.__boostInclude = boostInclude
+
 	def build(self, emptyCompilationResult, willExecutor):
-		raise NotImplementedError()
+		if os.path.exists(self.__boostInclude):
+			return
+		if not os.path.exists(self.__getBoostIncludeRoot()):
+			os.makedirs(self.__getBoostIncludeRoot())
+		oldInclContent = set(os.listdir(self.__getBoostIncludeRoot()))
+		cmd = "rar x " + self.__archiveLocation + " " + self.__getBoostIncludeRoot()
+		os.system(cmd)
+		newInclContent = set(os.listdir(self.__getBoostIncludeRoot()))
+		includeDir = newInclContent - oldInclContent
+		includeDirName = None
+		for idn in includeDir:
+			includeDirName = idn
+		print includeDirName, "\n"
+		os.rename(
+			os.path.join(self.__getBoostIncludeRoot(), includeDirName),
+			self.__boostInclude
+		)
+
+	def __getBoostIncludeRoot(self):
+		return os.path.split(self.__boostInclude)[0]
 
 class HeadersLib:
 	EMPTY_LIST = []
@@ -13,7 +38,7 @@ class HeadersLib:
 		return HeadersLib.EMPTY_LIST
 
 	def getRoot(self):
-		return "D:\\/Work/_Outer/Boost/Output/1-39-0/boost-1-39-0-output"
+		return "D:/Other/MPS/_Projects/WuDoo/boost/boost-output"
 
 	def getExportHdrFolders(self):
 		return self.__includeList
@@ -31,6 +56,6 @@ class HeadersLib:
 		return "BOOST_HEADERS"
 
 	def getSpecialBuilder(self):
-		return HeadersBuilder()
+		return HeadersBuilder("D:/Other/MPS/_Projects/WuDoo/boost/archive/boost_1_39_0.rar", "D:/Other/MPS/_Projects/WuDoo/boost/boost-output/Include")
 
 HEADERS_LIB = HeadersLib()
