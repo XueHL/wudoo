@@ -1,5 +1,6 @@
 class HeadersBuilder:
-	pass
+	def build(self, emptyCompilationResult, willExecutor):
+		raise NotImplementedError()
 
 class HeadersLib:
 	EMPTY_LIST = []
@@ -30,7 +31,6 @@ class HeadersLib:
 		return "BOOST_HEADERS"
 
 	def getSpecialBuilder(self):
-		raise NotImplementedError()
 		return HeadersBuilder()
 
 HEADERS_LIB = HeadersLib()

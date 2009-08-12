@@ -12,7 +12,7 @@ class CompileObjsResolveDependence(BaseResolveDependenceStrategy):
 			)
 
 	def resolve(self, depPrj, rootCompilation, willExecutor):
-		compilationResult = ObjectsCompilationResult(depPrj)
+		compilationResult = ObjectsCompilationResult(depPrj, rootCompilation)
 		rootCompilation.buildCompilationResult(compilationResult, willExecutor)
 		self.getCompilationPoolStrategy().onNewCompiled(compilationResult)
 		return compilationResult

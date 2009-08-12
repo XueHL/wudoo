@@ -20,7 +20,7 @@ class StaticLibResolveDependence(BaseResolveDependenceStrategy):
 			)
 		if compiledResult is not None:
 			return compiledResult
-		staticLibCompilationResult = StaticLibCompilationResult(depPrj)
+		staticLibCompilationResult = StaticLibCompilationResult(depPrj, rootCompilation)
 		rootCompilation.buildCompilationResult(staticLibCompilationResult, willExecutor)
 		self.getCompilationPoolStrategy().onNewCompiled(staticLibCompilationResult)
 		return staticLibCompilationResult

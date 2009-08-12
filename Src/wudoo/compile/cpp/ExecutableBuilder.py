@@ -3,8 +3,9 @@ from wudoo.compile.buildresult.ObjectsCompilationResult import ObjectsCompilatio
 from wudoo.compile.buildresult.ObjectsBuilder import ObjectsBuilder
 
 class ExecutableBuilder(IBuilder):
-	def build(self, emptyCompilationResult, compilation, willExecutor):
-		objectsCompilationResult = ObjectsCompilationResult(emptyCompilationResult.getProject())
+	def build(self, emptyCompilationResult, willExecutor):
+		compilation = emptyCompilationResult.getCompilation()
+		objectsCompilationResult = ObjectsCompilationResult(emptyCompilationResult.getProject(), compilation)
 		compilation.buildCompilationResult(objectsCompilationResult, willExecutor)
 		objFSItems = objectsCompilationResult.getObjectFSItems()
 

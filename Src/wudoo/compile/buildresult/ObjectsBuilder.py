@@ -6,8 +6,9 @@ class ObjectsBuilder(IBuilder):
 	def __init__(self, skipItemsStrategy = CompileAllStrategy()):
 		self.__skipItemsStrategy = skipItemsStrategy
 	
-	def build(self, emptyCompilationResult, compilation, willExecutor):
+	def build(self, emptyCompilationResult, willExecutor):
 		project = emptyCompilationResult.getProject()
+		compilation = emptyCompilationResult.getCompilation()
 		project.findSources()
 		compiler = compilation.getCompiler()
 		for src in project.getSourceItems():
