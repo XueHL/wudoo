@@ -7,11 +7,11 @@ Stories compilation flags.
 """
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
 		raise NotImplementedError()
-		
-	#def registerBuilder(self, compilationResultClazz, builder):
-	#	raise NotImplementedError()
 
 	def setCompiler(self, compiler):
+		raise NotImplementedError()
+
+	def getCompiler(self):
 		raise NotImplementedError()
 		
 	def setResolveDependenceStrategy(self, resolveDependenceStrategy):
@@ -19,14 +19,14 @@ Stories compilation flags.
 		
 	def getResolveDependenceStrategy(self):
 		raise NotImplementedError()
-
-	def getCompiler(self):
-		raise NotImplementedError()
 	
 	def getAllocateStrategy(self):
 		raise NotImplementedError()
 	
 	def setAllocateStrategy(self, allocateStrategy):
+		"""\
+allocateStrategy is a wudoo.compile.allocate.IAllocateStrategy
+"""
 		raise NotImplementedError()
 
 	def setDebugInfoLevel(self, debugInfoLevel):
