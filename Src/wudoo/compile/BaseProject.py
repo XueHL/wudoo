@@ -12,9 +12,10 @@ class BaseProject(IProject):
 		root = None
 		):
 		self.__name = name
+		moduleFile = os.path.abspath(moduleFile)
 		self.__moduleFile = moduleFile
 		if root is None:
-			root = os.path.abspath(os.path.normpath(os.path.join(moduleFile, "..", ".."))) # reduces CM / <biulder_name.py>
+			root = os.path.normpath(os.path.join(moduleFile, "..", "..")) # reduces CM / <biulder_name.py>
 		root = os.path.normpath(root)
 		self.__root = root
 		
@@ -50,6 +51,8 @@ class BaseProject(IProject):
 		self.__sourceFolders.extend(BaseProject.reduceFoldersDescr(sourceFoldersDescr))
 		
 	def addDependenceProject(self, project):
+		if project is None:
+			raise "project can't be None"
 		self.__dependenceProjects.append(project)		
 		
 	def __reduceFoldersDescr(descr):

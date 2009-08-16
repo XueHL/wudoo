@@ -67,5 +67,5 @@ def module2root(modulefile, upcount = 1):
 	result = os.path.normpath(result)
 	return result
 
-LIBS_REG_OFFICE = LibsRegOffice("z:\\uaa")
 MODULES_REG_OFFICE = ModulesRegOffice()
+LIBS_REG_OFFICE = LibsRegOffice("z:\\uaa", MODULES_REG_OFFICE)
