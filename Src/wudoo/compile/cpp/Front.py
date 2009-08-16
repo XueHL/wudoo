@@ -11,14 +11,14 @@ from wudoo.compile.cpp.ExecutableCompilationResult import ExecutableCompilationR
 from wudoo.compile.cpp.profile import BuildProfiles
 
 from wudoo.compile.allocate.OutputRootBasedAllocate import OutputRootBasedAllocate
+from wudoo.compile.libscenter.LibsRegOffice import LibsRegOffice
+from wudoo.compile.ModulesRegOffice import ModulesRegOffice
 from wudoo.SystemWillExecutor import SystemWillExecutor
 from wudoo.FSItem import FSItem
 
 from wudoo.console import Console2obj
 
 from wudoo.compile.cpp.libscenter import PredefinedLibs
-
-DEPENT_MODULE_PATH_STORRAGE = {}
 
 class DefaultArgsObj:
 	def __init__(self):
@@ -60,15 +60,12 @@ def wdefaultBuild(
 		)
 	compilation.buildCompilationResult(compilationResult, willExecutor)
 
-def addDependProjDir(dppdPath):
-	dppdPath = os.path.normpath(dppdPath)
-	if not DEPENT_MODULE_PATH_STORRAGE.has_key(dppdPath):
-		DEPENT_MODULE_PATH_STORRAGE[dppdPath] = dppdPath
-		sys.path.append(dppdPath)
-
 def module2root(modulefile, upcount = 1):
 	result = os.path.join(modulefile, "..")
 	for i in xrange(upcount):
 		result = os.path.join(result, "..")
 	result = os.path.normpath(result)
 	return result
+
+LIBS_REG_OFFICE = LibsRegOffice()
+MODULES_REG_OFFICE = ModulesRegOffice()

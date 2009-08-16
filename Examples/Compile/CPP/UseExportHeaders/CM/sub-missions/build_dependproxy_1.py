@@ -15,7 +15,7 @@ import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
 project.addDependenceProject(statLibPrj)
 
-#addDependProjDir(os.path.join(project.getRoot(), "..", "..", "ExportHeaders", "CM"))
+#MODULES_REG_OFFICE.addDependProjDir(os.path.join(project.getRoot(), "..", "..", "ExportHeaders", "CM"))
 #import build_exphdr
 #exportHdrPrj = build_exphdr.getProject()
 #project.addDependenceProject(exportHdrPrj)
