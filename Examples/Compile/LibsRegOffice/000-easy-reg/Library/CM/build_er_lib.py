@@ -27,4 +27,5 @@ def getProject():
 if (__name__ == "__main__"):
 	print "Registering library: ", getProject().getName(), " ..."
 	LIBS_REG_OFFICE.registerLibrary(getProject)
+	LIBS_REG_OFFICE.flush()
 	print "Completed"
