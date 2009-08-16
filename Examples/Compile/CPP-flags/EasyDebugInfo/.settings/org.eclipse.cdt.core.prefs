@@ -1,0 +1,4 @@
+#Wed Jul 01 21:43:03 MSD 2009
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.724357857=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment append\="true" appendContributed\="true">\r\n<variable delimiter\=";" name\="pythonpath" operation\="replace" value\="${ProjDirPath}/../../../../Src"/>\r\n</environment>\r\n
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.release.1298022036=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<environment append\="true" appendContributed\="true">\r\n<variable delimiter\=";" name\="pythonpath" operation\="append" value\="${ProjDirPath}/../../../../Src"/>\r\n</environment>\r\n
