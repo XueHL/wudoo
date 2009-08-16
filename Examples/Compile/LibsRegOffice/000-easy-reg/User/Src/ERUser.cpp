@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "ERUser.h"
+#include "ERLib.h"
 
 int main( int count, char * * args )
 {

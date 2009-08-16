@@ -9,7 +9,7 @@ Src
 """
 )
 
-project.addHdrFolders(
+project.addExportHdrFolders(
 """
 Hdr
 """

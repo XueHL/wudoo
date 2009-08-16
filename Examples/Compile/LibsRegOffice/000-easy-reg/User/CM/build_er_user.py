@@ -16,7 +16,7 @@ Hdr
 )
 
 ### ### Dependings  ### ###
-project.addDependenceProject(LibsRegOffice.libByName("EasyRegisterLibrary"))
+project.addDependenceProject(LIBS_REG_OFFICE.libByName("EasyRegisterLibrary"))
 
 ### ### ### ### ### ### ### ### ### ### 
 storrage = pickle.dumps(project)
@@ -29,4 +29,5 @@ def getProject():
 
 ### ### ### ### ### ### ### ### ### ### 
 if (__name__ == "__main__"):
+	project = getProject()
 	wdefaultBuild(project)

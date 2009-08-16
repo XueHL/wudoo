@@ -5,12 +5,12 @@ from wudoo.compile.buildresult.ObjectsBuilder import ObjectsBuilder
 class ExecutableBuilder(IBuilder):
 	def build(self, emptyCompilationResult, willExecutor):
 		compilation = emptyCompilationResult.getCompilation()
-		objectsCompilationResult = ObjectsCompilationResult(emptyCompilationResult.getProject(), compilation)
+		project = emptyCompilationResult.getProject()
+		objectsCompilationResult = ObjectsCompilationResult(project, compilation)
 		compilation.buildCompilationResult(objectsCompilationResult, willExecutor)
 		objFSItems = objectsCompilationResult.getObjectFSItems()
 
 		resolveDependenceStrategy = compilation.getResolveDependenceStrategy()
-		project = emptyCompilationResult.getProject()
 		for depPrj in self.__allDeps(project):
 			resolveCompilationResult = resolveDependenceStrategy.resolve(depPrj, compilation, willExecutor)
 			for depObjFSItem in resolveCompilationResult.getObjectFSItems():
