@@ -16,6 +16,7 @@ import tests.compile.examples.TestStoringCompilation
 import tests.console.TestConsole2Obj
 import tests.compile.TestFront
 import tests.compile.examples.sidelibs.TestBoost
+import tests.compile.examples.sidelibs.TestLibsRegOffice
 
 testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestProject),\
@@ -27,5 +28,6 @@ testsuit = unittest.TestSuite([\
 	unittest.TestLoader().loadTestsFromModule(tests.console.TestConsole2Obj),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.TestFront),\
 	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.sidelibs.TestBoost),\
+	unittest.TestLoader().loadTestsFromModule(tests.compile.examples.sidelibs.TestLibsRegOffice),\
 	])
 unittest.TextTestRunner(verbosity=2).run(testsuit)
