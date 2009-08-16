@@ -9,4 +9,3 @@ class ModulesRegOffice:
 		if not dppdPath in self.__modulesPathStorrage:
 			self.__modulesPathStorrage.add(dppdPath)
 			sys.path.append(dppdPath)
-
