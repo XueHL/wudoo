@@ -5,7 +5,7 @@ from wudoo.SystemWillExecutor import SystemWillExecutor
 
 from wudoo.compile.cpp.Front import DefaultCPPCompilation
 from wudoo.compile.BaseCompilation import BaseCompilation
-from wudoo.compile.Project import Project
+from wudoo.compile.cpp.CPPProject import CPPProject
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 
@@ -55,15 +55,11 @@ class TestEasyExamples(unittest.TestCase):
 		from tests.compile.TestCompilation import TestCompilation
 		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		project = TestCompilation.build_easy_prj.getProject()
-#		compilation = DefaultCPPCompilation(project)
 		tmpDir = tempfile.mkdtemp()
-#		strat = AllocInSpecifDirStrategy(tmpDir, ".o")
-#		compilation.setAllocateObjStrategy(strat)
 		def setupCompilationCallback(compilation, project):
 			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupCompilationCallback)
-#		compilation.buildWorkFlow(SystemWillExecutor())
-		project = Project(tmpDir)
+		project = CPPProject("Prj", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(tmpDir)))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
 		project.findSources()
@@ -80,18 +76,17 @@ class TestEasyExamples(unittest.TestCase):
 		def setupCompilationCallback(compilation, project):
 			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupCompilationCallback)
-#		compilation.setGoalFSItem(FSItem(tmpDir, "Bin", project.getName() + ".exe"));
-#		compilation.setObjRoot(os.path.join(tmpDir, "Obj"))
-#		compilation.setDependenceBuildRoot(os.path.join(tmpDir, "Outer", "Obj"))
-#		compilation.buildWorkFlow(SystemWillExecutor())
-		project = Project(tmpDir)
+		project = CPPProject("PrjFindSources", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(tmpDir)))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
 		project.findSources()
 		objItems = project.getSourceItems()
 		objPaths = [io.getPathNameExt(1) for io in objItems]
 		objPaths.sort()
-		self.assertEquals(["Bin\\UseExportHdr.exe", "Obj\\Src\\main.o", "Outer\\ExportHdr\\SrcMain\\main.o", "Outer\\ExportHdr\\Src\\ExportHello.o"], objPaths)
+		self.assertEquals(
+			["Bin\\UseExportHdr.exe", "Obj\\Src\\main.o", "Outer\\ExportHdr\\SrcMain\\main.o", "Outer\\ExportHdr\\Src\\ExportHello.o"],
+			objPaths
+			)
 
 	def testProxyStatlibEquilibristic(self):
 		project = TestEasyExamples.build_dependproxy_prj.getProject()
@@ -102,7 +97,7 @@ class TestEasyExamples(unittest.TestCase):
 			setupPathsFromRoot(compilation, project, tmpDir)
 		wdefaultBuild(project, setupTmpdirCallback)
 	
-		project = Project(tmpDir)
+		project = CPPProject("Prj", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(tmpDir)))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe"}));
 		project.findSources()

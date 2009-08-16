@@ -1,6 +1,6 @@
 import unittest, os.path, sys, tempfile
 
-from wudoo.compile.Project import Project
+from wudoo.compile.cpp.CPPProject import CPPProject
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.FSItem import FSItem
 

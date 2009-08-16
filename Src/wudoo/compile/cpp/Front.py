@@ -1,6 +1,6 @@
 import os, sys
 
-from wudoo.compile.cpp.CompileCPPProject import CompileCPPProject
+from wudoo.compile.cpp.CPPProject import CPPProject
 from wudoo.compile.cpp.CPPCompilation import CPPCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.SetupCompilationUtils import *
@@ -25,7 +25,7 @@ class DefaultArgsObj:
 		self.profile = []
 		self.buildroot = [None]
 
-Project = CompileCPPProject
+Project = CPPProject
 
 def DefaultCPPCompilation(
 		project, 
@@ -63,11 +63,15 @@ def wdefaultBuild(
 		)
 	compilation.buildCompilationResult(compilationResult, willExecutor)
 
-def moduleFile2basePath(modFile):
-	return os.path.abspath(os.path.normpath(os.path.join(modFile, "..")))
-
 def addDependProjDir(dppdPath):
 	dppdPath = os.path.normpath(dppdPath)
 	if not DEPENT_MODULE_PATH_STORRAGE.has_key(dppdPath):
 		DEPENT_MODULE_PATH_STORRAGE[dppdPath] = dppdPath
 		sys.path.append(dppdPath)
+
+def module2root(modulefile, upcount = 1):
+	result = os.path.join(modulefile, "..")
+	for i in xrange(upcount):
+		result = os.path.join(result, "..")
+	result = os.path.normpath(result)
+	return result

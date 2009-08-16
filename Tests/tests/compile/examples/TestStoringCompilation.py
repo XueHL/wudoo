@@ -2,7 +2,7 @@ import unittest, os, sys, tempfile
 
 from wudoo.SystemWillExecutor import SystemWillExecutor
 
-from wudoo.compile.Project import Project
+from wudoo.compile.cpp.CPPProject import CPPProject
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationPool
 from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolveDependence
@@ -58,7 +58,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmp0)
+		project = CPPProject("Prj2346", tmp0, tmp0)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -95,7 +95,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmp1)
+		project = CPPProject("Prj", tmp1, tmp1)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -161,7 +161,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmp0)
+		project = CPPProject("PrjFindSources", tmp0, tmp0)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -201,7 +201,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmp1)
+		project = CPPProject("Prj", tmp1, tmp1)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -258,7 +258,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmpDir)
+		project = CPPProject("Prj", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -308,7 +308,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmpDir)
+		project = CPPProject("Prj", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a"}));
 		project.findSources()
@@ -387,7 +387,7 @@ class TestStoringCompilation(unittest.TestCase):
 			swe.execute(cmd)
 		del scwe
 
-		project = Project(tmpDir)
+		project = CPPProject("Prj", tmpDir, tmpDir)
 		project.addSrcFolders("\n".join(os.listdir(project.getRoot())))
 		project.setSourceFilter(ExtensionBasedFilter({"o": "o", "exe": "exe", "a": "a", "skipcrc": "skipcrc"}));
 		project.findSources()

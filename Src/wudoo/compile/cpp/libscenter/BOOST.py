@@ -18,7 +18,6 @@ class BoostCommonBuilder:
 		includeDirName = None
 		for idn in includeDir:
 			includeDirName = idn
-		print includeDirName, "\n"
 		os.rename(
 			os.path.join(self.__getBoostIncludeRoot(), includeDirName),
 			self.__boostInclude
@@ -38,7 +37,7 @@ class BOOSTCommonLib:
 		return BOOSTCommonLib.EMPTY_LIST
 
 	def getRoot(self):
-		return "D:/Other/MPS/_Projects/WuDoo/boost/boost-output"
+		return "Z:/Boost"
 
 	def getExportHdrFolders(self):
 		return self.__includeList
@@ -56,6 +55,6 @@ class BOOSTCommonLib:
 		return "BOOST_COMMON_LIB"
 
 	def getSpecialBuilder(self):
-		return BoostCommonBuilder("D:/Other/MPS/_Projects/WuDoo/boost/archive/boost_1_39_0.rar", "D:/Other/MPS/_Projects/WuDoo/boost/boost-output/Include")
+		return BoostCommonBuilder("D:/Work/_Outer/Boost/boost-39/boost_1_39_0.rar", "Z:/Boost/Include")
 
 BOOST_COMMON_LIB = BOOSTCommonLib()

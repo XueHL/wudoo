@@ -4,7 +4,6 @@ from wudoo.compile.ICompilation import ICompilation
 from wudoo.compile.BaseCompilation import BaseCompilation
 from wudoo.compile.cpp.gcc.GPPCompiler import GPPCompiler
 from wudoo.compile.cpp.Front import DefaultCPPCompilation
-from wudoo.compile.Project import Project
 from wudoo.filter.ExtensionBasedFilter import ExtensionBasedFilter
 from wudoo.SystemWillExecutor import SystemWillExecutor
 from wudoo.FSItem import FSItem

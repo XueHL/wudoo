@@ -1,7 +1,7 @@
 import os, sys
 
-SRC = "DefaultEmptyCompileResult2builderStrategy"
-GOAL = "DefaultEmptyCompileResult2builderStrategy"
+SRC = ' = CPPProject('
+GOAL = ' = CPPProject('
 
 def rec(p):
 	if p.find(".svn") > -1:

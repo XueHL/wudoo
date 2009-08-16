@@ -1,10 +1,8 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "UseExportHdr-dependProxy")
+project = CPPProject("UseExportHdr-dependProxy", __file__, module2root(__file__, 2))
 
-MDL_FILE = moduleFile2basePath(__file__)
-project.setRoot(os.path.join("..", ".."), MDL_FILE)
 project.addSrcFolders(
 """
 #Src
@@ -17,7 +15,7 @@ import build_useexphdr_asstatlib_0 as build_useexphdr_asstatlib
 statLibPrj = build_useexphdr_asstatlib.getProject()
 project.addDependenceProject(statLibPrj)
 
-#addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
+#addDependProjDir(os.path.join(project.getRoot(), "..", "..", "ExportHeaders", "CM"))
 #import build_exphdr
 #exportHdrPrj = build_exphdr.getProject()
 #project.addDependenceProject(exportHdrPrj)

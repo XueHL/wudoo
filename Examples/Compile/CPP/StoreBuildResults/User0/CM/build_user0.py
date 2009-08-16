@@ -1,10 +1,8 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "Store-User-0", moduleFile = __file__)
+project = CPPProject(name = "Store-User-0", moduleFile = __file__)
 
-MDL_FILE = moduleFile2basePath(__file__)
-project.setRoot("..", MDL_FILE)
 project.addSrcFolders(
 """
 Src
@@ -12,7 +10,7 @@ Src
 )
 
 ### ### Dependings  ### ###
-addDependProjDir(os.path.join(MDL_FILE, "..", "..", "TheLibrary", "CM"))
+addDependProjDir(os.path.join(project.getRoot(), "..", "TheLibrary", "CM"))
 import build_thelibrary as thelibrary
 theLibPrj = thelibrary.getProject()
 project.addDependenceProject(theLibPrj)

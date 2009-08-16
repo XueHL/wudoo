@@ -1,10 +1,8 @@
 import pickle
 from wudoo.compile.cpp.Front import *
 
-project = Project(name = "SLib-UseExportHdr")
+project = CPPProject("SLib-UseExportHdr", __file__, module2root(__file__, 2))
 
-MDL_FILE = moduleFile2basePath(__file__)
-project.setRoot(os.path.join("..", ".."), MDL_FILE)
 project.addSrcFolders(
 """
 Src
@@ -19,7 +17,7 @@ CM/sub-missions/sub-src/slib
 )
 
 ### ### Dependings  ### ###
-addDependProjDir(os.path.join(MDL_FILE, "..", "..", "..", "ExportHeaders", "CM"))
+addDependProjDir(os.path.join(project.getRoot(), "..", "ExportHeaders", "CM"))
 import build_exphdr
 exportHdrPrj = build_exphdr.getProject()
 project.addDependenceProject(exportHdrPrj)
