@@ -1,20 +1,22 @@
 import subprocess
 from wudoo.IWillExecutor import IWillExecutor
+from wudoo.IWillReportHandler import IWillReportHandler
 
-class SystemWillExecutor(IWillExecutor):
+class SystemWillExecutor(IWillExecutor, IWillReportHandler):
+	def __init__(self, willReportHandler = None):
+		if willReportHandler is None:
+			willReportHandler = self
+		self.__willReportHandler = willReportHandler
+	
 	def execute(self, cmd):
-		#print cmd
 		result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-		#print result[1]
-		if self.__isErr(result):
+		self.__willReportHandler.handleReport(result)
+		
+	def handleReport(self, result):
+		if self.__isErr(result[1]):
 			print result[1]
 
-	def __isErr(self, stdErrOut):
-		err = stdErrOut[1]
-		if err is None:
+	def __isErr(self, errOut):
+		if errOut is None:
 			return False
-		if len(err) == 0:
-			return False
-		#if err.find("error") == -1:
-		#	return False
-		return True
+		return errOut.find("erro") > 0
