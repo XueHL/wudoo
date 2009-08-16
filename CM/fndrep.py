@@ -1,7 +1,7 @@
 import os, sys
 
-SRC = ' = CPPProject('
-GOAL = ' = CPPProject('
+SRC = 'MODULES_REG_OFFICE.addDependProjDir('
+GOAL = 'MODULES_REG_OFFICE.MODULES_REG_OFFICE.addDependProjDir('
 
 def rec(p):
 	if p.find(".svn") > -1:

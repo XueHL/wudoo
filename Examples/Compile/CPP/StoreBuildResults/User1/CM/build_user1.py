@@ -10,7 +10,7 @@ Src
 )
 
 ### ### Dependings  ### ###
-addDependProjDir(os.path.join(project.getRoot(), "..", "TheLibrary", "CM"))
+MODULES_REG_OFFICE.addDependProjDir(os.path.join(project.getRoot(), "..", "TheLibrary", "CM"))
 import build_thelibrary as thelibrary
 theLibPrj = thelibrary.getProject()
 project.addDependenceProject(theLibPrj)

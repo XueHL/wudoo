@@ -23,9 +23,8 @@ def getProject():
 	project = pickle.loads(storrage)
 	return project
 
-
 ### ### ### Registering ### ### ### ### 
 if (__name__ == "__main__"):
 	print "Registering library: ", getProject().getName(), " ..."
-	LibsRegOffice.registerLibrary(getProject)
+	LIBS_REG_OFFICE.registerLibrary(getProject)
 	print "Completed"
