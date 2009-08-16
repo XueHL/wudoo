@@ -12,19 +12,15 @@ class BaseCompilation(ICompilation):
 		self.__compiler = None
 		self.__allocateStrategy = None
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()
-		#self.__buildersMap = {}
 		self.__debugInfoLevel = 0
 		self.__optimisationLevel = 100
 		self.__skipItemsStrategy = CompileAllStrategy()
 		self.__emptyCompileResult2builderStrategy = DefaultEmptyCompileResult2builderStrategy()
 		
 	def buildCompilationResult(self, emptyCompilationResult, willExecutor):
-		#builder = self.__buildersMap[emptyCompilationResult.__class__]
 		builder = self.__emptyCompileResult2builderStrategy.emptyCompileResult2builder(emptyCompilationResult)
 		builder.build(emptyCompilationResult, willExecutor)
 		
-	#def registerBuilder(self, compilationResultClazz, builder):
-	#	self.__buildersMap[compilationResultClazz] = builder
 
 	def setCompiler(self, compiler):
 		self.__compiler = compiler

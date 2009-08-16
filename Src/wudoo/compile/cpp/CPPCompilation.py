@@ -30,11 +30,3 @@ class CPPCompilation(BaseCompilation):
 			StaticLibCompilationResult,
 			StaticLibBuilder()
 			)
-
-	def setSkipItemsStrategy(self, skipItemsStrategy):
-		BaseCompilation.setSkipItemsStrategy(self, skipItemsStrategy)
-		ecr2bStrat = self.getEmptyCompileResult2builderStrategy()
-		ecr2bStrat.registerBuilder(
-			ObjectsCompilationResult,
-			ObjectsBuilder(skipItemsStrategy)
-			)
