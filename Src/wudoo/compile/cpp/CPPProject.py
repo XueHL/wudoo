@@ -6,9 +6,6 @@ from wudoo.FSItem import FSItem
 from wudoo.fsrecutils import CPPDependUtils
 
 class CPPProject(BaseProject, ICPPProject):
-	"""\
-Essence one can compile.
-"""
 	def __init__(
 		self, 
 		name,
