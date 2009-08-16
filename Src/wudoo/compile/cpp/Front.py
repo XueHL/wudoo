@@ -28,12 +28,9 @@ class DefaultArgsObj:
 Project = CPPProject
 
 def DefaultCPPCompilation(
-		project, 
 		binDestFSItem = None
 		):
-	compilation = CPPCompilation(
-		project, 
-		) 
+	compilation = CPPCompilation() 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
@@ -53,7 +50,7 @@ def wdefaultBuild(
 		setupCompilationCallback = nopSetupCompilationCallback, 
 		willExecutor = SystemWillExecutor(),
 		):
-	compilation = DefaultCPPCompilation(project)
+	compilation = DefaultCPPCompilation()
 	profilesChain(compilation, project)
 	setupCompilationCallback(compilation, project)
 	compilationResult = ExecutableCompilationResult(

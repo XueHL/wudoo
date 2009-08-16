@@ -8,7 +8,7 @@ from wudoo.compile.buildresult.skipcompile.CompileAllStrategy import CompileAllS
 from wudoo.compile.DefaultEmptyCompileResult2builderStrategy import DefaultEmptyCompileResult2builderStrategy
 
 class BaseCompilation(ICompilation):
-	def __init__(self, project, *faik0, **faik1):
+	def __init__(self, *faik0, **faik1):
 		self.__compiler = None
 		self.__allocateStrategy = None
 		self.__resolveDependenceStrategy = CompileObjsResolveDependence()

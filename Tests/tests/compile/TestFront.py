@@ -12,7 +12,7 @@ class TestFront(unittest.TestCase):
 	def testFillDevelopCompilation(self):
 		from wudoo.console import Console2obj
 		project = TestFront.build_useexphdr_prj.getProject()
-		compilation = DefaultCPPCompilation(project)
+		compilation = DefaultCPPCompilation()
 		import tempfile
 		tmpDir = tempfile.mkdtemp()
 		argsObj = Console2obj.argArr2obj(("--profile develop --buildroot " + tmpDir).split(" "), DefaultArgsObj())
