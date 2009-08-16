@@ -70,7 +70,6 @@ class TestEasyExamples(unittest.TestCase):
 		
 	def testBuildDepend(self):
 		project = TestEasyExamples.build_useexphdr_prj.getProject()
-#		compilation = DefaultCPPCompilation(project)
 		tmpDir = tempfile.mkdtemp()
 		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		def setupCompilationCallback(compilation, project):

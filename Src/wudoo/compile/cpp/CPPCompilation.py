@@ -9,14 +9,8 @@ from wudoo.compile.buildresult.ObjectsBuilder import ObjectsBuilder
 from wudoo.compile.buildresult.StaticLibBuilder import StaticLibBuilder
 
 class CPPCompilation(BaseCompilation):
-	def __init__(
-			self,
-			project,
-			):
-		BaseCompilation.__init__(
-			self, 
-			project,
-			)
+	def __init__(self):
+		BaseCompilation.__init__(self)
 		ecr2bStrat = self.getEmptyCompileResult2builderStrategy()
 		ecr2bStrat.registerBuilder(
 			ExecutableCompilationResult,
