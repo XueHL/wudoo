@@ -10,7 +10,7 @@ class TestLibsRegOffice(unittest.TestCase):
 		)
 		build_er_lib_cmd = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "000-easy-reg", "Library", "CM", "build_er_lib.py"))
 		build_er_lib_cmd = "python " + build_er_lib_cmd
-		subprocess.Popen(build_er_lib_cmd).communicate()
+		SystemWillExecutor().execute(build_er_lib_cmd)
 		import build_er_user
 		TestLibsRegOffice.userProj = build_er_user.getProject()
 		tmpDir = tempfile.mktemp()
@@ -42,7 +42,7 @@ class TestLocalLibsSearch(unittest.TestCase):
 	def setUp(self):
 		globalLibCmd = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "001-glob-loc", "GlobalLib", "CM", "build_glb_lib.py"))
 		globalLibCmd = "python " + globalLibCmd
-		subprocess.Popen(globalLibCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+		SystemWillExecutor().execute(globalLibCmd)
 		sys.path.append(
 			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "001-glob-loc", "User", "CM"))
 		)

@@ -6,7 +6,7 @@ from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationP
 class TestBoost(unittest.TestCase):
 	def setUp(self):
 		sys.path.append(
-			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-predefined-libs", "Boost", "EasySkip", "CM"))
+			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "CPP-predefined-libs", "Boost", "CM"))
 		)
 		import build_boost_use
 		TestBoost.boostPrj = build_boost_use.getProject()
