@@ -9,8 +9,9 @@ from wudoo.compile.dependence.StaticLibResolveDependence import StaticLibResolve
 
 from tests.fakes.StoreCallsWillExecutor import StoreCallsWillExecutor
 
+from wudoo.compile.cpp.Front import *
+
 def ifLib1ThenObj(project):
-	from wudoo.compile.cpp.Front import CompileObjsResolveDependence
 	if project.getName() == "Lib1":
 		return CompileObjsResolveDependence()
 
@@ -25,7 +26,6 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_user1 as usr1prj
 	
 	def testTheLibraryExample(self):
-		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
 		tmp1 = os.path.join(tmpDir, "p1")
@@ -124,7 +124,6 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_chain_1 as chain1prj
 
 	def testChainResolve_so_ss(self):
-		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
 		tmpDir = tempfile.mktemp()
 		tmp0 = os.path.join(tmpDir, "p0") 
 		tmp1 = os.path.join(tmpDir, "p1")
@@ -228,7 +227,6 @@ class TestStoringCompilation(unittest.TestCase):
 	import build_dbg as dbgprj
 
 	def testDbgInfo(self):
-		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
@@ -355,7 +353,6 @@ class TestStoringCompilation(unittest.TestCase):
 		skroot = TestStoringCompilation.cloneSkipTest()
 		import build_easyskip as skipprj
 		from wudoo.console import Console2obj
-		from wudoo.compile.cpp.Front import setupPathsFromRoot, wdefaultBuild, ChainCaseDependencyResolve, CompileObjsResolveDependence, profilesChain
 		tmpDir = tempfile.mktemp()
 		
 		def faikGPF(self, project):
@@ -365,7 +362,6 @@ class TestStoringCompilation(unittest.TestCase):
 		 
 		skipinfoprj = skipprj.getProject()
 
-		class DefaultArgsObj: pass
 		argsObj = Console2obj.argArr2obj(("--profile develop --buildroot " + tmpDir).split(" "), DefaultArgsObj())
 		def setupCompilationCallback(compilation, project):
 			profilesChain(compilation, project, argsObj)

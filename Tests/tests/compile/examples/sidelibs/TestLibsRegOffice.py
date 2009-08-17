@@ -6,12 +6,11 @@ from wudoo.compile.compilationpool.StoreCompilationPool import StoreCompilationP
 class TestLibsRegOffice(unittest.TestCase):
 	def setUp(self):
 		sys.path.append(
-			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "000-easy-reg", "Library", "CM"))
-		)
-		sys.path.append(
 			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "000-easy-reg", "User", "CM"))
 		)
-		import build_er_lib
+		build_er_lib_cmd = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "000-easy-reg", "Library", "CM", "build_er_lib.py"))
+		build_er_lib_cmd = "python " + build_er_lib_cmd
+		subprocess.Popen(build_er_lib_cmd).communicate()
 		import build_er_user
 		TestLibsRegOffice.userProj = build_er_user.getProject()
 		tmpDir = tempfile.mktemp()
@@ -23,7 +22,6 @@ class TestLibsRegOffice(unittest.TestCase):
 	def tearDown(self):
 		n = len(sys.path)
 		del sys.path[n - 1]
-		del sys.path[n - 2]
 		del TestLibsRegOffice.userProj
 		StoreCompilationPool._StoreCompilationPool__getPoolFile = TestLibsRegOffice.getPoolFile
 
@@ -39,4 +37,43 @@ class TestLibsRegOffice(unittest.TestCase):
 		executable = os.path.join(tmpDir, "Bin", executable)
 		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 		self.assertEqual("easy-reg :: Library\r\n", result)
+
+class TestLocalLibsSearch(unittest.TestCase):
+	def setUp(self):
+		globalLibCmd = os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "001-glob-loc", "GlobalLib", "CM", "build_glb_lib.py"))
+		globalLibCmd = "python " + globalLibCmd
+		subprocess.Popen(globalLibCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+		sys.path.append(
+			os.path.normpath(os.path.join(sys.path[0], "..", "Examples", "Compile", "LibsRegOffice", "001-glob-loc", "User", "CM"))
+		)
+		import build_GL_user
+		TestLocalLibsSearch.userProj = build_GL_user.getProject()
+		tmpDir = tempfile.mktemp()
+		def faikGPF(self, project):
+			return os.path.join(tmpDir, "StoreCompilationPool.data")
+		TestLocalLibsSearch.getPoolFile = StoreCompilationPool._StoreCompilationPool__getPoolFile
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = faikGPF
+
+	def tearDown(self):
+		n = len(sys.path)
+		del sys.path[n - 1]
+		del TestLocalLibsSearch.userProj
+		StoreCompilationPool._StoreCompilationPool__getPoolFile = TestLocalLibsSearch.getPoolFile
+
+	def testDevelopingProjectsSearch(self):
+		tmpDir = tempfile.mktemp()
+		def setupCompilationCallback(compilation, project):
+			argsObj = DefaultArgsObj()
+			argsObj.developprojects = ["LocalLibrary"]
+			argsObj.developprojectssearch = [".."]
+			profilesChain(compilation, project, argsObj)
+			setupPathsFromRoot(compilation, project, tmpDir)
+		wdefaultBuild(TestLocalLibsSearch.userProj, setupCompilationCallback)
+		executable = None
+		for sf in os.listdir(os.path.join(tmpDir, "Bin")):
+			if os.path.splitext(sf)[0] == "GLUser":
+				executable = sf
+		executable = os.path.join(tmpDir, "Bin", executable)
+		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+		self.assertEqual("The Global\r\nThe Local\r\n", result)
 		

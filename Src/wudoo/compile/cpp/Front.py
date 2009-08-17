@@ -24,13 +24,15 @@ class DefaultArgsObj:
 	def __init__(self):
 		self.profile = []
 		self.buildroot = [None]
+		self.developprojects = []
+		self.developprojectssearch = []
 
 Project = CPPProject
 
 def DefaultCPPCompilation(
 		binDestFSItem = None
 		):
-	compilation = CPPCompilation() 
+	compilation = CPPCompilation(libsRegOffice = LIBS_REG_OFFICE) 
 	compilation.setCompiler(GPPCompiler())
 	return compilation
 
@@ -44,6 +46,7 @@ def profilesChain(compilation, project, argsObj = None):
 		argsObj.profile = [BuildProfiles.DEFAULT_PROFILE_NAME] + argsObj.profile
 	for profileName in argsObj.profile:
 		BuildProfiles.applyProfile(compilation, project, profileName, argsObj)
+	LIBS_REG_OFFICE.setupArgsObj(argsObj, project.getRoot())
 	
 def wdefaultBuild(
 		project, 
