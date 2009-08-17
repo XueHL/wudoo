@@ -1,5 +1,8 @@
 import os
 
+from wudoo.compile.libscenter.IProjectSearcher import IProjectSearcher
+from wudoo.compile.IProject import IProject
+
 class BoostCommonBuilder:
 	def __init__(self, archiveLocation, boostInclude):
 		self.__archiveLocation = archiveLocation
@@ -26,7 +29,7 @@ class BoostCommonBuilder:
 	def __getBoostIncludeRoot(self):
 		return os.path.split(self.__boostInclude)[0]
 
-class BOOSTCommonLib:
+class BOOSTCommonLib(IProject):
 	EMPTY_LIST = []
 
 	def __init__(self):

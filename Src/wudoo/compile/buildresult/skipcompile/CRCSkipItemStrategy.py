@@ -44,7 +44,7 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 
 	def __addProjectHeaders(self, project):
 		allNewHdrFolders = []
-		for depPrj in CPPDependUtils.getAllDependProjects(project):
+		for depPrj in CPPDependUtils.getAllDependProjects(project, True):
 			if depPrj in self.__projects:
 				continue
 			self.__projects.add(depPrj)

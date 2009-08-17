@@ -7,6 +7,7 @@ class LibsRegOffice:
 		self.__name2modulepath = None
 		self.__pairs = []
 		self.__flushedCount = 0
+		self.__localFoundModules = {}
 	
 	def registerLibrary(self, getProjectFunctor):
 		projectInstance = getProjectFunctor()
@@ -19,11 +20,21 @@ class LibsRegOffice:
 		
 	def libByName(self, name):
 		name2modulepath = self.__getName2modulepath()
-		if not name2modulepath.has_key(name):
-			return None
-		modulePath = name2modulepath[name]
-		getProjectFunctor = self.__loadGetProjFunctor(modulePath)
-		return getProjectFunctor()
+		modulePath = None
+		allDB = self.__mergeDicts(self.__localFoundModules, name2modulepath)
+		if allDB.has_key(name):
+			modulePath = allDB[name]
+		
+		if modulePath is not None:
+			getProjectFunctor = self.__loadGetProjFunctor(modulePath)
+			return getProjectFunctor()
+		else:
+			return name
+		
+	def setupArgsObj(self, argsObj, prjRoot):
+		for searchArea in argsObj.developprojectssearch:
+			searchArea = os.path.normpath(os.path.join(prjRoot, searchArea))
+			self.__dfsModules(searchArea)
 		
 	def flush(self):
 		output = open(self.__dbPath, "a")
@@ -32,6 +43,28 @@ class LibsRegOffice:
 			pair = self.__pairs[j]
 			pickle.dump(pair, output)
 		output.close()
+		
+	def __mergeDicts(self, *dicts):
+		result = {}
+		for d in dicts:
+			for (k, v) in d.items():
+				result[k] = v
+		return result
+		
+	def __dfsModules(self, file):
+		if os.path.isfile(file):
+			ext = os.path.splitext(file)[1]
+			if ext == ".py":
+				try:
+					functor = self.__loadGetProjFunctor(file)
+					prj = functor()
+					self.__localFoundModules[prj.getName()] = file
+				except:
+					pass
+		else:
+			for sub in os.listdir(file):
+				sub = os.path.join(file, sub)
+				self.__dfsModules(sub)
 		
 	def __getName2modulepath(self):
 		if self.__name2modulepath is not None:
@@ -60,10 +93,25 @@ class LibsRegOffice:
 		self.__modulesRegOffice.addDependProjDir(os.path.split(moduleFile)[0])
 	
 	def __loadGetProjFunctor(self, modulePath):
+		modDirPath = os.path.split(modulePath)[0]
+		self.__modulesRegOffice.addDependProjDir(modDirPath)
 		moduleName = os.path.split(modulePath)[1]
 		moduleName = os.path.splitext(moduleName)[0]
 		MOD_NAME_2_GETTER = {}
-		import build_er_lib
-		MOD_NAME_2_GETTER["build_er_lib"] = build_er_lib.getProject
+		try:
+			import build_er_lib
+			MOD_NAME_2_GETTER["build_er_lib"] = build_er_lib.getProject
+		except:
+			pass
+		try:
+			import build_glb_lib
+			MOD_NAME_2_GETTER["build_glb_lib"] = build_glb_lib.getProject
+		except:
+			pass
+		try:
+			import build_loc_lib
+			MOD_NAME_2_GETTER["build_loc_lib"] = build_loc_lib.getProject
+		except:
+			pass
 		return MOD_NAME_2_GETTER[moduleName]
 	  

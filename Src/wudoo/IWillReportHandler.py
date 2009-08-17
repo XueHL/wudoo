@@ -1,3 +1,3 @@
 class IWillReportHandler:
-	def handleReport(self, result):
+	def handleReport(self, cmd, result):
 		raise NotImplementedError()

@@ -31,6 +31,7 @@ class TestBoost(unittest.TestCase):
 		for sf in os.listdir(os.path.join(tmpDir, "Bin")):
 			if os.path.splitext(sf)[0] == "BoostUse":
 				executable = sf
+		self.assertFalse(executable is None)
 		executable = os.path.join(tmpDir, "Bin", executable)
 		result = subprocess.Popen(executable, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 		self.assertEqual("shared_ptr created: 0 shared_ptr destroyed: 0\r\nshared_ptr created: 22 shared_ptr destroyed: 22\r\n", result)
