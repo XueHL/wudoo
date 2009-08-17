@@ -2,6 +2,8 @@ import os
 
 from wudoo.FSItem import FSItem
 from wudoo.compile.allocate.IAllocateStrategy import IAllocateStrategy
+from wudoo.compile.cpp.ObjectFSItem import ObjectFSItem
+from wudoo.compile.cpp.ArchiveFSItem import ArchiveFSItem
 
 class OutputRootBasedAllocate(IAllocateStrategy):
 	def __init__(
@@ -32,10 +34,10 @@ class OutputRootBasedAllocate(IAllocateStrategy):
 			path = [os.path.join(self.__outerFolder, project.getName())]
 		path.extend(src.getPathArr(1)) 
 		path.append(src.getName() + self.__objExt)
-		return FSItem(*path)
+		return ObjectFSItem(*path)
 	
 	def allocateStaticLib(self, project):
-		return FSItem(self.__outerFolder, project.getName() + self.__libext)
+		return ArchiveFSItem(self.__outerFolder, project.getName() + self.__libext)
 
 	def allocateSingleCompileInfo(self, typeStr):
 		if typeStr[0] != '.':

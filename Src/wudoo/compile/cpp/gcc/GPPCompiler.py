@@ -28,7 +28,7 @@ class GPPCompiler(BaseCompiler):
 	def linkExecutable(self, objectFSItems, goalFSItem, willExecutor):
 		objStr = ""
 		for obj in objectFSItems:
-			objStr += " \"" + obj.getPathNameExt() + '"'
+			objStr += ' "' + obj.getPathNameExt() + '"'
 		command = self.__gppCmd + \
 			objStr + \
 			" -o " + \

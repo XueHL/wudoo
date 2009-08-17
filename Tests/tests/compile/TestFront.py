@@ -27,10 +27,10 @@ class TestFront(unittest.TestCase):
 		
 		self.assertEquals(
 			[
-			'g++ -c "__SRC__\\UseExportHeaders\\Src\\main.cpp" -o "__WS__\\Obj\\Src\\main.o"  -I"__SRC__\\ExportHeaders\\ExportHrd" -g3 -O0', 
 			'g++ -c "__SRC__\\ExportHeaders\\Src\\ExportHello.cpp" -o "__WS__\\Outer\\ExportHdr\\Src\\ExportHello.o"  -I"__SRC__\\ExportHeaders\\Hdr" -I"__SRC__\\ExportHeaders\\ExportHrd" -g3 -O0', 
-			'g++ -c "__SRC__\\ExportHeaders\\SrcMain\\main.cpp" -o "__WS__\\Outer\\ExportHdr\\SrcMain\\main.o"  -I"__SRC__\\ExportHeaders\\Hdr" -I"__SRC__\\ExportHeaders\\ExportHrd" -g3 -O0',
-			'g++ "__WS__\\Obj\\Src\\main.o" "__WS__\\Outer\\ExportHdr\\Src\\ExportHello.o" -o "__WS__\\Bin\\UseExportHdr"'
+			'g++ -c "__SRC__\\ExportHeaders\\SrcMain\\main.cpp" -o "__WS__\\Outer\\ExportHdr\\SrcMain\\main.o"  -I"__SRC__\\ExportHeaders\\Hdr" -I"__SRC__\\ExportHeaders\\ExportHrd" -g3 -O0', 
+			'g++ -c "__SRC__\\UseExportHeaders\\Src\\main.cpp" -o "__WS__\\Obj\\Src\\main.o"  -I"__SRC__\\ExportHeaders\\ExportHrd" -g3 -O0', 
+			'g++ "__WS__\\Outer\\ExportHdr\\Src\\ExportHello.o" "__WS__\\Obj\\Src\\main.o" -o "__WS__\\Bin\\UseExportHdr"',
 			],
 			history
 			)

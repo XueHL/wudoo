@@ -32,6 +32,8 @@ class CRCSkipItemStrategy(ISkipItemsStrategy):
 		for item in storeItems:
 			buf = open(item.getPathNameExt(), "r").read()
 			crcStorr[item.getPathNameExt()] = buf
+		if not os.path.exists(crcFSItem.getPath()):
+			os.makedirs(crcFSItem.getPath())
 		f = open(crcFSItem.getPathNameExt(), "w")
 		crcStorr = pickle.dumps(crcStorr)
 		f.write(crcStorr)

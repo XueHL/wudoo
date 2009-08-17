@@ -45,9 +45,9 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User0\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr" -g0 -O3', 
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\Src\\NameHolder.cpp" -o "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr" -g0 -O3', 
 			'ar q "__TMP__\\p0\\Outer\\TheLibrary.a" "__TMP__\\p0\\Outer\\TheLibrary\\Src\\NameHolder.o"', 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\User0\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\StoreBuildResults\\TheLibrary\\ExportHdr" -g0 -O3', 
 			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\TheLibrary.a" -o "__TMP__\\p0\\Bin\\Store-User-0"'
 			], 
 			history
@@ -146,12 +146,12 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\User-0__0-s--1-o\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\Src\\NameHolder0.cpp" -o "__TMP__\\p0\\Outer\\Lib0\\Src\\NameHolder0.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -g0 -O3', 
 			'ar q "__TMP__\\p0\\Outer\\Lib0.a" "__TMP__\\p0\\Outer\\Lib0\\Src\\NameHolder0.o"', 
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\Src\\NameHolder1.cpp" -o "__TMP__\\p0\\Outer\\Lib1\\Src\\NameHolder1.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
-			'g++ "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\Lib0.a" "__TMP__\\p0\\Outer\\Lib1\\Src\\NameHolder1.o" -o "__TMP__\\p0\\Bin\\User-0__0-s--1-o"'
-			], 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\User-0__0-s--1-o\\Src\\main.cpp" -o "__TMP__\\p0\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
+			'g++ "__TMP__\\p0\\Outer\\Lib1\\Src\\NameHolder1.o" "__TMP__\\p0\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\Lib0.a" -o "__TMP__\\p0\\Bin\\User-0__0-s--1-o"'
+			],
 			history
 			)
 		del history
@@ -187,9 +187,9 @@ class TestStoringCompilation(unittest.TestCase):
 		history = "@".join(scwe.history).replace(trunk, "__TRUNK__").replace(tmpDir, "__TMP__").split("@")
 		self.assertEqual(
 			[
-			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\User-1__0-s--1-s\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
 			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\Src\\NameHolder1.cpp" -o "__TMP__\\p1\\Outer\\Lib1\\Src\\NameHolder1.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
 			'ar q "__TMP__\\p1\\Outer\\Lib1.a" "__TMP__\\p1\\Outer\\Lib1\\Src\\NameHolder1.o"', 
+			'g++ -c "__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\User-1__0-s--1-s\\Src\\main.cpp" -o "__TMP__\\p1\\Obj\\Src\\main.o"  -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib0\\ExportHdr" -I"__TRUNK__\\Examples\\Compile\\CPP\\ChainResolveStrategy\\Lib1\\ExportHdr" -g0 -O3', 
 			'g++ "__TMP__\\p1\\Obj\\Src\\main.o" "__TMP__\\p0\\Outer\\Lib0.a" "__TMP__\\p1\\Outer\\Lib1.a" -o "__TMP__\\p1\\Bin\\User-1__0-s--1-s"'
 			], 
 			history
