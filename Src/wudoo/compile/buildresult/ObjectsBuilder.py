@@ -14,5 +14,4 @@ class ObjectsBuilder(IBuilder):
 			if not skipItemsStrategy.skip(src, compilation, project):
 				compiler.compile(src, obj, project, compilation, willExecutor)
 				skipItemsStrategy.onCompiled(src, compilation, project)
-			obj = compilation.getAllocateStrategy().allocateObj(src, emptyCompilationResult.getProject())
 			emptyCompilationResult.getObjectFSItems().append(obj)
