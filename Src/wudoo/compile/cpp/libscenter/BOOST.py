@@ -33,7 +33,7 @@ class BOOSTCommonLib(IProject):
 	EMPTY_LIST = []
 
 	def __init__(self):
-		self.__moduleFile = __file__
+		self.__moduleFile = None
 		self.__includeList = ["Include"]
 
 	def getDependences(self):
