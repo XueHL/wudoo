@@ -7,3 +7,6 @@ class BaseCompositElement(ICompositElement, BaseElement):
 
 	def appendElement(self, element):
 		self.__elements.append(element)
+
+	def getElementsList(self):
+		return self.__elements

@@ -2,10 +2,9 @@ from wudoo.textproc.processing.ITextProcessor import ITextProcessor
 from wudoo.textproc.processing.DefaultToolsOperationStraegy import DefaultToolsOperationStraegy
 from wudoo.textproc.processing.tools.ParagraphTool import ParagraphTool
 from wudoo.textproc.processing.tools.ButtomTool import ButtomTool
+from wudoo.textproc.save.SaveOnStopStrategyFront import SaveOnStopStrategyFront
 from wudoo.textproc.document.elements.Document import Document
 from wudoo.textproc.document.elements.Header import Header
-
-Header
 
 class TextProcessor(ITextProcessor):
 	def __init__(self, docName, scriptFile):
@@ -14,6 +13,7 @@ class TextProcessor(ITextProcessor):
 		self.__document = Document()
 		self.__tools = [ButtomTool()]
 		self.__toolsOperationStraegy = DefaultToolsOperationStraegy()
+		self.__onStopStrategy = SaveOnStopStrategyFront()
 
 	def setBookName(self, name):
 		self.__document.getBookName().set(name)
@@ -34,4 +34,7 @@ class TextProcessor(ITextProcessor):
 		return self.__tools
 
 	def stop(self):
-		pass
+		self.__onStopStrategy.onStop(self.__document)
+
+	def getDocumtnt(self):
+		return self.__document

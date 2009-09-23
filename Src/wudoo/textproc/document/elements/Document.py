@@ -8,3 +8,6 @@ class Document(BaseCompositElement):
 
 	def getBookName(self):
 		return self.__bookName
+
+	def visit(self, visitor):
+		visitor.visitDocument(self)

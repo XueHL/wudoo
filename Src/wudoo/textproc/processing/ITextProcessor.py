@@ -16,3 +16,6 @@ class ITextProcessor:
 
 	def stop(self):
 		raise NotImplementedError()
+
+	def getDocumtnt(self):
+		raise NotImplementedError()
