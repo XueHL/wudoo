@@ -14,7 +14,7 @@ class SystemWillExecutor(IWillExecutor, IWillReportHandler):
 		
 	def handleReport(self, cmd, result):
 		if self.__isErr(result[1]):
-			print "CMD was:\n\t\t", cmd, "\nresult:\n\t\t", result[1]
+			print "\nCMD was:\n\t\t", cmd, "\nresult:\n\t\t", result[1]
 
 	def __isErr(self, errOut):
 		if errOut is None:
