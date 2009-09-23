@@ -58,13 +58,39 @@ def eatDayDistSep(buf_ptr):
 	assert p == 0
 	buf_ptr[0] = buf_ptr[0][3:]
 
-class WorkDay:
+class WorkDist:
 	def __init__(self, dayBegTime, dayEndTime):
 		self.dayBegTime = dayBegTime
 		self.dayEndTime = dayEndTime
 
 	def __str__(self):
 		return str(self.dayBegTime) + " -> " + str(self.dayEndTime) + " :: " + str(self.dayEndTime - self.dayBegTime)
+
+class WorkDay:
+	def __init__(self):
+		self.__workDists = []
+
+	def append(self, workDist):
+		self.__workDists.append(workDist)
+
+	def getTotalWorkTime(self):
+		result = datetime.timedelta(days = 0)
+		for workDist in self.__workDists:
+			result = result + ( workDist.dayEndTime - workDist.dayBegTime )
+		return result
+
+	def __str__(self):
+		if self.isEmpty():
+			return "Empty"
+		buf = ""
+		for wirkDist in self.__workDists:
+			buf = buf + str(wirkDist) + ", "
+		buf += " ::: " + str(self.getTotalWorkTime())
+		return buf
+
+	def isEmpty(self):
+		return len(self.__workDists) == 0
+
 
 class WorkWeek:
 	def __init__(self, dayDists):
@@ -76,7 +102,7 @@ def parseMonth(buf):
 	buf = buf[p:]
 	date = getMonthStart()
 	initMonth = date.month
-	delta = datetime.timedelta(days = 1)
+	deltaOneDay = datetime.timedelta(days = 1)
 	buf_ptr = [buf]
 	weeks = []
 	lastWeek = [None] * 7
@@ -84,16 +110,21 @@ def parseMonth(buf):
 		eatDayNumber(buf_ptr, date)
 		qsbrbuf = parseSqbrbuf(buf_ptr)
 		#
-		dayBegTime = parseTime(buf_ptr, date)
-		if dayBegTime is not None:
+		workDay = WorkDay()
+		while True:
+			dayBegTime = parseTime(buf_ptr, date)
+			if dayBegTime is None:
+				break
 			eatDayDistSep(buf_ptr)
 			dayEndTime = parseTime(buf_ptr, date)
-			lastWeek[date.weekday()] = WorkDay(dayBegTime, dayEndTime)
+			workDist = WorkDist(dayBegTime, dayEndTime)
+			workDay.append(workDist)
+		lastWeek[date.weekday()] = workDay
 		#
-		date += delta
+		date += deltaOneDay
 		if date.weekday() == 0 and (not lastWeek == [None] * 7):
 			weeks.append(WorkWeek(lastWeek))
 			lastWeek = [None] * 7
-	if lastWeek[0] is not None:
+	if not lastWeek[0].isEmpty():
 		weeks.append(WorkWeek(lastWeek))
 	return weeks
