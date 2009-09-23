@@ -18,16 +18,16 @@ from wudoo.timeutils.HRBOParse import *
 buf = open(inputName, "r").read()
 weekList = parseMonth(buf)
 lastWeek = weekList[len(weekList) - 1]
-for dayDist in lastWeek.dayDists:
+for dayDist in lastWeek.workDays:
 	print dayDist
 
 weeksum = None
 remaindDays = 5
-for dayDist in lastWeek.dayDists:
-	if dayDist is None:
+for workDay in lastWeek.workDays:
+	if workDay.isEmpty():
 		continue
 	remaindDays -= 1
-	cd = dayDist.dayEndTime - dayDist.dayBegTime
+	cd = workDay.getTotalWorkTime()
 	if weeksum is None:
 		weeksum = cd
 	else:
