@@ -80,12 +80,11 @@ class WorkDay:
 		return result
 
 	def __str__(self):
-		if self.isEmpty():
-			return "Empty"
-		buf = ""
+		buf = str(self.getTotalWorkTime()) + " ::: "
 		for wirkDist in self.__workDists:
 			buf = buf + str(wirkDist) + ", "
-		buf += " ::: " + str(self.getTotalWorkTime())
+		if not self.isEmpty():
+			buf = buf[:len(buf)-2]
 		return buf
 
 	def isEmpty(self):
@@ -93,8 +92,8 @@ class WorkDay:
 
 
 class WorkWeek:
-	def __init__(self, dayDists):
-		self.dayDists = dayDists
+	def __init__(self, workDays):
+		self.workDays = workDays
 
 def parseMonth(buf):
 	p = buf.find(START_CALENDAR_PATTERN)
