@@ -1,2 +1,3 @@
 class IElement:
-	pass
+	def visit(self, visitor):
+		raise NotImplementedError(self.__class__)
