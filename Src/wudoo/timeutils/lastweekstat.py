@@ -23,11 +23,11 @@ for dayDist in lastWeek.dayDists:
 
 weeksum = None
 remaindDays = 5
-for dayDist in lastWeek.dayDists:
-	if dayDist is None:
+for workDay in lastWeek.dayDists:
+	if workDay is None:
 		continue
 	remaindDays -= 1
-	cd = dayDist.dayEndTime - dayDist.dayBegTime
+	cd = workDay.getTotalWorkTime()
 	if weeksum is None:
 		weeksum = cd
 	else:
