@@ -67,3 +67,12 @@ of the Rings have been made for radio, theatre, and film.
 )
 
 tproc.stop()
+
+### ### ### ### ### 
+import imp, os
+path = os.path.abspath("lfn.py")
+print path
+nm = os.path.basename(path)
+mdnm = os.path.splitext(nm)[0]
+lfnmodule = imp.load_module("uaa", open(path), path, ("py", "U", imp.PY_SOURCE))
+lfnmodule.foo()
