@@ -74,5 +74,5 @@ path = os.path.abspath("lfn.py")
 print path
 nm = os.path.basename(path)
 mdnm = os.path.splitext(nm)[0]
-lfnmodule = imp.load_module("uaa", open(path), path, ("py", "U", imp.PY_SOURCE))
+lfnmodule = imp.load_module("pamparam", open(path), path, ("py", "U", imp.PY_SOURCE))
 lfnmodule.foo()

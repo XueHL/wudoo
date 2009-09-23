@@ -71,4 +71,4 @@ def module2root(modulefile, upcount = 1):
 	return result
 
 MODULES_REG_OFFICE = ModulesRegOffice()
-LIBS_REG_OFFICE = LibsRegOffice("z:\\uaa", MODULES_REG_OFFICE)
+LIBS_REG_OFFICE = LibsRegOffice("z:\\gg", MODULES_REG_OFFICE)
