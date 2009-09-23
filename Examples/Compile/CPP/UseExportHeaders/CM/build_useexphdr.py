@@ -29,6 +29,5 @@ if (__name__ == "__main__"):
 	def setupBuildRoot(compilation, project):
 		pass
 		setupPathsFromRoot(compilation, project)
-#		setupPathsFromRoot(compilation, project, "z:\\uaa")
 	project = getProject()
 	wdefaultBuild(project, setupBuildRoot)
