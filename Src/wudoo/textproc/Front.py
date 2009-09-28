@@ -1,3 +1,5 @@
+from wudoo.modulesutils.FileAsModuleUtils import *
+
 DOC_STORRAGE = {}
 
 def getTextProc(docName, the__file__):
