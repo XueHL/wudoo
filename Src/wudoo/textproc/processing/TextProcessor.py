@@ -36,5 +36,8 @@ class TextProcessor(ITextProcessor):
 	def stop(self):
 		self.__onStopStrategy.onStop(self.__document)
 
+	def getOnStopStrategy(self):
+		return self.__onStopStrategy
+
 	def getDocumtnt(self):
 		return self.__document
