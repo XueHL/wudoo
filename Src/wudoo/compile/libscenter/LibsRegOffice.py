@@ -93,25 +93,10 @@ class LibsRegOffice:
 		self.__modulesRegOffice.addDependProjDir(os.path.split(moduleFile)[0])
 	
 	def __loadGetProjFunctor(self, modulePath):
-		modDirPath = os.path.split(modulePath)[0]
-		self.__modulesRegOffice.addDependProjDir(modDirPath)
-		moduleName = os.path.split(modulePath)[1]
-		moduleName = os.path.splitext(moduleName)[0]
-		MOD_NAME_2_GETTER = {}
-		try:
-			import build_er_lib
-			MOD_NAME_2_GETTER["build_er_lib"] = build_er_lib.getProject
-		except:
-			pass
-		try:
-			import build_glb_lib
-			MOD_NAME_2_GETTER["build_glb_lib"] = build_glb_lib.getProject
-		except:
-			pass
-		try:
-			import build_loc_lib
-			MOD_NAME_2_GETTER["build_loc_lib"] = build_loc_lib.getProject
-		except:
-			pass
-		return MOD_NAME_2_GETTER[moduleName]
+		modulePath = modulePath.replace(".pyc", ".py")
+		moduleFileName = os.path.split(modulePath)[1]
+		moduleName = os.path.splitext(moduleFileName)[0]
+		import imp
+		module = imp.load_module(moduleName, open(modulePath), modulePath, ("py", "U", imp.PY_SOURCE))
+		return module.getProject
 	  
