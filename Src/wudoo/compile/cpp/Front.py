@@ -63,6 +63,18 @@ def wdefaultBuild(
 		compilation.getAllocateStrategy().allocateExecutable(project)
 		)
 	compilation.buildCompilationResult(compilationResult, willExecutor)
+	
+def wdefaultBuildStaticlib(
+		project
+		):
+	compilation = DefaultCPPCompilation()
+	profilesChain(compilation, project)
+	compilationResult = StaticLibCompilationResult(
+		project,
+		compilation,
+		compilation.getAllocateStrategy().allocateStaticLib(project)
+		)
+	compilation.buildCompilationResult(compilationResult, SystemWillExecutor())
 
 def module2root(modulefile, upcount = 1):
 	result = os.path.join(modulefile, "..")
