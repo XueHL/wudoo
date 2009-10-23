@@ -49,6 +49,9 @@ def profilesChain(compilation, project, argsObj = None):
 		BuildProfiles.applyProfile(compilation, project, profileName, argsObj)
 	LIBS_REG_OFFICE.setupArgsObj(argsObj, project.getRoot())
 	
+def projectByName(name):
+	return LIBS_REG_OFFICE.libByName(name)
+	
 def wdefaultBuild(
 		project, 
 		setupCompilationCallback = nopSetupCompilationCallback, 
