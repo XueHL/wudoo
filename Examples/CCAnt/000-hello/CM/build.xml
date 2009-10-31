@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<project name="hello" default="compile-hello" basedir="..">
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+	<taskdef resource="cpptasks.tasks"/>
+	<target name="compile-hello">
+		<mkdir dir="${basedir}/_Out/Bin"/>
+		<mkdir dir="${basedir}/_Out/Obj"/>
+		<cc name="g++"
+			outtype="executable"
+			outfile="${basedir}/_Out/Bin/hello"
+			objdir="${basedir}/_Out/Obj/"
+			>
+			<syslibset dir="D:\Programs\_Programming\MinGW\lib" />
+			<fileset dir="${basedir}/Src" includes="*.cpp" />
+			<includepath path="${basedir}/Hdr"/>
+		</cc>
+	</target>
+</project>
