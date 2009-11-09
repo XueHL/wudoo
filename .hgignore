@@ -15,3 +15,4 @@ regexp:Examples/Compile/CPP-skip/EasySkip/Out/.*
 regexp:Examples/Compile/CPP-predefined-libs/Boost/EasySkip/Out/.*
 regexp:Examples/Compile/LibsRegOffice/000-easy-reg/User/Out/.*
 regexp:Examples/Compile/LibsRegOffice/001-glob-loc/User/Out/.*
+regexp:Archive/ant/Build/_Out/.*
