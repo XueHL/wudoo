@@ -19,7 +19,7 @@ def eatDayNumber(buf_ptr, date):
 def parseSqbrbuf(buf_ptr):
 	op = buf_ptr[0].find("[")
 	assert op > -1
-	if op > 1:
+	if op > 3:
 		return None
 	cp = buf_ptr[0].find("]")
 	assert cp > -1
@@ -37,7 +37,7 @@ def parseTime(buf_ptr, date):
 		buf_ptr[0] = buf_ptr[0][qstp+1:]
 		nw = datetime.datetime.now()
 		return datetime.datetime(year = nw.year, month = nw.month, day = nw.day, hour = nw.hour, minute = nw.minute)
-	if ddp > 3:#vihodnoy
+	if ddp > 4:#vihodnoy
 		return None
 	assert ddp > -1
 	bp = ddp - 1
