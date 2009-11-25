@@ -5,7 +5,7 @@ DAYNORM = 8.5
 DAYNORM = datetime.timedelta(seconds = int(60.0 * 60.0 * DAYNORM))
 
 WEEKNORM = DAYNORM * 4
-print WEEKNORM
+#print WEEKNORM
 
 ### ### ### ### ### ### ### ### ### ###
 
