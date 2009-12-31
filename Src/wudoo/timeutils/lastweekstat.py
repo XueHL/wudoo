@@ -51,4 +51,4 @@ rmndh += rmnd.days * 24.0
 print "remaind ", rmndh, "H ", rmndm, "M ", rmnds, "S"
 
 if remaindDays > 0:
-	print "remaind per day", (WEEKNORM - weeksum) / remaindDays
+	print "remaind per day", (WEEKNORM - weeksum) / remaindDays, " ( ", (WEEKNORM - weeksum) / (remaindDays + 1)," )"
