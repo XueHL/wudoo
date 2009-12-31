@@ -21,7 +21,7 @@ lastWeek = weekList[len(weekList) - 1]
 for dayDist in lastWeek.workDays:
 	print dayDist
 
-weeksum = None
+weeksum = datetime.datetime.now() - datetime.datetime.now()
 remaindDays = 5
 for workDay in lastWeek.workDays:
 	if workDay is None or workDay.isEmpty():
@@ -43,7 +43,12 @@ seconds = minutes * 60.0
 secondsint = int(seconds)
 print str(hoursint) + " H " + str(minutesint) + " M " + str(secondsint) + " S"
 
-print "remaind", WEEKNORM - weeksum
+rmnd = WEEKNORM - weeksum
+rmndh = rmnd.seconds / 3600
+rmndm = rmnd.seconds / 60 - rmndh * 60
+rmnds = rmnd.seconds - rmndm * 60 - rmndh * 3600
+rmndh += rmnd.days * 24.0
+print "remaind ", rmndh, "H ", rmndm, "M ", rmnds, "S"
 
 if remaindDays > 0:
 	print "remaind per day", (WEEKNORM - weeksum) / remaindDays

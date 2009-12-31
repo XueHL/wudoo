@@ -95,6 +95,12 @@ class WorkWeek:
 	def __init__(self, workDays):
 		self.workDays = workDays
 
+	def isEmpty(self):
+		for wd in self.workDays:
+			if wd is not None and not wd.isEmpty():
+				return False
+		return True
+
 def parseMonth(buf):
 	p = buf.find(START_CALENDAR_PATTERN)
 	p += len(START_CALENDAR_PATTERN)
@@ -121,7 +127,7 @@ def parseMonth(buf):
 		lastWeek[date.weekday()] = workDay
 		#
 		date += deltaOneDay
-		if date.weekday() == 0 and (not lastWeek == [None] * 7):
+		if date.weekday() == 0 and (not WorkWeek(lastWeek).isEmpty()):
 			weeks.append(WorkWeek(lastWeek))
 			lastWeek = [None] * 7
 	if not lastWeek[0].isEmpty():
