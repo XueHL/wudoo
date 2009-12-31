@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<project name="jni-ant" default="build-all" basedir=".." xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks" >
+	<target name="build-jar">
+		<mkdir dir="_Out/Classes"/>
+		<javac srcdir="src-java" destdir="_Out/Classes" />
+		<mkdir dir="_Out/Jars"/>
+		<jar jarfile="_Out/Jars/jni-ant.jar" basedir="_Out/Classes"/>
+		<delete dir="_Out/Classes"/>
+	</target>
+	
+	<target name="build-jni-hdr" depends="build-jar">
+		<mkdir dir="_Out/Hdr"/>
+		<javah destdir="_Out/Hdr" force="yes" class="jniant.CPPHello" classpath="_Out/Jars/jni-ant.jar" />
+	</target>
+
+	<target name="build-jni-impl" depends="build-jni-hdr">
+        	<mkdir dir="_Out/Obj"/>
+        	<mkdir dir="_Out/Bin"/>
+	        <cpptasks:cc outtype="shared" subsystem="console" outfile="_Out/Bin/CPPHello" objdir="_Out/Obj">
+        		<includepath location="_Out/Hdr" />
+	         	<compiler name="g++" />
+        		<linker name="g++" />
+			<!--<linkerarg value="-Wl"/>-->
+			<linkerarg value="--add-stdcall-alias"/>
+	        	<fileset dir="src-cpp" />
+        	</cpptasks:cc>
+        	<rename src="_Out/Bin/libCPPHello.so" dest="_Out/Bin/libCPPHello.dll"/>
+        	<delete dir="_Out/Obj"/>
+        	<delete dir="_Out/Hdr"/>
+	</target>
+
+	<target name="copy-cmds" depends="build-jni-hdr">
+		<copy file="cm/cmds/run.cmd" toDir="_Out" />
+	</target>
+
+	<target name="build-all" depends="copy-cmds,build-jni-impl">
+	</target>
+</project>

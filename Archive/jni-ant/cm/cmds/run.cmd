@@ -1,0 +1,1 @@
+java -Djava.library.path=Bin -cp Jars\jni-ant.jar jniant.CPPHello
